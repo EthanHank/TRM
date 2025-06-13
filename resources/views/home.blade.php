@@ -10,20 +10,13 @@
         html {
             scroll-behavior: smooth;
         }
-
-        :root {
-            --primary-green: rgb(1, 84, 95);
-            --hover-green: rgb(0, 63, 71);
-            --light-green: rgb(226, 242, 244);
-        }
-
         .navbar-brand {
             font-weight: bold;
-            color: var(--light-green) !important;
+            color: white;
         }
 
         .navbar {
-            background-color: var(--primary-green) !important;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
 
         .nav-link {
@@ -35,7 +28,7 @@
         }
 
         .footer {
-            background-color: var(--primary-green);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             padding: 2rem 0;
             bottom: 0;
@@ -43,7 +36,6 @@
         }
 
         .footer a {
-            color: var(--light-green) !important;
             text-decoration: none;
         }
 
@@ -56,8 +48,8 @@
             margin-bottom: 0;
         }
 
-        h1, h2, h5 {
-            color: var(--primary-green);
+        h1, h2 {
+            color: #667eea;
         }
 
         .section-padding {
@@ -72,12 +64,11 @@
         }
 
         #home {
-            background-image: url('/images/home-section.jpg');
+            background-image: url('/images/home-section1.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             position: relative;
-            color: var(--primary-green) important;
         }
 
         #home::before {
@@ -87,17 +78,17 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: rgba(255, 255, 255, 0.60);
+            background-color: rgba(255, 255, 255, 0.80);
             z-index: 1;
         }
 
         #home .section-content {
             position: relative;
             z-index: 2;
+            color:rgb(56, 81, 191);
         }
 
         #home h1 {
-            color: var(--primary-green) important;
             font-size: 2.5rem;
             font-weight: bold;
             margin-bottom: 1.5rem;
@@ -106,31 +97,35 @@
         #home .lead {
             font-size: 1.5rem;
             margin-bottom: 1rem;
-            color: var(--primary-green) important;
             font-weight: bold;
         }
 
         #about {
-            background-color: var(--light-green);
-            color: var(--primary-green);
+            background-color:rgb(241, 245, 255);
+            color: #667eea;
         }
 
         #about h2, #about h3 {
-            color: var(--primary-green);
+            color: #667eea;
         }
 
         #contact {
             background-color: white;
         }
 
-        .contact-info i {
-            color: var(--primary-green);
+        .contact-info i, .contact-info {
+            color: #667eea;
             margin-right: 10px;
         }
 
         .contact-form .form-control {
-            border-color: var(--primary-green);
+            border-color: #667eea;
             border-radius: 0;
+            color: #667eea;
+        }
+
+        .contact-form .form-control::placeholder{
+            color: #667eea;
         }
 
         .contact-form .form-control:focus {
@@ -138,13 +133,15 @@
         }
 
         .btn-primary {
-            background-color: var(--primary-green);
-            border-color: var(--primary-green);
+            background-color: #667eea;
+            border-color: #667eea;
         }
 
         .btn-primary:hover {
-            background-color: var(--hover-green);
-            border-color: var(--hover-green);
+            color: #667eea;
+            background-color: white;
+            border-color: #667eea;
+            transition: all 0.5s ease;
         }
     </style>
 </head>

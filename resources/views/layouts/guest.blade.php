@@ -18,33 +18,45 @@
     <!-- Custom Styles -->
     <style>
         .custom-bg {
-            background-color: #e8f5e9 !important;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
         }
 
         .custom-container {
-            background-color: rgb(1, 84, 95) !important;
-            border: 1px solid #c5e1a5;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .custom-text {
             color: white !important;
         }
 
-        .custom-logo{
-            color: rgb(1, 84, 95) !important;
+        .custom-logo {
+            color: #667eea !important;
         }
 
         .custom-input {
-            border-color: #81c784 !important;
+            border-color: #667eea !important;
+            background-color: white !important;
         }
 
         .custom-input:focus {
-            border-color: #2e7d32 !important;
-            box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.2) !important;
+            border-color: #764ba2 !important;
+            box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2) !important;
         }
+
         .custom-size {
             font-size: 24px;
             font-weight: bold;
+            color: #667eea;
+        }
+
+        .custom-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+            color: white !important;
+        }
+
+        .custom-button:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%) !important;
         }
     </style>
 </head>
@@ -52,7 +64,7 @@
 <body class="font-sans text-gray-900 antialiased">
     <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
         <div>
-            <a href="/" class="custom-size  hover:text-green-800">
+            <a href="/" class="custom-size hover:text-[#764ba2]">
                 Tun Rice Milling
             </a>
         </div>
