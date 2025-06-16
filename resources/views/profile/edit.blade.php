@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile - Tun Rice Milling</title>
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <!-- Custom Admin CSS -->
@@ -66,6 +67,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Sidebar -->
     <nav class="sidebar" id="sidebar">
@@ -104,12 +106,6 @@
                         Reports
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="{{ route('profile.edit') }}">
-                        <i class="bi bi-gear"></i>
-                        Settings
-                    </a>
-                </li>
             </ul>
         </div>
     </nav>
@@ -124,12 +120,16 @@
                 </button>
                 <div class="ms-auto d-flex align-items-center">
                     <div class="dropdown">
-                        <button class="btn btn-link dropdown-toggle text-dark" type="button" id="userDropdown" data-bs-toggle="dropdown">
+                        <button class="btn btn-link dropdown-toggle text-dark" type="button" id="userDropdown"
+                            data-bs-toggle="dropdown">
                             <i class="bi bi-person-circle me-2"></i>
                             {{ Auth::user()->name }}
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="{{ route('profile.edit') }}"><i class="bi bi-person me-2"></i>Profile</a></li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('profile.edit') }}"><i
+                                        class="bi bi-person me-2"></i>Profile</a>
+                            </li>
                             <li>
                                 <form action="{{ route('logout') }}" class="d-inline" method="POST">
                                     @csrf
@@ -163,7 +163,8 @@
 
                                 <div class="mb-3">
                                     <label for="name" class="form-label">Name</label>
-                                    <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $user->name) }}" required autofocus>
+                                    <input type="text" class="form-control" id="name" name="name"
+                                        value="{{ old('name', $user->name) }}" required autofocus>
                                     @error('name')
                                         <div class="text-danger mt-1">{{ $message }}</div>
                                     @enderror
@@ -171,25 +172,33 @@
 
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="email" name="email" value="{{ old('email', $user->email) }}" required>
+                                    <input type="email" class="form-control" id="email" name="email"
+                                        value="{{ old('email', $user->email) }}" required>
                                     @error('email')
                                         <div class="text-danger mt-1">{{ $message }}</div>
                                     @enderror
                                 </div>
 
-                                @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
+                                @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && !$user->hasVerifiedEmail())
                                     <div class="alert alert-warning">
                                         <p class="mb-0">Your email address is unverified.</p>
                                         <form method="post" action="{{ route('verification.send') }}" class="mt-2">
                                             @csrf
-                                            <button type="submit" class="btn btn-link p-0">Click here to re-send the verification email.</button>
+                                            <button type="submit" class="btn btn-link p-0">Click here to re-send the
+                                                verification email.</button>
                                         </form>
                                     </div>
                                 @endif
 
-                                <div class="d-flex justify-content-end">
+                                <div class="d-flex justify-content-end mb-4">
                                     <button type="submit" class="btn btn-primary">Save Changes</button>
                                 </div>
+
+                                @if (session('profile-updated'))
+                                    <div class="alert alert-success">
+                                        {{ session('profile-updated') }}
+                                    </div>
+                                @endif
                             </form>
                         </div>
                     </div>
@@ -206,7 +215,8 @@
 
                                 <div class="mb-3">
                                     <label for="current_password" class="form-label">Current Password</label>
-                                    <input type="password" class="form-control" id="current_password" name="current_password" required>
+                                    <input type="password" class="form-control" id="current_password"
+                                        name="current_password" required>
                                     @error('current_password')
                                         <div class="text-danger mt-1">{{ $message }}</div>
                                     @enderror
@@ -222,7 +232,8 @@
 
                                 <div class="mb-3">
                                     <label for="password_confirmation" class="form-label">Confirm Password</label>
-                                    <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
+                                    <input type="password" class="form-control" id="password_confirmation"
+                                        name="password_confirmation" required>
                                 </div>
 
                                 <div class="d-flex justify-content-end">
@@ -238,8 +249,10 @@
                             <h5 class="card-title mb-0 text-danger">Delete Account</h5>
                         </div>
                         <div class="card-body">
-                            <p class="text-muted">Once your account is deleted, all of its resources and data will be permanently deleted.</p>
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteAccountModal">
+                            <p class="text-muted">Once your account is deleted, all of its resources and data will be
+                                permanently deleted.</p>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                data-bs-target="#deleteAccountModal">
                                 Delete Account
                             </button>
                         </div>
@@ -258,7 +271,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Are you sure you want to delete your account? Once your account is deleted, all of its resources and data will be permanently deleted.</p>
+                    <p>Are you sure you want to delete your account? Once your account is deleted, all of its resources
+                        and data will be permanently deleted.</p>
                     <form method="post" action="{{ route('profile.destroy') }}" class="mt-4">
                         @csrf
                         @method('delete')
@@ -284,4 +298,5 @@
     <!-- Custom JavaScript -->
     <script src="{{ asset('js/app.js') }}"></script>
 </body>
+
 </html>

@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tun Rice Milling</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <style>
         html {
             scroll-behavior: smooth;
@@ -21,10 +20,16 @@
 
         .nav-link {
             color: white !important;
+            transition: all 0.5s ease;
+            height: 100%;
+            border-radius: 20px;
+            margin: 0 5px;
+            text-align: center;
         }
 
         .nav-link:hover {
-            color: var(--light-green) !important;
+            color: #667eea !important;
+            background-color: white;
         }
 
         .footer {
@@ -109,7 +114,7 @@
             color: #667eea;
         }
 
-        #contact {
+        #merchant {
             background-color: white;
         }
 
@@ -143,6 +148,11 @@
             border-color: #667eea;
             transition: all 0.5s ease;
         }
+        @media (max-width: 991px) {
+            .nav-link{
+                margin: 5px 0;
+            }
+        }
     </style>
 </head>
 
@@ -163,7 +173,7 @@
                         <a class="nav-link" href="#about">About Us</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#contact">Contact Us</a>
+                        <a class="nav-link" href="#merchant">Be a Merchant</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">Login</a>
@@ -208,10 +218,10 @@
             </div>
         </section>
 
-        <!-- Contact Us Section -->
-        <section id="contact" class="section-padding">
+        <!-- Be Our Merchant Section -->
+        <section id="merchant" class="section-padding">
             <div class="container section-content">
-                <h2 class="text-center mb-5">Contact Us</h2>
+                <h2 class="text-center mb-5">Be a Merchant</h2>
                 <div class="row">
                     <div class="col-md-6 mb-4">
                         <div class="contact-info">
@@ -254,7 +264,7 @@
                     <ul class="list-unstyled">
                         <li><a href="#" class="text-white">Home</a></li>
                         <li><a href="#" class="text-white">About Us</a></li>
-                        <li><a href="#" class="text-white">Contact Us</a></li>
+                        <li><a href="#" class="text-white">Be a Merchant</a></li>
                         <li><a href="#" class="text-white">Login</a></li>
                     </ul>
                 </div>
@@ -278,7 +288,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
 
     <!-- Bootstrap JS and dependencies -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
 </body>
 
 </html>
