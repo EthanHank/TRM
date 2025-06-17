@@ -89,12 +89,9 @@
 
 @media (max-width: 768px) {
     .sidebar {
-        margin-left: calc(-1 * var(--sidebar-width));
-    }
-    .sidebar.active {
         margin-left: 0;
     }
     .main-content {
-        margin-left: 0;
+        margin-left: var(--sidebar-width);
     }
 } 

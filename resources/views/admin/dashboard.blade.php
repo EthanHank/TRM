@@ -33,12 +33,6 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">
-                        <i class="bi bi-people"></i>
-                        Customers
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
                         <i class="bi bi-box"></i>
                         Products
                     </a>
@@ -51,8 +45,8 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">
-                        <i class="bi bi-gear"></i>
-                        Settings
+                        <i class="bi bi-people"></i>
+                        Users Management
                     </a>
                 </li>
             </ul>

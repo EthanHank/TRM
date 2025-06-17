@@ -236,9 +236,15 @@
                                         name="password_confirmation" required>
                                 </div>
 
-                                <div class="d-flex justify-content-end">
+                                <div class="d-flex justify-content-end mb-4">
                                     <button type="submit" class="btn btn-primary">Update Password</button>
                                 </div>
+
+                                @if (session('password-updated'))
+                                    <div class="alert alert-success">
+                                        {{ session('password-updated') }}
+                                    </div>
+                                @endif
                             </form>
                         </div>
                     </div>
