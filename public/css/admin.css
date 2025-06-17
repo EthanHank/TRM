@@ -89,6 +89,24 @@
 .bi.bi-list{
     font-size: 20pt;
 }
+.submenu-collapse {
+    transition: all 0.3s ease-in-out;
+}
+.submenu-collapse.collapsing {
+    transition: all 0.3s ease-in-out;
+}
+.transition-rotate {
+    transition: transform 0.3s ease-in-out;
+}
+.collapsed .transition-rotate {
+    transform: rotate(-90deg);
+}
+.nav-link {
+    transition: all 0.2s ease-in-out;
+}
+.nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
 
 @media (max-width: 768px) {
     .sidebar {

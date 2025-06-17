@@ -44,10 +44,25 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#userManagementSubmenu">
                         <i class="bi bi-people"></i>
                         Users Management
+                        <i class="bi bi-chevron-down ms-auto transition-rotate"></i>
                     </a>
+                    <div class="collapse submenu-collapse" id="userManagementSubmenu">
+                        <ul class="nav flex-column ms-3">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <i class="bi bi-person-lines-fill me-2"></i>Users
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <i class="bi bi-shield-lock me-2"></i>Roles & Permissions
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -94,8 +109,8 @@
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
-                                    <h6 class="text-muted mb-2">Total Rice Processed</h6>
-                                    <h3 class="mb-0">2,500 tons</h3>
+                                    <h6 class="text-muted mb-2">Our Merchants</h6>
+                                    <h3 class="mb-0">2,500</h3>
                                 </div>
                                 <div class="stat-icon bg-primary bg-opacity-10 text-primary">
                                     <i class="bi bi-box"></i>
@@ -109,7 +124,7 @@
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
-                                    <h6 class="text-muted mb-2">Active Orders</h6>
+                                    <h6 class="text-muted mb-2">Inhouse Rice</h6>
                                     <h3 class="mb-0">15</h3>
                                 </div>
                                 <div class="stat-icon bg-success bg-opacity-10 text-success">
@@ -151,9 +166,8 @@
                 </div>
             </div>
 
-            <!-- Recent Orders and Quick Actions -->
-            <div class="row g-4">
-                <div class="col-md-8">
+            <!-- Recent Orders -->
+                <div class="col-md-12">
                     <div class="card">
                         <div class="card-header bg-white">
                             <h5 class="card-title mb-0">Recent Orders</h5>
@@ -188,30 +202,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-header bg-white">
-                            <h5 class="card-title mb-0">Quick Actions</h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="d-grid gap-2">
-                                <button class="btn btn-primary">
-                                    <i class="bi bi-plus-circle me-2"></i>New Order
-                                </button>
-                                <button class="btn btn-success">
-                                    <i class="bi bi-file-earmark-text me-2"></i>Generate Report
-                                </button>
-                                <button class="btn btn-warning">
-                                    <i class="bi bi-people me-2"></i>Manage Users
-                                </button>
-                                <button class="btn btn-info">
-                                    <i class="bi bi-gear me-2"></i>Settings
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 

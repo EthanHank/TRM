@@ -101,10 +101,25 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#userManagementSubmenu">
                         <i class="bi bi-people"></i>
-                        Customers
+                        Users Management
+                        <i class="bi bi-chevron-down ms-auto transition-rotate"></i>
                     </a>
+                    <div class="collapse submenu-collapse" id="userManagementSubmenu">
+                        <ul class="nav flex-column ms-3">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <i class="bi bi-person-lines-fill me-2"></i>Users
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <i class="bi bi-shield-lock me-2"></i>Roles & Permissions
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -295,8 +310,6 @@
             </div>
         </div>
     </div>
-
-    @include('sweetalert::alert')
 
     <!-- Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
