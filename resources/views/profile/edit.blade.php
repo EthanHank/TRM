@@ -90,12 +90,6 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">
-                        <i class="bi bi-people"></i>
-                        Customers
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
                         <i class="bi bi-box"></i>
                         Products
                     </a>
@@ -104,6 +98,12 @@
                     <a class="nav-link" href="#">
                         <i class="bi bi-graph-up"></i>
                         Reports
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-people"></i>
+                        Customers
                     </a>
                 </li>
             </ul>
