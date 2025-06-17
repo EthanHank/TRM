@@ -160,6 +160,11 @@
                             <form method="post" action="{{ route('profile.update') }}" class="space-y-6">
                                 @csrf
                                 @method('patch')
+                                 @if (session('profile-updated'))
+                                    <div class="alert alert-success">
+                                        {{ session('profile-updated') }}
+                                    </div>
+                                @endif
 
                                 <div class="mb-3">
                                     <label for="name" class="form-label">Name</label>
@@ -193,12 +198,6 @@
                                 <div class="d-flex justify-content-end mb-4">
                                     <button type="submit" class="btn btn-primary">Save Changes</button>
                                 </div>
-
-                                @if (session('profile-updated'))
-                                    <div class="alert alert-success">
-                                        {{ session('profile-updated') }}
-                                    </div>
-                                @endif
                             </form>
                         </div>
                     </div>
@@ -212,7 +211,11 @@
                             <form method="post" action="{{ route('password.update') }}">
                                 @csrf
                                 @method('put')
-
+                                @if (session('password-updated'))
+                                    <div class="alert alert-success mb-4">
+                                        {{ session('password-updated') }}
+                                    </div>
+                                @endif
                                 <div class="mb-3">
                                     <label for="current_password" class="form-label">Current Password</label>
                                     <input type="password" class="form-control" id="current_password"
@@ -236,15 +239,9 @@
                                         name="password_confirmation" required>
                                 </div>
 
-                                <div class="d-flex justify-content-end mb-4">
+                                <div class="d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary">Update Password</button>
                                 </div>
-
-                                @if (session('password-updated'))
-                                    <div class="alert alert-success">
-                                        {{ session('password-updated') }}
-                                    </div>
-                                @endif
                             </form>
                         </div>
                     </div>
@@ -298,6 +295,8 @@
             </div>
         </div>
     </div>
+
+    @include('sweetalert::alert')
 
     <!-- Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
         html {
             scroll-behavior: smooth;
         }
+
         .navbar-brand {
             font-weight: bold;
             color: white;
@@ -53,12 +55,13 @@
             margin-bottom: 0;
         }
 
-        h1, h2 {
+        h1,
+        h2 {
             color: #667eea;
         }
 
         .section-padding {
-            height: 100vh;
+            min-height: 100vh;
             padding: 80px 0;
             display: flex;
             align-items: center;
@@ -90,7 +93,7 @@
         #home .section-content {
             position: relative;
             z-index: 2;
-            color:rgb(56, 81, 191);
+            color: rgb(56, 81, 191);
         }
 
         #home h1 {
@@ -105,12 +108,15 @@
             font-weight: bold;
         }
 
-        #about {
-            background-color:rgb(241, 245, 255);
+        #about,
+        #contact {
+            background-color: rgb(241, 245, 255);
             color: #667eea;
         }
 
-        #about h2, #about h3 {
+        #about h2,
+        #about h3,
+        #contact h3 {
             color: #667eea;
         }
 
@@ -118,9 +124,18 @@
             background-color: white;
         }
 
-        .contact-info i, .contact-info {
+        .contact-info i,
+        .contact-info {
             color: #667eea;
             margin-right: 10px;
+        }
+
+        .contact-form {
+            width: 80%;
+            color: #667eea;
+            box-shadow: 0 0 15px #667eea;
+            padding: 20px;
+            border-radius: 20px;
         }
 
         .contact-form .form-control {
@@ -129,7 +144,7 @@
             color: #667eea;
         }
 
-        .contact-form .form-control::placeholder{
+        .contact-form .form-control::placeholder {
             color: #667eea;
         }
 
@@ -148,8 +163,14 @@
             border-color: #667eea;
             transition: all 0.5s ease;
         }
+
+        .contact-image{
+            max-width: 400px;
+            max-height: 300px;
+        }
+
         @media (max-width: 991px) {
-            .nav-link{
+            .nav-link {
                 margin: 5px 0;
             }
         }
@@ -174,6 +195,9 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#merchant">Be a Merchant</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact Us</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">Login</a>
@@ -222,6 +246,62 @@
         <section id="merchant" class="section-padding">
             <div class="container section-content">
                 <h2 class="text-center mb-5">Be a Merchant</h2>
+                <div class="d-flex justify-content-center mb-4">
+                    <form class="contact-form">
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <div class="mb-4">
+                                    <input type="text" class="form-control" placeholder="Your Username" required>
+                                </div>
+                                <div class="mb-4">
+                                    <input type="text" class="form-control" placeholder="Your Name" required>
+                                </div>
+                                <div class="mb-4">
+                                    <input type="text" class="form-control" placeholder="Your NRC" required>
+                                </div>
+                                <div class="mb-4">
+                                    <input type="text" class="form-control" placeholder="Your Phone" required>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4 col-sm-4">
+                                        <label for="gender">Gender:</label>
+                                    </div>
+                                    <div class="col-4 col-sm-4">
+                                        <input type="radio" name="gender" id="male" checked>
+                                        <label class="mr-3" for="male">
+                                            Male
+                                        </label>
+                                    </div>
+                                    <div class="col-4 col-sm-4">
+                                        <input type="radio" name="gender" id="female">
+                                        <label for="female">
+                                            Female
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="mb-4">
+                                    <input type="date" class="form-control" id="dateofbirth" required>
+                                </div>
+                                <div class="mb-4">
+                                    <input type="email" class="form-control" placeholder="Your Email" required>
+                                </div>
+                                <div>
+                                    <textarea class="form-control" rows="4" type="text" placeholder="Your Address" required></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary mb-4 w-100">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Us Section -->
+        <section id="contact" class="section-padding">
+            <div class="container section-content">
+                <h2 class="text-center my-5">Contact Us</h2>
                 <div class="row">
                     <div class="col-md-6 mb-4">
                         <div class="contact-info">
@@ -233,24 +313,15 @@
                         </div>
                     </div>
                     <div class="col-md-6 mb-4">
-                        <form class="contact-form">
-                            <div class="mb-3">
-                                <input type="text" class="form-control" placeholder="Your Name" required>
-                            </div>
-                            <div class="mb-3">
-                                <input type="email" class="form-control" placeholder="Your Email" required>
-                            </div>
-                            <div class="mb-3">
-                                <textarea class="form-control" rows="5" placeholder="Your Message" required></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Send Message</button>
-                        </form>
+                        <div class="contact-image">
+                            <img src="{{ asset('images/contact.png') }}" class="img-fluid" alt="contact images">
+                        </div>
                     </div>
                 </div>
+
             </div>
         </section>
     </div>
-
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
@@ -262,17 +333,18 @@
                 <div class="col-md-4">
                     <h5>Quick Links</h5>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-white">Home</a></li>
-                        <li><a href="#" class="text-white">About Us</a></li>
-                        <li><a href="#" class="text-white">Be a Merchant</a></li>
-                        <li><a href="#" class="text-white">Login</a></li>
+                        <li><a href="#home" class="text-white">Home</a></li>
+                        <li><a href="#about" class="text-white">About Us</a></li>
+                        <li><a href="#merchant" class="text-white">Be a Merchant</a></li>
+                        <li><a href="#contact" class="text-white">Contact Us</a></li>
+                        <li><a href="{{ route('login') }}" class="text-white">Login</a></li>
                     </ul>
                 </div>
                 <div class="col-md-4">
                     <h5>Contact Info</h5>
                     <ul class="list-unstyled">
-                        <li>Address: Your Address Here</li>
-                        <li>Phone: (123) 456-7890</li>
+                        <li>Address: 123 Rice Mill Road, Yangon, Myanmar</li>
+                        <li>Phone: (95) 123-456-789</li>
                         <li>Email: info@tunricemilling.com</li>
                     </ul>
                 </div>
@@ -283,7 +355,7 @@
             </div>
         </div>
     </footer>
-    
+
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
 
