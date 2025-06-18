@@ -34,6 +34,71 @@
             background-color: white;
         }
 
+        /* Dashboard Link Styles */
+        .nav-link.dashboard-link {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 8px 20px;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link.dashboard-link:hover {
+            background-color: white;
+            color: #667eea !important;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-link.dashboard-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                120deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .nav-link.dashboard-link:hover::before {
+            left: 100%;
+        }
+
+        .nav-link.dashboard-link i {
+            margin-right: 5px;
+        }
+
+        /* Role Badge Styles */
+        .role-badge {
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-left: 5px;
+            font-weight: 500;
+        }
+
+        .role-badge.superadmin {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .role-badge.admin {
+            background-color: #0d6efd;
+            color: white;
+        }
+
+        .role-badge.merchant {
+            background-color: #198754;
+            color: white;
+        }
+
         .footer {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -199,9 +264,29 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#contact">Contact Us</a>
                     </li>
+                    @if (Auth::check() && Auth::user()->hasRole('merchant'))
+                    <li class="nav-item">
+                        <a class="nav-link dashboard-link" href="{{ route('users.dashboard') }}">
+                            <i class="bi bi-speedometer2"></i>Dashboard
+                            <span class="role-badge merchant">{{ Auth::user()->name }}</span>
+                        </a>
+                    </li>
+                    @elseif (Auth::check() && (Auth::user()->hasRole('superadmin') || Auth::user()->hasRole('admin')))
+                    <li class="nav-item">
+                        <a class="nav-link dashboard-link" href="{{ route('admin.dashboard') }}">
+                            <i class="bi bi-speedometer2"></i>Dashboard
+                            @if(Auth::user()->hasRole('superadmin'))
+                                <span class="role-badge superadmin">{{ Auth::user()->name }}</span>
+                            @else
+                                <span class="role-badge admin">{{ Auth::user()->name }}</span>
+                            @endif
+                        </a>
+                    </li>
+                    @else
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">Login</a>
                     </li>
+                    @endif
                 </ul>
             </div>
         </div>
