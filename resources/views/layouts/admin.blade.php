@@ -58,8 +58,13 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <i class="bi bi-shield-lock me-2"></i>Roles & Permissions
+                                <a class="nav-link" href="{{ route('admin.roles.index') }}">
+                                    <i class="bi bi-shield-lock me-2"></i>Roles
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin.permissions.index') }}">
+                                    <i class="bi bi-ui-checks-grid me-2"></i>Permissions
                                 </a>
                             </li>
                         </ul>
@@ -78,8 +83,8 @@
                     <i class="bi bi-list"></i>
                 </button>
                 <div class="ms-auto d-flex align-items-center">
-                    <div class="dropdown">
-                        <button class="btn btn-link dropdown-toggle text-dark" type="button" id="userDropdown" data-bs-toggle="dropdown">
+                    <div class="dropdown profile-dropdown">
+                        <button class="btn btn-link dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown">
                             <i class="bi bi-person-circle me-2"></i>
                             {{ Auth::user()->name }}
                         </button>
@@ -90,7 +95,7 @@
                             <li>
                                 <form action="{{ route('logout') }}" class="d-inline" method="POST">
                                     @csrf
-                                    <button type="submit" class="dropdown-item border-0 bg-transparent">
+                                    <button type="submit" class="dropdown-item border-0">
                                         <i class="bi bi-box-arrow-right me-2"></i>Logout
                                     </button>
                                 </form>
