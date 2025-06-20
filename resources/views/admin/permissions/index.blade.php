@@ -12,6 +12,12 @@
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 @endif
+@if (session('permission-updated'))
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ session('permission-updated') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
 <div class="d-flex justify-content-end mb-4">
     <a href="{{ route('admin.permissions.create') }}" class="btn btn-success"> + Add Permission</a>
 </div>

@@ -3,6 +3,8 @@
 namespace App\Http\Requests\Permission;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Spatie\Permission\Models\Permission;
 
 class UpdatePermissionRequest extends FormRequest
 {
@@ -11,7 +13,7 @@ class UpdatePermissionRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +24,11 @@ class UpdatePermissionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255|unique:permissions,name,' . $this->route('permission')->id,
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+            ],
             'category' => ['required', 'string', 'max:255'],
         ];
     }
@@ -33,7 +39,7 @@ class UpdatePermissionRequest extends FormRequest
             'name.required' => 'The name field is required.',
             'name.string' => 'The name field must be a string.',
             'name.max' => 'The name field must not be greater than 255 characters.',            
-            'name.unique' => 'The name field already exists.',
+            // 'name.unique' => 'The name field already exists.',
             'category.required' => 'The category field is required.',
             'category.string' => 'The category field must be a string.',
             'category.max' => 'The category field must not be greater than 255 characters.',
