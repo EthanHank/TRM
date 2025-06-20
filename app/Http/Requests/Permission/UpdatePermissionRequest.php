@@ -39,7 +39,6 @@ class UpdatePermissionRequest extends FormRequest
             'name.required' => 'The name field is required.',
             'name.string' => 'The name field must be a string.',
             'name.max' => 'The name field must not be greater than 255 characters.',            
-            // 'name.unique' => 'The name field already exists.',
             'category.required' => 'The category field is required.',
             'category.string' => 'The category field must be a string.',
             'category.max' => 'The category field must not be greater than 255 characters.',
