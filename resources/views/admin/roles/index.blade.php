@@ -12,6 +12,12 @@
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 @endif
+@if (session('role-updated'))
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ session('role-updated') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
 <div class="d-flex justify-content-end mb-4">
     <a href="{{ route('admin.roles.create') }}" class="btn btn-success"> + Add Role</a>
 </div>
@@ -33,7 +39,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if ($roles->isEmpty())
+                        @if ($roles->count() == 0)
                         <tr>
                             <td colspan="4" class="text-center text-muted py-4">No roles found! T_T</td>
                         </tr>
@@ -45,7 +51,7 @@
                             <td>{{ $role->updated_at }}</td>
                             <td>
                                 <span class="btn btn-primary">
-                                    <a class="text-white" href="#">
+                                    <a class="text-white" href="{{ route('admin.roles.edit', $role->id) }}">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
                                 </span>
@@ -59,6 +65,14 @@
                         @endforeach
                     </tbody>
                 </table>
+            </div>
+            
+            <div class="mt-3">
+                    @if($roles->hasPages())
+                        {{ $roles->links('vendor.pagination.custom-pagination') }}
+                    @else
+                        <small class="text-muted">Showing all results ({{ $roles->total() }} total)</small>
+                    @endif
             </div>
         </div>
     </div>

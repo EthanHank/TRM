@@ -3,15 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Role\CreateRoleRequest;
-use GuzzleHttp\Promise\Create;
-use Illuminate\Http\Request;
+use App\Http\Requests\Role\UpdateRoleRequest;
 use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
     public function index()
     {
-        $roles = Role::all();
+        $roles = Role::whereNotIn('name', ['superadmin'])->paginate(5);
 
         return view('admin.roles.index', compact('roles'));
     }
@@ -23,10 +22,20 @@ class RoleController extends Controller
 
     public function store(CreateRoleRequest $request)
     {
-        $role = $request->validated();
-
-        Role::create($role);
+        Role::create($request->validated());
 
         return redirect()->route('admin.roles.index')->with('role-created', 'Role is created successfully');
+    }
+
+    public function edit(Role $role)
+    {
+        return view('admin.roles.edit', compact('role'));
+    }
+
+    public function update(UpdateRoleRequest $request, Role $role)
+    {
+        $role->update($request->validated());
+
+        return redirect()->route('admin.roles.index')->with('role-updated', 'Role is updated successfully');
     }
 }

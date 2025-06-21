@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Permission;
+namespace App\Http\Requests\Role;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdatePermissionRequest extends FormRequest
+class UpdateRoleRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,7 @@ class UpdatePermissionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255', 'unique:permissions,name,' . $this->permission->id],
-            'category' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'regex:/^[a-zA-Z]+$/', 'max:255', 'unique:roles,name,' . $this->role->id],
         ];
     }
 
@@ -31,12 +30,9 @@ class UpdatePermissionRequest extends FormRequest
     {
         return [
             'name.required' => 'The name field is required.',
-            'name.string' => 'The name field must be a string.',
+            'name.regex' => 'The name field must contain only letters and no spaces.',
             'name.max' => 'The name field must not be greater than 255 characters.',
             'name.unique' => 'The name field already exists.',
-            'category.required' => 'The category field is required.',
-            'category.string' => 'The category field must be a string.',
-            'category.max' => 'The category field must not be greater than 255 characters.',
         ];
     }
 }
