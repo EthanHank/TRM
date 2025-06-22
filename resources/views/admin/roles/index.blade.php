@@ -6,15 +6,9 @@
 <div>
     <h6 class="text-muted mb-4">Admin > Roles</h6>
 </div>
-@if (session('role-created'))
+@if (session('success'))
 <div class="alert alert-success alert-dismissible fade show" role="alert">
-    {{ session('role-created') }}
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-@endif
-@if (session('role-updated'))
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-    {{ session('role-updated') }}
+    {{ session('success') }}
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 @endif
@@ -55,11 +49,13 @@
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
                                 </span>
-                                <span class="btn btn-danger">
-                                    <a class="text-white" href="#">
+                                <form action="{{ route('admin.roles.destroy', $role->id) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this role?')">
                                         <i class="bi bi-trash"></i>
-                                    </a>
-                                </span>
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                         @endforeach

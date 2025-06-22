@@ -11,7 +11,7 @@ class PermissionController extends Controller
 {
     public function index()
     {
-        $permissions = Permission::all();
+        $permissions = Permission::orderBy('id', 'desc')->paginate(5);
 
         return view('admin.permissions.index', compact('permissions'));
     }
@@ -27,7 +27,7 @@ class PermissionController extends Controller
 
         Permission::create($permission);
 
-        return redirect()->route('admin.permissions.index')->with('permission-created', 'Permission is created successfully');
+        return redirect()->route('admin.permissions.index')->with('success', 'Permission is created successfully');
     }
 
     public function edit(Permission $permission)
@@ -39,6 +39,13 @@ class PermissionController extends Controller
     {
         $permission->update($request->validated());
 
-        return redirect()->route('admin.permissions.index')->with('permission-updated', 'Permission is updated successfully');
+        return redirect()->route('admin.permissions.index')->with('success', 'Permission is updated successfully');
+    }
+
+    public function destroy(Permission $permission)
+    {
+        $permission->delete();
+
+        return back()->with('success', 'Permission is deleted successfully');
     }
 }

@@ -6,15 +6,9 @@
 <div>
     <h6 class="text-muted mb-4">Admin > Permissions</h6>
 </div>
-@if (session('permission-created'))
+@if (session('success'))
 <div class="alert alert-success alert-dismissible fade show" role="alert">
-    {{ session('permission-created') }}
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-@endif
-@if (session('permission-updated'))
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-    {{ session('permission-updated') }}
+    {{ session('success') }}
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 @endif
@@ -40,33 +34,42 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if ($permissions->isEmpty())
+                        @if ($permissions->count() == 0)
                         <tr>
-                            <td colspan="4" class="text-center text-muted py-4">No permissions found! T_T</td>
+                            <td colspan="5" class="text-center text-muted py-4">No permissions found! T_T</td>
                         </tr>
                         @endif
                         @foreach ($permissions as $permission)
                         <tr>
                             <td>{{ $permission->name }}</td>
                             <td>{{ $permission->category }}</td>
-                            <td>{{ $permission->created_at }}</td>
-                            <td>{{ $permission->updated_at }}</td>
+                            <td>{{ $permission->created_at->format('d-m-Y H:i:s') }}</td>
+                            <td>{{ $permission->updated_at->format('d-m-Y H:i:s') }}</td>
                             <td>
                                 <span class="btn btn-primary">
                                     <a class="text-white" href="{{ route('admin.permissions.edit', $permission->id) }}">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
                                 </span>
-                                <span class="btn btn-danger">
-                                    <a class="text-white" href="#">
+                                <form action="{{ route('admin.permissions.destroy', $permission->id) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this permission?')">
                                         <i class="bi bi-trash"></i>
-                                    </a>
-                                </span>
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
+            </div>
+            <div class="mt-3">
+                    @if($permissions->hasPages())
+                        {{ $permissions->links('vendor.pagination.custom-pagination') }}
+                    @else
+                        <small class="text-muted">Showing all results ({{ $permissions->total() }} total)</small>
+                    @endif
             </div>
         </div>
     </div>

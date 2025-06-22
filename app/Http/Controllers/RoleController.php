@@ -10,7 +10,7 @@ class RoleController extends Controller
 {
     public function index()
     {
-        $roles = Role::whereNotIn('name', ['superadmin'])->paginate(5);
+        $roles = Role::whereNotIn('name', ['superadmin'])->orderBy('id', 'desc')->paginate(5);
 
         return view('admin.roles.index', compact('roles'));
     }
@@ -24,7 +24,7 @@ class RoleController extends Controller
     {
         Role::create($request->validated());
 
-        return redirect()->route('admin.roles.index')->with('role-created', 'Role is created successfully');
+        return redirect()->route('admin.roles.index')->with('success', 'Role is created successfully');
     }
 
     public function edit(Role $role)
@@ -36,6 +36,13 @@ class RoleController extends Controller
     {
         $role->update($request->validated());
 
-        return redirect()->route('admin.roles.index')->with('role-updated', 'Role is updated successfully');
+        return redirect()->route('admin.roles.index')->with('success', 'Role is updated successfully');
+    }
+
+    public function destroy(Role $role)
+    {
+        $role->delete();
+
+        return back()->with('success', 'Role is deleted successfully');
     }
 }
