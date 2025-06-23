@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Role\CreateRoleRequest;
 use App\Http\Requests\Role\UpdateRoleRequest;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
@@ -29,7 +31,11 @@ class RoleController extends Controller
 
     public function edit(Role $role)
     {
-        return view('admin.roles.edit', compact('role'));
+        $permissions = Permission::whereDoesntHave('roles', function ($query) use ($role) {
+            $query->where('roles.id', $role->id);
+        })->get();
+
+        return view('admin.roles.edit', compact('role', 'permissions'));
     }
 
     public function update(UpdateRoleRequest $request, Role $role)
@@ -45,4 +51,22 @@ class RoleController extends Controller
 
         return back()->with('success', 'Role is deleted successfully');
     }
+
+    public function assignPermissions(Request $request, Role $role)
+    {
+        // Convert IDs to names
+        $permissions = Permission::whereIn('id', $request->permissions)->pluck('name');
+        $role->givePermissionTo($permissions);
+
+        return back()->with('success', 'Permissions are assigned successfully');
+    }
+
+    public function revokePermissions(Role $role, Permission $permission)
+    {
+        $role->revokePermissionTo($permission->name);
+
+        return back()->with('revoke_success', 'Permission revoked successfully');
+
+    }
 }
+

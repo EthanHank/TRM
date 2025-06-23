@@ -2,8 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PermissionController;
 
@@ -11,13 +10,14 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/users/dashboard', [UserController::class, 'index'])->name('users.dashboard');
-// Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+Route::get('/users/dashboard', [Controller::class, 'userIndex'])->name('users.dashboard');
 
 Route::middleware(['auth','role:superadmin'])->name('admin.')->prefix('admin')->group(function () {
-    Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [Controller::class, 'adminIndex'])->name('dashboard');
     Route::resource('/roles', RoleController::class);
     Route::resource('/permissions', PermissionController::class);
+    Route::post('/roles/{role}/permissions/assign', [RoleController::class, 'assignPermissions'])->name('roles.permissions.assign');
+    Route::delete('/roles/{role}/permissions/{permission}', [RoleController::class, 'revokePermissions'])->name('roles.permissions.revoke');
 });
 
 Route::middleware('auth')->group(function () {

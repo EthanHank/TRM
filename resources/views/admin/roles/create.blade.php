@@ -22,7 +22,10 @@
                 @error('name')
                     <div class="text-danger my-1">{{ $message }}</div>
                 @enderror
-                <button type="submit" class="btn btn-primary mt-2">Create</button>
+                <button type="submit" class="btn btn-primary mt-2 me-1">Create</button>
+                <a href="{{ route('admin.roles.index') }}" class="btn btn-outline-secondary mt-2">
+                    Cancel
+                </a>
             </form>
         </div>
     </div>
