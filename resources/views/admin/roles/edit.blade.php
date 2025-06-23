@@ -6,13 +6,18 @@
 <div>
     <h6 class="text-muted mb-4">Admin > Roles > Update</h6>
 </div>
-<a href="{{ route('admin.roles.index') }}" class="btn btn-secondary mb-4">
-    <i class="bi bi-arrow-left"></i> Back to Roles
-</a>
+<div class="d-flex justify-content-end mb-4">
+    <a href="{{ route('admin.roles.index') }}" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> Back to Roles
+    </a>
+</div>
 <div class="mb-4">
     <div class="card">
         <div class="card-header bg-white">
-            <h5 class="card-title mb-0">Update Role</h5>
+            <h5 class="card-title mb-0">
+                Update Role 
+                (<span class="text-primary">{{ $role->name }}</span>)
+            </h5>
         </div>
         <div class="card-body">
             <form action="{{ route('admin.roles.update', $role) }}" method="POST">
@@ -37,15 +42,18 @@
         </div>
         <div class="card-body">
             @if ($role->permissions->count() > 0)
-                <div class="d-flex align-items-center mb-2">
+                <div class="d-flex flex-wrap gap-2 mb-2">
                 @foreach ($role->permissions as $permission)
-                    <form class="m-2 d-flex align-items-center" action="{{ route('admin.roles.permissions.revoke', [$role->id, $permission->id]) }}" method="POST" style="display:inline;" onclick="return confirm('Are you sure you want to revoke this permission?')">
+                    <form action="{{ route('admin.roles.permissions.revoke', [$role->id, $permission->id]) }}" method="POST" class="position-relative" style="display:inline;" onsubmit="return confirm('Are you sure you want to revoke this permission?')">
                         @csrf
                         @method('DELETE')
-                        <label for="permission_{{ $permission->id }}" class="border p-1 border-end-0">{{ $permission->name }}</label>
-                        <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-x-circle"></i></button>
+                        <span class="badge bg-danger px-3 py-2 d-flex align-items-center" style="font-size:1rem; font-weight:500;">
+                            {{ $permission->name }}
+                            <button type="submit" class="btn btn-sm btn-link text-white ms-2 p-0" style="line-height:1;" title="Revoke Permission">
+                                <i class="bi bi-x-circle-fill"></i>
+                            </button>
+                        </span>
                     </form>
-                
                 @endforeach
                 </div>
             @else
@@ -59,6 +67,7 @@
             @endif
         </div>
     </div>
+    <p class="text-muted m-1 small">Permissions can be revoked by clicking the <i class="text-danger bi bi-x-circle-fill"></i> button.</p>
 </div>
 <div class="mb-4">
     <div class="card">
@@ -75,6 +84,7 @@
                             <label class="form-check-label" for="permission_{{ $permission->id }}">{{ $permission->name }}</label>
                         </div>
                     @endforeach
+                    <button type="submit" class="btn btn-success my-2 col-md-3 offset-md-9">Assign Permissions</button>
                 @else
                     <p class="text-muted">No permissions found to assign.</p>
                 @endif
@@ -84,7 +94,12 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
                 @endif
-                <button type="submit" class="btn btn-success mt-2 col-md-3 offset-md-9">Assign Permissions</button>
+                @if (session('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                @endif
             </form>
         </div>
     </div>

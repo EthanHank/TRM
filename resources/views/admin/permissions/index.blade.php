@@ -6,15 +6,7 @@
 <div>
     <h6 class="text-muted mb-4">Admin > Permissions</h6>
 </div>
-@if (session('success'))
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-    {{ session('success') }}
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-@endif
-<div class="d-flex justify-content-end mb-4">
-    <a href="{{ route('admin.permissions.create') }}" class="btn btn-success"> + Add Permission</a>
-</div>
+
 <!-- Roles Table -->
 <div class="col-md-12">
     <div class="card">
@@ -30,7 +22,6 @@
                             <th>Category</th>
                             <th>Created At</th>
                             <th>Updated At</th>
-                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -45,20 +36,6 @@
                             <td>{{ $permission->category }}</td>
                             <td>{{ $permission->created_at->format('d-m-Y H:i:s') }}</td>
                             <td>{{ $permission->updated_at->format('d-m-Y H:i:s') }}</td>
-                            <td>
-                                <span class="btn btn-primary">
-                                    <a class="text-white" href="{{ route('admin.permissions.edit', $permission->id) }}">
-                                        <i class="bi bi-pencil-square"></i>
-                                    </a>
-                                </span>
-                                <form action="{{ route('admin.permissions.destroy', $permission->id) }}" method="POST" class="d-inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this permission?')">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </form>
-                            </td>
                         </tr>
                         @endforeach
                     </tbody>

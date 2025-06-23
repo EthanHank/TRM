@@ -54,11 +54,14 @@ class RoleController extends Controller
 
     public function assignPermissions(Request $request, Role $role)
     {
-        // Convert IDs to names
-        $permissions = Permission::whereIn('id', $request->permissions)->pluck('name');
-        $role->givePermissionTo($permissions);
+        if ($request->has('permissions')) {
+            $permissions = Permission::whereIn('id', $request->permissions)->pluck('name');
+            $role->givePermissionTo($permissions);
 
-        return back()->with('success', 'Permissions are assigned successfully');
+            return back()->with('success', 'Permissions are assigned successfully');
+        }
+
+        return back()->with('error', 'No permissions selected');
     }
 
     public function revokePermissions(Role $role, Permission $permission)
