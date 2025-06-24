@@ -15,7 +15,10 @@ Route::get('/users/dashboard', [UserController::class, 'dashboard'])->name('user
 
 Route::middleware(['auth','role:superadmin'])->name('admin.')->prefix('admin')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::resource('/users', UserController::class);
     Route::resource('/roles', RoleController::class);
+    Route::post('/users/{user}/roles/assign', [UserController::class, 'assignRole'])->name('users.roles.assign');
+    Route::delete('/users/{user}/roles/{role}', [UserController::class, 'revokeRole'])->name('users.roles.revoke');
     Route::resource('/permissions', PermissionController::class)->only(['index']);
     Route::post('/roles/{role}/permissions/assign', [RoleController::class, 'assignPermissions'])->name('roles.permissions.assign');
     Route::delete('/roles/{role}/permissions/{permission}', [RoleController::class, 'revokePermissions'])->name('roles.permissions.revoke');

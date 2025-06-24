@@ -54,7 +54,8 @@ class RoleController extends Controller
 
     public function assignPermissions(Request $request, Role $role)
     {
-        if ($request->has('permissions')) {
+        if ($request->has('permissions')) 
+        {
             $permissions = Permission::whereIn('id', $request->permissions)->pluck('name');
             $role->givePermissionTo($permissions);
 

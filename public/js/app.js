@@ -32,4 +32,15 @@ document.addEventListener('DOMContentLoaded', function() {
         window.addEventListener('resize', checkWidth);
         checkWidth();
     }
-}); 
+});
+
+// Flatpickr
+document.addEventListener("DOMContentLoaded", function() {
+    flatpickr(".flatpickr", {
+        dateFormat: "Y-m-d",
+        maxDate: "today",
+        altInput: true,
+        altFormat: "F j, Y",
+        allowInput: true
+    });
+});
