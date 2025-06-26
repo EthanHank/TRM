@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class AdminSeeder extends Seeder
@@ -32,6 +33,10 @@ class AdminSeeder extends Seeder
         
         $role = Role::where('name', 'superadmin')->first();
 
+        // Assign all permissions to the role ONCE
+        $permissions = Permission::where('guard_name', 'web')->get();
+        $role->syncPermissions($permissions);
+
         foreach ($users as $user) {
             $data = User::create([
                 'name' => $user['name'],
@@ -47,7 +52,8 @@ class AdminSeeder extends Seeder
                 'is_opened' => $user['is_opened']
             ]);
 
-            $data->assignRole($role);
+            $data->assignRole($role->name);
+            
         }
         
     }

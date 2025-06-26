@@ -30,6 +30,7 @@
                             <th>Email</th>
                             <th>Is Opened</th>
                             <th>Role</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -58,6 +59,13 @@
                                 @endif
                             </td>
                             <td>
+                                @if($user->status == 1)
+                                    <span class="badge bg-success">Active</span>
+                                @else
+                                    <span class="badge bg-danger">Inactive</span>
+                                @endif
+                            </td>
+                            <td>
                                 <span class="btn btn-primary">
                                     <a class="text-white" href="{{ route('admin.users.edit', $user->id) }}">
                                         <i class="bi bi-pencil-square"></i>
@@ -70,6 +78,9 @@
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </form>
+                                <span class="btn btn-secondary">
+                                    <a href="{{ route('admin.users.changeStatus', $user->id) }}" class="text-white"><i class="bi bi-toggle-on"></i></a>
+                                </span>
                             </td>
                         </tr>
                         @endforeach

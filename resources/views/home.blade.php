@@ -332,51 +332,81 @@
             <div class="container section-content">
                 <h2 class="text-center mb-5">Be a Merchant</h2>
                 <div class="d-flex justify-content-center mb-4">
-                    <form class="contact-form">
+                    <form class="contact-form" action="{{ route('register') }}" method="post">
+                        @csrf
                         <div class="row">
                             <div class="col-md-6 mb-4">
                                 <div class="mb-4">
-                                    <input type="text" class="form-control" placeholder="Your Username" required>
+                                    <input type="text" class="form-control" placeholder="Your Username" name="name" >
+                                    @error('name')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="mb-4">
-                                    <input type="text" class="form-control" placeholder="Your Name" required>
+                                    <input type="text" class="form-control" placeholder="Your Name" name="full_name">
+                                    @error('full_name')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="mb-4">
-                                    <input type="text" class="form-control" placeholder="Your NRC" required>
+                                    <input type="text" class="form-control" placeholder="Your NRC" name="nrc">
+                                    @error('nrc')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="mb-4">
-                                    <input type="text" class="form-control" placeholder="Your Phone" required>
+                                    <input type="text" class="form-control" placeholder="Your Phone" name="phone">
+                                    @error('phone')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="row">
                                     <div class="col-4 col-sm-4">
                                         <label for="gender">Gender:</label>
                                     </div>
                                     <div class="col-4 col-sm-4">
-                                        <input type="radio" name="gender" id="male" checked>
+                                        <input type="radio" name="gender" id="male" value="male" checked>
                                         <label class="mr-3" for="male">
                                             Male
                                         </label>
                                     </div>
                                     <div class="col-4 col-sm-4">
-                                        <input type="radio" name="gender" id="female">
+                                        <input type="radio" name="gender" id="female" value="female">
                                         <label for="female">
                                             Female
                                         </label>
                                     </div>
+                                    @error('gender')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-6 mb-4">
                                 <div class="mb-4">
-                                    <input type="date" class="form-control" id="dateofbirth" required>
+                                    <input type="date" class="form-control" id="dateofbirth" name="date_of_birth">
+                                    @error('date_of_birth')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="mb-4">
-                                    <input type="email" class="form-control" placeholder="Your Email" required>
+                                    <input type="email" class="form-control" placeholder="Your Email" name="email">
+                                    @error('email')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div>
-                                    <textarea class="form-control" rows="4" type="text" placeholder="Your Address" required></textarea>
+                                    <textarea class="form-control" rows="4" type="text" placeholder="Your Address" name="address"></textarea>
+                                    @error('address')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
+                        @if(session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
                         <button type="submit" class="btn btn-primary mb-4 w-100">Submit</button>
                     </form>
                 </div>

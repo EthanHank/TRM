@@ -7,7 +7,7 @@
     <h6 class="text-muted mb-4">Admin > Users > Update</h6>
 </div>
 <div class="d-flex justify-content-end mb-4">
-    <a href="{{ route('admin.roles.index') }}" class="btn btn-outline-secondary">
+    <a href="{{ route('admin.users.index') }}" class="btn btn-outline-secondary">
         <i class="bi bi-arrow-left"></i> Back to Users
     </a>
 </div>
