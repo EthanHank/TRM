@@ -37,7 +37,7 @@
                     <tbody>
                         @if ($users->count() == 0)
                         <tr>
-                            <td colspan="5" class="text-center text-muted py-4">No users found! T_T</td>
+                            <td colspan="6" class="text-center text-muted py-4">No users found! T_T</td>
                         </tr>
                         @endif
                         @foreach ($users as $user)

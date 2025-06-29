@@ -39,7 +39,7 @@ class UserController extends Controller implements HasMiddleware
             $users = User::select('id', 'name', 'email', 'is_opened', 'status')
                 ->with('roles:id,name')
                 ->whereDoesntHave('roles', function ($query) {
-                    $query->whereIn('name', ['superadmin', 'merchant']);
+                    $query->whereIn('name', ['superadmin']);
                 })
                 ->where('is_opened', 1)
                 ->orderBy('id', 'desc')->paginate(5);
