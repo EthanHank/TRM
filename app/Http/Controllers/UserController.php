@@ -170,9 +170,7 @@ class UserController extends Controller implements HasMiddleware
     public function register(RegisterUserRequest $request)
     {
         try {
-            $user = User::create($request->all());
-            $user->email_verified_at = now();
-            $user->save();
+            User::create($request->all());
 
             return back()->with('success', 'Merchant is registered successfully');
         } catch (\Exception $e) {
