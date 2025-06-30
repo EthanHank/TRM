@@ -31,9 +31,9 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('admin.orders.*') ? 'active' : '' }}" href="#">
-                        <i class="bi bi-cart"></i>
-                        Orders
+                    <a class="nav-link {{ request()->routeIs('admin.merchants.*') ? 'active' : '' }}" href="{{ route('admin.merchants.index') }}">
+                        <i class="bi bi-person-square"></i>
+                        Merchants
                     </a>
                 </li>
                 <li class="nav-item">
@@ -50,7 +50,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}" href="#" data-bs-toggle="collapse" data-bs-target="#userManagementSubmenu">
-                        <i class="bi bi-people"></i>
+                        <i class="bi bi-person-gear"></i>
                         Users Management
                         <i class="bi bi-chevron-down ms-auto transition-rotate"></i>
                     </a>
