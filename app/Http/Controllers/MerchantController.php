@@ -7,6 +7,8 @@ use App\Http\Requests\Merchant\MerchantUpdateRequest;
 use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
+use App\Mail\MerchantConfirmed;
+use Illuminate\Support\Facades\Mail;
 
 class MerchantController extends Controller
 {
@@ -46,6 +48,12 @@ class MerchantController extends Controller
                 'is_opened' => 1,
             ]);
             $merchant->roles()->sync($request->roles);
+
+            $password = $request->password;
+            
+            // Send confirmation email
+            Mail::to($merchant->email)->queue(new MerchantConfirmed($merchant, $password));
+            
             return redirect()->route('admin.merchants.index')->with('success', 'Merchant is confirmed successfully');
         } catch (\Exception $e) {
             Log::error('Failed to update merchant: ' . $e->getMessage());
