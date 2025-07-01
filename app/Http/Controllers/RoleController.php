@@ -7,9 +7,21 @@ use App\Http\Requests\Role\UpdateRoleRequest;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Spatie\Permission\Middleware\PermissionMiddleware;
 
-class RoleController extends Controller
+class RoleController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return [
+            new Middleware(PermissionMiddleware::using('view-role'), only: ['index']),
+            new Middleware(PermissionMiddleware::using('create-role'), only: ['create', 'store']),
+            new Middleware(PermissionMiddleware::using('edit-role'), only: ['edit', 'update', 'assignPermissions', 'revokePermissions']),
+            new Middleware(PermissionMiddleware::using('delete-role'), only: ['destroy']),
+        ];
+    }
     public function index()
     {
         $roles = Role::whereNotIn('name', ['superadmin'])->orderBy('id', 'desc')->paginate(5);

@@ -9,9 +9,19 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use App\Mail\MerchantConfirmed;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Routing\Controllers\Middleware;
+use Spatie\Permission\Middleware\PermissionMiddleware;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class MerchantController extends Controller
+class MerchantController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return [
+            new Middleware(PermissionMiddleware::using('view-merchant'), only: ['index']),
+            new Middleware(PermissionMiddleware::using('edit-merchant'), only: ['edit', 'update']),
+        ];
+    }
     public function index()
     {
         try {
