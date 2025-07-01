@@ -25,7 +25,7 @@
                 @method('PUT')
                 <div class="col-md-6 mb-3">
                     <label for="name" class="form-label">Password</label>
-                    <input type="text" class="form-control" id="password" name="password" value="{{ old('password', $merchant->password) }}">
+                    <input type="password" class="form-control" id="password" name="password" value="{{ old('password', $merchant->password) }}">
                     @error('password')
                     <div class="text-danger my-1">{{ $message }}</div>
                     @enderror
@@ -44,7 +44,7 @@
                     @enderror
                 </div>
                 <div class="d-flex justify-content-start gap-2 mt-3">
-                    <button type="submit" class="btn btn-primary col-md-6">Confirm</button>
+                    <button type="submit" class="btn btn-primary col-md-6">Update</button>
                 </div>
             </form>
         </div>

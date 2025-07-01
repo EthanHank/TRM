@@ -27,7 +27,8 @@ class AdminSeeder extends Seeder
                 'email' => 'superadmin@admin.com',
                 'email_verified_at' => now(),
                 'password' => 'password',
-                'is_opened' => true
+                'is_opened' => true,
+                'status' => true
                 ]
             ];
         
@@ -49,7 +50,8 @@ class AdminSeeder extends Seeder
                 'email' => $user['email'],
                 'email_verified_at' => $user['email_verified_at'],
                 'password' => bcrypt($user['password']),
-                'is_opened' => $user['is_opened']
+                'is_opened' => $user['is_opened'],
+                'status' => $user['status']
             ]);
 
             $data->assignRole($role->name);

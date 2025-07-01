@@ -46,6 +46,8 @@ class MerchantController extends Controller
             $merchant->update([
                 'password' => Hash::make($request->password),
                 'is_opened' => 1,
+                'status' => 1,
+                'email_verified_at' => now(),
             ]);
             $merchant->roles()->sync($request->roles);
 
