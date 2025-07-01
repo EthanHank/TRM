@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tun Rice Milling</title>
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <style>
         html {
             scroll-behavior: smooth;
@@ -383,7 +384,7 @@
                             </div>
                             <div class="col-md-6 mb-4">
                                 <div class="mb-4">
-                                    <input type="date" class="form-control" id="dateofbirth" name="date_of_birth">
+                                    <input type="date" class="form-control" id="dateofbirth" name="date_of_birth" placeholder="Select date of birth">
                                     @error('date_of_birth')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -476,6 +477,9 @@
 
     <!-- Bootstrap JS and dependencies -->
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+    <!-- Flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
 </body>
 
 </html>

@@ -22,7 +22,7 @@ class UserController extends Controller implements HasMiddleware
         return [
             new Middleware(PermissionMiddleware::using('view-user'), only: ['index', 'show']),
             new Middleware(PermissionMiddleware::using('create-user'), only: ['create', 'store']),
-            new Middleware(PermissionMiddleware::using('edit-user'), only: ['edit', 'update','changeStatus','revokeRole','assignRole']),
+            new Middleware(PermissionMiddleware::using('edit-user'), only: ['edit', 'update', 'changeStatus', 'revokeRole', 'assignRole']),
             new Middleware(PermissionMiddleware::using('delete-user'), only: ['destroy']),
 
         ];

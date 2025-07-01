@@ -36,9 +36,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Flatpickr
 document.addEventListener("DOMContentLoaded", function() {
-    flatpickr(".flatpickr", {
+    const today = new Date();
+    const eighteenYearsAgo = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+    const oneHundredYearsAgo = new Date(today.getFullYear() - 100, today.getMonth(), today.getDate());
+
+    flatpickr("#dateofbirth", {
         dateFormat: "Y-m-d",
-        maxDate: "today",
+        maxDate: eighteenYearsAgo,
+        minDate: oneHundredYearsAgo,
         altInput: true,
         altFormat: "F j, Y",
         allowInput: true

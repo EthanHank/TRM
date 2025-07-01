@@ -69,7 +69,7 @@
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="date_of_birth" class="form-label">Date of Birth</label>
-                    <input type="text" class="form-control flatpickr" id="date_of_birth" name="date_of_birth" placeholder="Select date of birth">
+                    <input type="text" class="form-control" id="dateofbirth" name="date_of_birth" placeholder="Select date of birth">
                     @error('date_of_birth')
                     <div class="text-danger my-1">{{ $message }}</div>
                     @enderror
