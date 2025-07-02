@@ -43,9 +43,21 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('admin.reports.*') ? 'active' : '' }}" href="#">
-                        <i class="bi bi-graph-up"></i>
-                        Reports
+                    <a class="nav-link {{ request()->routeIs('admin.appointment_types.*') ? 'active' : '' }}" href="#">
+                        <i class="bi bi-calendar3"></i>
+                        Appointment Types
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('admin.result_types.*') ? 'active' : '' }}" href="#">
+                        <i class="bi bi-boxes"></i>
+                        Result Types
+                    </a>
+                </li>
+                 <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('admin.paddy_types.*') ? 'active' : '' }}" href="#">
+                        <i class="bi bi-backpack4-fill"></i>
+                        Paddy Types
                     </a>
                 </li>
                 <li class="nav-item">
