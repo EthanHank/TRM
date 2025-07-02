@@ -18,8 +18,8 @@ class MerchantController extends Controller implements HasMiddleware
     public static function middleware()
     {
         return [
-            new Middleware(PermissionMiddleware::using('view-merchant'), only: ['index']),
-            new Middleware(PermissionMiddleware::using('edit-merchant'), only: ['edit', 'update']),
+            new Middleware(PermissionMiddleware::using('view-user'), only: ['index']),
+            new Middleware(PermissionMiddleware::using('edit-user'), only: ['edit', 'update']),
         ];
     }
     public function index()

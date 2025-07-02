@@ -35,6 +35,31 @@ class PermissionSeeder extends Seeder
                 'category' => 'User Management',
                 'guard_name' => 'web',
             ],
+            [
+                'name' => 'create-role',
+                'category' => 'Role Management',
+                'guard_name' => 'web',
+            ],
+            [
+                'name' => 'edit-role',
+                'category' => 'Role Management',
+                'guard_name' => 'web',
+            ],
+            [
+                'name' => 'delete-role',
+                'category' => 'Role Management',
+                'guard_name' => 'web',
+            ],
+            [
+                'name' => 'view-role',
+                'category' => 'Role Management',
+                'guard_name' => 'web',
+            ],
+            [
+                'name' => 'view-permission',
+                'category' => 'Permission Management',
+                'guard_name' => 'web',
+            ],
         ];
 
         foreach ($permissions as $permission) {
