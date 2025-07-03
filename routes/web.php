@@ -7,6 +7,8 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MerchantController;
+use App\Http\Controllers\PaddyTypeController;
+use App\Http\Controllers\ResultTypeController;
 
 Route::get('/', function () {
     return view('home');
@@ -33,6 +35,10 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')->group(function () 
     Route::delete('/roles/{role}/permissions/{permission}', [RoleController::class, 'revokePermissions'])->name('roles.permissions.revoke');
     // Merchants
     Route::resource('/merchants', MerchantController::class);
+    // PaddyTypes
+    Route::resource('/paddy_types', PaddyTypeController::class);
+    // ResultTypes
+    Route::resource('/result_types', ResultTypeController::class);
 });
 
 Route::middleware('auth')->group(function () {

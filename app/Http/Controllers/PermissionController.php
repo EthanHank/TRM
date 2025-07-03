@@ -17,7 +17,7 @@ class PermissionController extends Controller implements HasMiddleware
     }
     public function index()
     {
-        $permissions = Permission::orderBy('id', 'desc')->paginate(10);
+        $permissions = Permission::orderBy('id', 'desc')->paginate(8);
         return view('admin.permissions.index', compact('permissions'));
     }
 }

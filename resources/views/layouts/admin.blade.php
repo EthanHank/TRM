@@ -49,13 +49,13 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('admin.result_types.*') ? 'active' : '' }}" href="#">
+                    <a class="nav-link {{ request()->routeIs('admin.result_types.*') ? 'active' : '' }}" href="{{ route('admin.result_types.index') }}">
                         <i class="bi bi-boxes"></i>
                         Result Types
                     </a>
                 </li>
                  <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('admin.paddy_types.*') ? 'active' : '' }}" href="#">
+                    <a class="nav-link {{ request()->routeIs('admin.paddy_types.*') ? 'active' : '' }}" href="{{ route('admin.paddy_types.index') }}">
                         <i class="bi bi-backpack4-fill"></i>
                         Paddy Types
                     </a>

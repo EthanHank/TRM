@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('password')->nullable();
             $table->boolean('is_opened')->default(false);
             $table->boolean('status')->default(false);
+            $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
         });
