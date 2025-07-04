@@ -60,6 +60,76 @@ class PermissionSeeder extends Seeder
                 'category' => 'Permission Management',
                 'guard_name' => 'web',
             ],
+            [
+                'name' => 'create-appointment-type',
+                'category' => 'Appointment Type Management',
+                'guard_name' => 'web',
+            ],
+            [
+                'name' => 'edit-appointment-type',
+                'category' => 'Appointment Type Management',
+                'guard_name' => 'web',
+            ],
+            [
+                'name' => 'delete-appointment-type',
+                'category' => 'Appointment Type Management',
+                'guard_name' => 'web',
+            ],
+            [
+                'name' => 'view-appointment-type',
+                'category' => 'Appointment Type Management',
+                'guard_name' => 'web',
+            ],
+            [
+                'name' => 'create-result-type',
+                'category' => 'Result Type Management',
+                'guard_name' => 'web',
+            ],
+            [
+                'name' => 'edit-result-type',
+                'category' => 'Result Type Management',
+                'guard_name' => 'web',
+            ],
+            [
+                'name' => 'delete-result-type',
+                'category' => 'Result Type Management',
+                'guard_name' => 'web',
+            ],
+            [
+                'name' => 'view-result-type',
+                'category' => 'Result Type Management',
+                'guard_name' => 'web',
+            ],
+            [
+                'name' => 'create-paddy-type',
+                'category' => 'Paddy Type Management',
+                'guard_name' => 'web',
+            ],
+            [
+                'name' => 'edit-paddy-type',
+                'category' => 'Paddy Type Management',
+                'guard_name' => 'web',
+            ],
+            [
+                'name' => 'delete-paddy-type',
+                'category' => 'Paddy Type Management',
+                'guard_name' => 'web',
+            ],
+            [
+                'name' => 'view-paddy-type',
+                'category' => 'Paddy Type Management',
+                'guard_name' => 'web',
+            ],
+            [
+                'name' => 'user-dashboard',
+                'category' => 'Portal Management',
+                'guard_name' => 'web',
+            ],
+            [
+                'name' => 'admin-dashboard',
+                'category' => 'Portal Management',
+                'guard_name' => 'web',
+            ],
         ];
 
         foreach ($permissions as $permission) {

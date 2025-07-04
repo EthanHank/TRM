@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 
-@section('title', 'Tun Rice Milling - Result Types Management')
+@section('title', 'Tun Rice Milling - Appointment Types Management')
 
 @section('content')
 <div>
-    <h6 class="text-muted mb-4">Admin > Result Types</h6>
+    <h6 class="text-muted mb-4">Admin > Appointment Types</h6>
 </div>
 @if (session('success'))
 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -19,13 +19,13 @@
 </div>
 @endif
 <div class="d-flex justify-content-end mb-4">
-    <a href="{{ route('admin.result_types.create') }}" class="btn btn-success"> + Add Result Type</a>
+    <a href="{{ route('admin.appointment_types.create') }}" class="btn btn-success"> + Add Appointment Type</a>
 </div>
 <!-- Roles Table -->
 <div class="col-md-12">
     <div class="card">
         <div class="card-header bg-white">
-            <h5 class="card-title mb-0">Current Result Types</h5>
+            <h5 class="card-title mb-0">Current Appointment Types</h5>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -38,25 +38,25 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if ($result_types->count() == 0)
+                        @if ($appointment_types->count() == 0)
                         <tr>
-                            <td colspan="4" class="text-center text-muted py-4">No result types found! T_T</td>
+                            <td colspan="4" class="text-center text-muted py-4">No appointment types found! T_T</td>
                         </tr>
                         @endif
-                        @foreach ($result_types as $result_type)
+                        @foreach ($appointment_types as $appointment_type)
                         <tr>
-                            <td>{{ $result_type->name }}</td>
-                            <td>{{ $result_type->description }}</td>
+                            <td>{{ $appointment_type->name }}</td>
+                            <td>{{ $appointment_type->description }}</td>
                             <td>
                                 <span class="btn btn-primary">
-                                    <a class="text-white" href="{{ route('admin.result_types.edit', $result_type->id) }}">
+                                    <a class="text-white" href="{{ route('admin.appointment_types.edit', $appointment_type->id) }}">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
                                 </span>
-                                <form action="{{ route('admin.result_types.destroy', $result_type->id) }}" method="POST" class="d-inline">
+                                <form action="{{ route('admin.appointment_types.destroy', $appointment_type->id) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this result type?')">
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this appointment type?')">
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </form>
@@ -68,10 +68,10 @@
             </div>
             
             <div class="mt-3">
-                    @if($result_types->hasPages())
-                        {{ $result_types->links('vendor.pagination.custom-pagination') }}
+                    @if($appointment_types->hasPages())
+                        {{ $appointment_types->links('vendor.pagination.custom-pagination') }}
                     @else
-                        <small class="text-muted">Showing all results ({{ $result_types->total() }} total)</small>
+                        <small class="text-muted">Showing all results ({{ $appointment_types->total() }} total)</small>
                     @endif
             </div>
         </div>

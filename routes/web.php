@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MerchantController;
 use App\Http\Controllers\PaddyTypeController;
 use App\Http\Controllers\ResultTypeController;
+use App\Http\Controllers\AppointmentTypeController;
 
 Route::get('/', function () {
     return view('home');
@@ -17,11 +18,11 @@ Route::post('/register', [UserController::class, 'register'])->name('register');
 
 
 Route::middleware('auth')->name('users.')->prefix('users')->group(function () {
-    Route::get('/dashboard', [UserController::class, 'dashboard'])->name('dashboard');
+    Route::get('/dashboard', [UserController::class, 'dashboard'])->name('dashboard')->middleware('permission:user-dashboard');
 });
 
 Route::middleware(['auth'])->name('admin.')->prefix('admin')->group(function () {
-    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard')->middleware('permission:admin-dashboard');
     // Users
     Route::resource('/users', UserController::class);
     Route::post('/users/{user}/roles/assign', [UserController::class, 'assignRole'])->name('users.roles.assign');
@@ -39,6 +40,8 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')->group(function () 
     Route::resource('/paddy_types', PaddyTypeController::class);
     // ResultTypes
     Route::resource('/result_types', ResultTypeController::class);
+    // AppointmentTypes
+    Route::resource('/appointment_types', AppointmentTypeController::class);
 });
 
 Route::middleware('auth')->group(function () {

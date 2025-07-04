@@ -37,6 +37,7 @@ class AdminSeeder extends Seeder
         // Assign all permissions to the role ONCE
         $permissions = Permission::where('guard_name', 'web')->get();
         $role->syncPermissions($permissions);
+        $role->revokePermissionTo('user-dashboard'); // Revoke 'user-dashboard' from superadmin
 
         foreach ($users as $user) {
             $data = User::create([

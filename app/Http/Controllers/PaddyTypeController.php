@@ -6,9 +6,22 @@ use App\Http\Requests\PaddyType\CreatePaddyTypeRequest;
 use App\Http\Requests\PaddyType\UpdatePaddyTypeRequest;
 use App\Models\PaddyType;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Spatie\Permission\Middleware\PermissionMiddleware;
 
-class PaddyTypeController extends Controller
+class PaddyTypeController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return [
+            new Middleware(PermissionMiddleware::using('view-paddy-type'), only: ['index']),
+            new Middleware(PermissionMiddleware::using('create-paddy-type'), only: ['create', 'store']),
+            new Middleware(PermissionMiddleware::using('edit-paddy-type'), only: ['edit', 'update']),
+            new Middleware(PermissionMiddleware::using('delete-paddy-type'), only: ['destroy']),
+        ];
+    }
+    
     public function index()
     {
         try {

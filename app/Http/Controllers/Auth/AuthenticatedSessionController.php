@@ -30,7 +30,7 @@ class AuthenticatedSessionController extends Controller
 
         $user = Auth::user();
 
-        if ($user->hasRole('merchant')) {
+        if ($user->hasPermissionTo('user-dashboard')) {
             return redirect()->route('users.dashboard');
         } else {
             return redirect()->route('admin.dashboard');

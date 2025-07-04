@@ -6,9 +6,22 @@ use App\Models\ResultType;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\ResultType\CreateResultTypeRequest;
 use App\Http\Requests\ResultType\UpdateResultTypeRequest;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Spatie\Permission\Middleware\PermissionMiddleware;
 
-class ResultTypeController extends Controller
+class ResultTypeController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return [
+            new Middleware(PermissionMiddleware::using('view-result-type'), only: ['index']),
+            new Middleware(PermissionMiddleware::using('create-result-type'), only: ['create', 'store']),
+            new Middleware(PermissionMiddleware::using('edit-result-type'), only: ['edit', 'update']),
+            new Middleware(PermissionMiddleware::using('delete-result-type'), only: ['destroy']),
+        ];
+    }
+
     public function index()
     {
         try {

@@ -90,11 +90,6 @@
             color: white;
         }
 
-        .role-badge.admin {
-            background-color: #0d6efd;
-            color: white;
-        }
-
         .role-badge.merchant {
             background-color: #198754;
             color: white;
@@ -265,22 +260,19 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#contact">Contact Us</a>
                     </li>
-                    @if (Auth::check() && Auth::user()->hasRole('merchant'))
+                    @if (Auth::check() && Auth::user()->hasPermissionTo('user-dashboard'))
                     <li class="nav-item">
                         <a class="nav-link dashboard-link" href="{{ route('users.dashboard') }}">
                             <i class="bi bi-speedometer2"></i>Dashboard
                             <span class="role-badge merchant">{{ Auth::user()->name }}</span>
                         </a>
                     </li>
-                    @elseif (Auth::check() && (Auth::user()->hasRole('superadmin') || Auth::user()->hasRole('admin')))
+                    @elseif (Auth::check() && Auth::user()->hasPermissionTo('admin-dashboard'))
                     <li class="nav-item">
                         <a class="nav-link dashboard-link" href="{{ route('admin.dashboard') }}">
-                            <i class="bi bi-speedometer2"></i>Dashboard
-                            @if(Auth::user()->hasRole('superadmin'))
-                                <span class="role-badge superadmin">{{ Auth::user()->name }}</span>
-                            @else
-                                <span class="role-badge admin">{{ Auth::user()->name }}</span>
-                            @endif
+                            <i class="bi bi-speedometer2"></i>
+                            Dashboard
+                            <span class="role-badge superadmin">{{ Auth::user()->name }}</span>
                         </a>
                     </li>
                     @else
