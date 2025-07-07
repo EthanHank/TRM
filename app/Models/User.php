@@ -55,4 +55,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function paddies()
+    {
+        return $this->hasMany(Paddy::class);
+    }
 }

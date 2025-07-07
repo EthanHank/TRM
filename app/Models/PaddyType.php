@@ -12,4 +12,9 @@ class PaddyType extends Model
     protected $fillable = ['name', 'description'];
 
     protected $table = 'paddy_types';
+
+    public function paddies()
+    {
+        return $this->hasMany(Paddy::class);
+    }
 }
