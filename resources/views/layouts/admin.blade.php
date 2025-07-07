@@ -37,9 +37,9 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('admin.products.*') ? 'active' : '' }}" href="#">
+                    <a class="nav-link {{ request()->routeIs('admin.paddies.*') ? 'active' : '' }}" href="{{ route('admin.paddies.index') }}">
                         <i class="bi bi-box"></i>
-                        Products
+                        Paddies
                     </a>
                 </li>
                 <li class="nav-item">

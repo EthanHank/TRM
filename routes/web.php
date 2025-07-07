@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PaddyController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
@@ -42,6 +43,8 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')->group(function () 
     Route::resource('/result_types', ResultTypeController::class);
     // AppointmentTypes
     Route::resource('/appointment_types', AppointmentTypeController::class);
+    // Paddies
+    Route::resource('/paddies', PaddyController::class);
 });
 
 Route::middleware('auth')->group(function () {
