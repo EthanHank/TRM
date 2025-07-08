@@ -31,7 +31,7 @@
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead>
-                        <tr>
+                        <tr class="text-center align-middle">
                             <th>Name</th>
                             <th>Description</th>
                             <th>Action</th>
@@ -44,11 +44,11 @@
                         </tr>
                         @endif
                         @foreach ($paddy_types as $paddy_type)
-                        <tr>
+                        <tr class="text-center align-middle">
                             <td>{{ $paddy_type->name }}</td>
                             <td>{{ $paddy_type->description }}</td>
                             <td>
-                                <span class="btn btn-primary">
+                                <span class="btn btn-primary mb-1">
                                     <a class="text-white" href="{{ route('admin.paddy_types.edit', $paddy_type->id) }}">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>

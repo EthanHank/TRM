@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\AppointmentType;
 
+use App\Models\AppointmentType;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use App\Models\AppointmentType;
 
 class UpdateAppointmentTypeRequest extends FormRequest
 {

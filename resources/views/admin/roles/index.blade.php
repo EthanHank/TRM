@@ -12,6 +12,12 @@
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 @endif
+@if (session('error'))
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ session('error') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
 <div class="d-flex justify-content-end mb-4">
     <a href="{{ route('admin.roles.create') }}" class="btn btn-success"> + Add Role</a>
 </div>
@@ -25,7 +31,7 @@
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead>
-                        <tr>
+                        <tr class="text-center align-middle">
                             <th>Name</th>
                             <th>Created At</th>
                             <th>Updated At</th>
@@ -39,12 +45,12 @@
                         </tr>
                         @endif
                         @foreach ($roles as $role)
-                        <tr>
+                        <tr class="text-center align-middle">
                             <td>{{ $role->name }}</td>
                             <td>{{ $role->created_at }}</td>
                             <td>{{ $role->updated_at }}</td>
                             <td>
-                                <span class="btn btn-primary">
+                                <span class="btn btn-primary mb-1">
                                     <a class="text-white" href="{{ route('admin.roles.edit', $role->id) }}">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>

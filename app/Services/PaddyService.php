@@ -6,12 +6,13 @@ use Carbon\Carbon;
 
 class PaddyService
 {
-    public function getStorageData(int $mositure_content){
-        
+    public function getStorageData(int $moisture_content)
+    {
+
         $rules = $this->getStorageRules();
 
         foreach ($rules as $rule) {
-            if ($mositure_content <= $rule['max']) {
+            if ($moisture_content <= $rule['max']) {
                 $startDate = Carbon::now();
                 $endDate = isset($rule['add']['months'])
                     ? $startDate->copy()->addMonths($rule['add']['months'])
@@ -24,6 +25,13 @@ class PaddyService
                 ];
             }
         }
+
+        // Fallback case if no rules match
+        return [
+            'maximum_storage_duration' => 'Too wet to store safely.',
+            'storage_start_date' => Carbon::now(),
+            'storage_end_date' => null,
+        ];
     }
 
     public function getStorageRules()

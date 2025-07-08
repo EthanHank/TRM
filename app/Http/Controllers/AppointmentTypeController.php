@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AppointmentType;
-use Illuminate\Support\Facades\Log;
 use App\Http\Requests\AppointmentType\CreateAppointmentTypeRequest;
 use App\Http\Requests\AppointmentType\UpdateAppointmentTypeRequest;
-use Illuminate\Routing\Controllers\Middleware;
+use App\Models\AppointmentType;
 use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Middleware\PermissionMiddleware;
+
 class AppointmentTypeController extends Controller implements HasMiddleware
 {
     public static function middleware()
@@ -25,9 +26,11 @@ class AppointmentTypeController extends Controller implements HasMiddleware
     {
         try {
             $appointment_types = AppointmentType::select('id', 'name', 'description')->paginate(5);
+
             return view('admin.appointment_types.index', compact('appointment_types'));
         } catch (\Exception $e) {
-            Log::error('Failed to retrieve appointment types: ' . $e->getMessage());
+            Log::error('Failed to retrieve appointment types: '.$e->getMessage());
+
             return back()->with('error', 'Failed to load appointment types. Please try again.');
         }
     }
@@ -41,9 +44,11 @@ class AppointmentTypeController extends Controller implements HasMiddleware
     {
         try {
             AppointmentType::create($request->validated());
+
             return redirect()->route('admin.appointment_types.index')->with('success', 'Appointment Type is created successfully');
         } catch (\Exception $e) {
-            Log::error('Failed to create appointment type: ' . $e->getMessage());
+            Log::error('Failed to create appointment type: '.$e->getMessage());
+
             return back()->withInput()->with('error', 'Failed to create appointment type. Please try again.');
         }
     }
@@ -57,9 +62,11 @@ class AppointmentTypeController extends Controller implements HasMiddleware
     {
         try {
             $appointment_type->update($request->validated());
+
             return redirect()->route('admin.appointment_types.index')->with('success', 'Appointment Type is updated successfully');
         } catch (\Exception $e) {
-            Log::error('Failed to update appointment type: ' . $e->getMessage());
+            Log::error('Failed to update appointment type: '.$e->getMessage());
+
             return back()->withInput()->with('error', 'Failed to update appointment type. Please try again.');
         }
     }
@@ -68,9 +75,11 @@ class AppointmentTypeController extends Controller implements HasMiddleware
     {
         try {
             $appointment_type->delete();
+
             return redirect()->route('admin.appointment_types.index')->with('success', 'Appointment Type is deleted successfully');
         } catch (\Exception $e) {
-            Log::error('Failed to delete appointment type: ' . $e->getMessage());
+            Log::error('Failed to delete appointment type: '.$e->getMessage());
+
             return back()->with('error', 'Failed to delete appointment type. Please try again.');
         }
     }

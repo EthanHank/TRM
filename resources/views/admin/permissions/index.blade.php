@@ -17,7 +17,7 @@
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead>
-                        <tr>
+                        <tr class="text-center align-middle">
                             <th>Name</th>
                             <th>Category</th>
                             <th>Created At</th>
@@ -31,7 +31,7 @@
                         </tr>
                         @endif
                         @foreach ($permissions as $permission)
-                        <tr>
+                        <tr class="text-center align-middle">
                             <td>{{ $permission->name }}</td>
                             <td>{{ $permission->category }}</td>
                             <td>{{ $permission->created_at->format('d-m-Y H:i:s') }}</td>

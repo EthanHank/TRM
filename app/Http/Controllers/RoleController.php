@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Role\CreateRoleRequest;
 use App\Http\Requests\Role\UpdateRoleRequest;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Spatie\Permission\Middleware\PermissionMiddleware;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller implements HasMiddleware
 {
@@ -22,6 +22,7 @@ class RoleController extends Controller implements HasMiddleware
             new Middleware(PermissionMiddleware::using('delete-role'), only: ['destroy']),
         ];
     }
+
     public function index()
     {
         $roles = Role::whereNotIn('name', ['superadmin'])->orderBy('id', 'desc')->paginate(5);
@@ -66,8 +67,7 @@ class RoleController extends Controller implements HasMiddleware
 
     public function assignPermissions(Request $request, Role $role)
     {
-        if ($request->has('permissions')) 
-        {
+        if ($request->has('permissions')) {
             $permissions = Permission::whereIn('id', $request->permissions)->pluck('name');
             $role->givePermissionTo($permissions);
 
@@ -85,4 +85,3 @@ class RoleController extends Controller implements HasMiddleware
 
     }
 }
-

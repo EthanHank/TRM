@@ -6,7 +6,12 @@
 <div>
     <h6 class="text-muted mb-4">Admin > Paddies > Create</h6>
 </div>
-
+@if (session('error'))
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ session('error') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
 <div class="mb-4">
     <div class="card">
         <div class="card-header bg-white">
@@ -17,23 +22,23 @@
                 @csrf
                 <div class="col-md-6 mb-3">
                     <label for="paddy_type" class="form-label">Paddy Type</label>
-                    <select class="form-select select2" id="paddy_type" name="paddy_type">
+                    <select class="form-select select2" id="paddy_type" name="paddy_type_id">
                         @foreach ($paddy_types as $paddy_type)
                             <option value="{{ $paddy_type->id }}">{{ $paddy_type->name }}</option>
                         @endforeach
                     </select>
-                    @error('paddy_type')
+                    @error('paddy_type_id')
                     <div class="text-danger my-1">{{ $message }}</div>
                     @enderror
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="user" class="form-label">Merchant</label>
-                    <select class="form-select select2" id="user" name="user">
+                    <select class="form-select select2" id="user" name="user_id">
                         @foreach ($users as $user)
                             <option value="{{ $user->id }}">{{ $user->name }}</option>
                         @endforeach
                     </select>
-                    @error('user')
+                    @error('user_id')
                     <div class="text-danger my-1">{{ $message }}</div>
                     @enderror
                 </div>

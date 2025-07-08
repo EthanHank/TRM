@@ -31,7 +31,7 @@
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead>
-                        <tr>
+                        <tr class="text-center align-middle">
                             <th>Name</th>
                             <th>Description</th>
                             <th>Action</th>
@@ -44,11 +44,11 @@
                         </tr>
                         @endif
                         @foreach ($appointment_types as $appointment_type)
-                        <tr>
+                        <tr class="text-center align-middle">
                             <td>{{ $appointment_type->name }}</td>
                             <td>{{ $appointment_type->description }}</td>
                             <td>
-                                <span class="btn btn-primary">
+                                <span class="btn btn-primary mb-1">
                                     <a class="text-white" href="{{ route('admin.appointment_types.edit', $appointment_type->id) }}">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>

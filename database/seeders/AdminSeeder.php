@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -16,7 +15,7 @@ class AdminSeeder extends Seeder
     public function run(): void
     {
         $users = [
-                [
+            [
                 'name' => 'Super Admin',
                 'full_name' => 'Pyae Phyo Win',
                 'nrc' => '12/KK/123456',
@@ -28,10 +27,10 @@ class AdminSeeder extends Seeder
                 'email_verified_at' => now(),
                 'password' => 'password',
                 'is_opened' => true,
-                'status' => true
-                ]
-            ];
-        
+                'status' => true,
+            ],
+        ];
+
         $role = Role::where('name', 'superadmin')->first();
 
         // Assign all permissions to the role ONCE
@@ -52,12 +51,12 @@ class AdminSeeder extends Seeder
                 'email_verified_at' => $user['email_verified_at'],
                 'password' => bcrypt($user['password']),
                 'is_opened' => $user['is_opened'],
-                'status' => $user['status']
+                'status' => $user['status'],
             ]);
 
             $data->assignRole($role->name);
-            
+
         }
-        
+
     }
 }

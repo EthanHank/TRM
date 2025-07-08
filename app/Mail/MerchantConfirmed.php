@@ -14,7 +14,9 @@ class MerchantConfirmed extends Mailable implements ShouldQueue
     use Queueable, SerializesModels;
 
     public $merchant;
+
     public $password;
+
     /**
      * Create a new message instance.
      */

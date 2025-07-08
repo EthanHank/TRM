@@ -63,7 +63,7 @@
                                 @endif
                             </td>
                             <td>
-                                <span class="btn btn-primary">
+                                <span class="btn btn-primary mb-1">
                                     <a class="text-white" href="{{ route('admin.merchants.edit', $merchant->id) }}">
                                         <i class="bi bi-person-fill-check"></i>
                                     </a>

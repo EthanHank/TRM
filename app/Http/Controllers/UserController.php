@@ -2,21 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\User;
-use Spatie\Permission\Models\Role;
-use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\User\CreateUserRequest;
+use App\Http\Requests\User\RegisterUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
-use Illuminate\Support\Facades\Log;
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Middleware\PermissionMiddleware;
-use App\Http\Requests\User\RegisterUserRequest;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller implements HasMiddleware
 {
-
     public static function middleware()
     {
         return [
@@ -46,7 +45,8 @@ class UserController extends Controller implements HasMiddleware
 
             return view('admin.users.index', compact('users'));
         } catch (\Exception $e) {
-            Log::error('Failed to retrieve users: ' . $e->getMessage());
+            Log::error('Failed to retrieve users: '.$e->getMessage());
+
             return back()->with('error', 'Failed to load users. Please try again.');
         }
     }
@@ -58,7 +58,8 @@ class UserController extends Controller implements HasMiddleware
 
             return view('admin.users.create', compact('roles'));
         } catch (\Exception $e) {
-            Log::error('Failed to load roles: ' . $e->getMessage());
+            Log::error('Failed to load roles: '.$e->getMessage());
+
             return back()->with('error', 'Failed to load roles. Please try again.');
         }
     }
@@ -77,7 +78,8 @@ class UserController extends Controller implements HasMiddleware
 
             return redirect()->route('admin.users.index')->with('success', 'User is created successfully');
         } catch (\Exception $e) {
-            Log::error('Failed to create user: ' . $e->getMessage());
+            Log::error('Failed to create user: '.$e->getMessage());
+
             return back()->withInput()->with('error', 'Failed to create user. Please try again.');
         }
     }
@@ -90,9 +92,11 @@ class UserController extends Controller implements HasMiddleware
             })->where('name', '!=', 'superadmin')->get();
 
             $userRoles = $user->roles->pluck('id')->toArray();
+
             return view('admin.users.edit', compact('user', 'roles', 'userRoles'));
         } catch (\Exception $e) {
-            Log::error('Failed to load user for edit: ' . $e->getMessage());
+            Log::error('Failed to load user for edit: '.$e->getMessage());
+
             return back()->with('error', 'Failed to load user. Please try again.');
         }
     }
@@ -104,7 +108,8 @@ class UserController extends Controller implements HasMiddleware
 
             return redirect()->route('admin.users.index')->with('success', 'User is updated successfully');
         } catch (\Exception $e) {
-            Log::error('Failed to update user: ' . $e->getMessage());
+            Log::error('Failed to update user: '.$e->getMessage());
+
             return back()->withInput()->with('error', 'Failed to update user. Please try again.');
         }
     }
@@ -116,7 +121,8 @@ class UserController extends Controller implements HasMiddleware
 
             return back()->with('revoke_success', 'Role revoked successfully');
         } catch (\Exception $e) {
-            Log::error('Failed to revoke role: ' . $e->getMessage());
+            Log::error('Failed to revoke role: '.$e->getMessage());
+
             return back()->with('error', 'Failed to revoke role. Please try again.');
         }
     }
@@ -133,7 +139,8 @@ class UserController extends Controller implements HasMiddleware
 
             return back()->with('error', 'No roles selected');
         } catch (\Exception $e) {
-            Log::error('Failed to assign role: ' . $e->getMessage());
+            Log::error('Failed to assign role: '.$e->getMessage());
+
             return back()->with('error', 'Failed to assign role. Please try again.');
         }
     }
@@ -145,7 +152,8 @@ class UserController extends Controller implements HasMiddleware
 
             return redirect()->route('admin.users.index')->with('success', 'User is deleted successfully');
         } catch (\Exception $e) {
-            Log::error('Failed to delete user: ' . $e->getMessage());
+            Log::error('Failed to delete user: '.$e->getMessage());
+
             return back()->with('error', 'Failed to delete user. Please try again.');
         }
     }
@@ -162,7 +170,8 @@ class UserController extends Controller implements HasMiddleware
 
             return back()->with('success', 'User status is changed successfully');
         } catch (\Exception $e) {
-            Log::error('Failed to change user status: ' . $e->getMessage());
+            Log::error('Failed to change user status: '.$e->getMessage());
+
             return back()->with('error', 'Failed to change user status. Please try again.');
         }
     }
@@ -174,7 +183,8 @@ class UserController extends Controller implements HasMiddleware
 
             return back()->with('success', 'Merchant is registered successfully');
         } catch (\Exception $e) {
-            Log::error('Failed to register merchant: ' . $e->getMessage());
+            Log::error('Failed to register merchant: '.$e->getMessage());
+
             return back()->with('error', 'Failed to register merchant. Please try again.');
         }
     }

@@ -6,7 +6,12 @@
 <div>
     <h6 class="text-muted mb-4">Admin > Users > Create</h6>
 </div>
-
+@if (session('error'))
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ session('error') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
 <div class="mb-4">
     <div class="card">
         <div class="card-header bg-white">

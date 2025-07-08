@@ -6,6 +6,12 @@
 <div>
     <h6 class="text-muted mb-4">Admin > Users > Update</h6>
 </div>
+@if (session('error'))
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ session('error') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
 <div class="d-flex justify-content-end mb-4">
     <a href="{{ route('admin.users.index') }}" class="btn btn-outline-secondary">
         <i class="bi bi-arrow-left"></i> Back to Users

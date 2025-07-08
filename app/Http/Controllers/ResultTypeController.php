@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ResultType;
-use Illuminate\Support\Facades\Log;
 use App\Http\Requests\ResultType\CreateResultTypeRequest;
 use App\Http\Requests\ResultType\UpdateResultTypeRequest;
-use Illuminate\Routing\Controllers\Middleware;
+use App\Models\ResultType;
 use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Middleware\PermissionMiddleware;
 
 class ResultTypeController extends Controller implements HasMiddleware
@@ -27,11 +27,13 @@ class ResultTypeController extends Controller implements HasMiddleware
         try {
             // Retrieve all result types with selected fields and paginate
             $result_types = ResultType::select('id', 'name', 'description')->paginate(5);
+
             // Logic to retrieve and display result types
             return view('admin.result_types.index', compact('result_types'));
         } catch (\Exception $e) {
             // Log the error and return an error message
-            Log::error('Failed to retrieve result types: ' . $e->getMessage());
+            Log::error('Failed to retrieve result types: '.$e->getMessage());
+
             return back()->with('error', 'Failed to load result types. Please try again.');
         }
     }
@@ -47,10 +49,12 @@ class ResultTypeController extends Controller implements HasMiddleware
         try {
             // Create a new result type with validated data
             ResultType::create($request->validated());
+
             return redirect()->route('admin.result_types.index')->with('success', 'Result Type is created successfully');
         } catch (\Exception $e) {
             // Log the error and return an error message
-            Log::error('Failed to create result type: ' . $e->getMessage());
+            Log::error('Failed to create result type: '.$e->getMessage());
+
             return back()->withInput()->with('error', 'Failed to create result type. Please try again.');
         }
     }
@@ -66,10 +70,12 @@ class ResultTypeController extends Controller implements HasMiddleware
         try {
             // Update the result type with validated data
             $result_type->update($request->validated());
+
             return redirect()->route('admin.result_types.index')->with('success', 'Result Type is updated successfully');
         } catch (\Exception $e) {
             // Log the error and return an error message
-            Log::error('Failed to update result type: ' . $e->getMessage());
+            Log::error('Failed to update result type: '.$e->getMessage());
+
             return back()->withInput()->with('error', 'Failed to update result type. Please try again.');
         }
     }
@@ -79,10 +85,12 @@ class ResultTypeController extends Controller implements HasMiddleware
         try {
             // Soft delete the result type
             $result_type->delete();
+
             return redirect()->route('admin.result_types.index')->with('success', 'Result Type is deleted successfully');
         } catch (\Exception $e) {
             // Log the error and return an error message
-            Log::error('Failed to delete result type: ' . $e->getMessage());
+            Log::error('Failed to delete result type: '.$e->getMessage());
+
             return back()->with('error', 'Failed to delete result type. Please try again.');
         }
     }

@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Http\Requests\Merchant\MerchantUpdateRequest;
-use Illuminate\Support\Facades\Log;
-use Spatie\Permission\Models\Role;
-use Illuminate\Support\Facades\Hash;
 use App\Mail\MerchantConfirmed;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Routing\Controllers\Middleware;
-use Spatie\Permission\Middleware\PermissionMiddleware;
+use App\Models\User;
 use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use Spatie\Permission\Middleware\PermissionMiddleware;
+use Spatie\Permission\Models\Role;
 
 class MerchantController extends Controller implements HasMiddleware
 {
@@ -22,6 +22,7 @@ class MerchantController extends Controller implements HasMiddleware
             new Middleware(PermissionMiddleware::using('edit-user'), only: ['edit', 'update']),
         ];
     }
+
     public function index()
     {
         try {
@@ -31,7 +32,8 @@ class MerchantController extends Controller implements HasMiddleware
 
             return view('admin.merchants.index', compact('merchants'));
         } catch (\Exception $e) {
-            Log::error('Failed to retrieve merchants: ' . $e->getMessage());
+            Log::error('Failed to retrieve merchants: '.$e->getMessage());
+
             return back()->with('error', 'Failed to load merchants. Please try again.');
         }
     }
@@ -45,7 +47,8 @@ class MerchantController extends Controller implements HasMiddleware
             return view('admin.merchants.edit', compact('merchant', 'roles'));
 
         } catch (\Exception $e) {
-            Log::error('Failed to load user for edit: ' . $e->getMessage());
+            Log::error('Failed to load user for edit: '.$e->getMessage());
+
             return back()->with('error', 'Failed to load user. Please try again.');
         }
     }
@@ -62,15 +65,16 @@ class MerchantController extends Controller implements HasMiddleware
             $merchant->roles()->sync($request->roles);
 
             $password = $request->password;
-            
+
             // Send confirmation email
             Mail::to($merchant->email)->queue(new MerchantConfirmed($merchant, $password));
-            
+
             return redirect()->route('admin.merchants.index')->with('success', 'Merchant is confirmed successfully');
         } catch (\Exception $e) {
-            Log::error('Failed to update merchant: ' . $e->getMessage());
+            Log::error('Failed to update merchant: '.$e->getMessage());
+
             return back()->with('error', 'Failed to update merchant. Please try again.');
         }
-            
+
     }
 }

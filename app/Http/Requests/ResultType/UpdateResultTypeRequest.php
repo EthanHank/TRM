@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\ResultType;
 
+use App\Models\ResultType;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use App\Models\ResultType;
 
 class UpdateResultTypeRequest extends FormRequest
 {

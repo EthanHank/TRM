@@ -12,6 +12,12 @@
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 @endif
+@if (session('error'))
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ session('error') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
 <div class="d-flex justify-content-end mb-4">
     <a href="{{ route('admin.users.create') }}" class="btn btn-success"> + Add User</a>
 </div>
@@ -25,7 +31,7 @@
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead>
-                        <tr>
+                        <tr class="text-center align-middle">
                             <th>Name</th>
                             <th>Email</th>
                             <th>Is Opened</th>
@@ -41,7 +47,7 @@
                         </tr>
                         @endif
                         @foreach ($users as $user)
-                        <tr>
+                        <tr class="text-center align-middle">
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>
@@ -66,7 +72,7 @@
                                 @endif
                             </td>
                             <td>
-                                <span class="btn btn-primary">
+                                <span class="btn btn-primary mb-1">
                                     <a class="text-white" href="{{ route('admin.users.edit', $user->id) }}">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
@@ -74,7 +80,7 @@
                                 <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this user?')">
+                                    <button type="submit" class="btn btn-danger mb-1" onclick="return confirm('Are you sure you want to delete this user?')">
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </form>

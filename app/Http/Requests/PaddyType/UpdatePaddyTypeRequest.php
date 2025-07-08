@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\PaddyType;
 
+use App\Models\PaddyType;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use App\Models\PaddyType;
 
 class UpdatePaddyTypeRequest extends FormRequest
 {

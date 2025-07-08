@@ -12,6 +12,12 @@
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 @endif
+@if (session('error'))
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ session('error') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
 <div class="d-flex justify-content-end mb-4">
     <a href="{{ route('admin.paddies.create') }}" class="btn btn-success"> + Add Paddy</a>
 </div>
@@ -25,7 +31,7 @@
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead>
-                        <tr>
+                        <tr class="text-center align-middle">
                             <th>Paddy Type</th>
                             <th>Merchant</th>
                             <th>Bag Quantity</th>
@@ -43,16 +49,16 @@
                         </tr>
                         @endif
                         @foreach ($paddies as $paddy)
-                        <tr>
+                        <tr class="text-center align-middle">
                             <td>{{ $paddy->paddy_type->name }}</td>
                             <td>{{ $paddy->user->name }}</td>
                             <td>{{ $paddy->bag_quantity }} bags</td>
                             <td>{{ $paddy->moisture_content }}%</td>
-                            <td>{{ $paddy->storage_start }}</td>
-                            <td>{{ $paddy->storage_end }}</td>
+                            <td>{{ $paddy->storage_start_date }}</td>
+                            <td>{{ $paddy->storage_end_date }}</td>
                             <td>{{ $paddy->maximum_storage_duration }}</td>
                             <td>
-                                <span class="btn btn-primary">
+                                <span class="btn btn-primary mb-1">
                                     <a class="text-white" href="{{ route('admin.paddies.edit', $paddy->id) }}">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>

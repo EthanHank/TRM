@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('appointment_types', function (Blueprint $table) {
             $table->id()->primary();
             $table->string('name');
-            $table->text('description');  
+            $table->text('description');
             $table->softDeletes();
             $table->timestamps();
         });

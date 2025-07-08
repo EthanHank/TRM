@@ -22,11 +22,11 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255|unique:users,name,' . $this->user->id,
+            'name' => 'required|string|max:255|unique:users,name,'.$this->user->id,
             'full_name' => 'required|string|max:255',
-            'phone' => 'required|string|max:255|unique:users,phone,' . $this->user->id,
-            'email' => 'required|email|max:255|unique:users,email,' . $this->user->id,
-            'nrc' => 'required|string|max:255|unique:users,nrc,' . $this->user->id,
+            'phone' => 'required|string|max:255|unique:users,phone,'.$this->user->id,
+            'email' => 'required|email|max:255|unique:users,email,'.$this->user->id,
+            'nrc' => 'required|string|max:255|unique:users,nrc,'.$this->user->id,
             'address' => 'required|string|max:255',
             'gender' => 'required|string|max:255',
             'date_of_birth' => 'required|date',
