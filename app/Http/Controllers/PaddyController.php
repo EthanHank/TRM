@@ -48,7 +48,7 @@ class PaddyController extends Controller
     {
         try {
             $data = $request->validated();
-            $storageData = $paddyService->getStorageData($data['moisture_content']);
+            $storageData = $paddyService->getStorageData(null, $data['moisture_content']);
 
             Paddy::create(array_merge($data, $storageData));
 
@@ -57,6 +57,38 @@ class PaddyController extends Controller
             Log::error('Failed to create paddy: '.$e->getMessage());
 
             return back()->with('error', 'An error occurred while creating the paddy: '.$e->getMessage());
+        }
+    }
+
+    public function edit(Paddy $paddy)
+    {
+        try {
+            $paddy_types = PaddyType::select('id', 'name')->get();
+            $users = User::select('id', 'name')->whereHas('roles', function ($query) {
+                $query->where('name', 'merchant');
+            })->get();
+
+            return view('admin.paddies.edit', compact('paddy', 'paddy_types', 'users'));
+        } catch (\Exception $e) {
+            Log::error('Failed to load paddy for edit: '.$e->getMessage());
+
+            return back()->with('error', 'An error occurred while loading the paddy: '.$e->getMessage());
+        }
+    }
+
+    public function update(CreatePaddyRequest $request, Paddy $paddy, PaddyService $paddyService)
+    {
+        try {
+            $data = $request->validated();
+            $storageData = $paddyService->getStorageData($paddy, $data['moisture_content']);
+
+            $paddy->update(array_merge($data, $storageData));
+
+            return redirect()->route('admin.paddies.index')->with('success', 'Paddy is updated successfully.');
+        } catch (\Exception $e) {
+            Log::error('Failed to update paddy: '.$e->getMessage());
+
+            return back()->with('error', 'An error occurred while updating the paddy: '.$e->getMessage());
         }
     }
 }

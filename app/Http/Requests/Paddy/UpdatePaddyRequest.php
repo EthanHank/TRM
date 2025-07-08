@@ -22,7 +22,27 @@ class UpdatePaddyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'user_id' => 'required|exists:users,id',
+            'paddy_type_id' => 'required|exists:paddy_types,id',
+            'bag_quantity' => 'required|numeric|min:1',
+            'moisture_content' => 'required|numeric|min:13|max:23',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'user_id.required' => 'The user field is required.',
+            'paddy_type_id.required' => 'The paddy type field is required.',
+            'bag_quantity.required' => 'The bag quantity field is required.',
+            'bag_quantity.numeric' => 'The bag quantity must be a number.',
+            'bag_quantity.min' => 'The bag quantity must be at least 1.',
+            'user_id.exists' => 'The selected user does not exist.',
+            'paddy_type_id.exists' => 'The selected paddy type does not exist.',
+            'moisture_content.numeric' => 'Moisture content must be a number.',
+            'moisture_content.required' => 'The moisture content field is required.',
+            'moisture_content.min' => 'Moisture content must be at least 13%.',
+            'moisture_content.max' => 'Moisture content must not exceed 23%.',
         ];
     }
 }

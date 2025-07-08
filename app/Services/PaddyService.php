@@ -3,25 +3,37 @@
 namespace App\Services;
 
 use Carbon\Carbon;
+use App\Models\Paddy;
 
 class PaddyService
 {
-    public function getStorageData(int $moisture_content)
+    /**
+     * Calculates and applies storage values to a Paddy model.
+     *
+     * @param Paddy|null $paddy (pass null when creating)
+     * @param int $moisture
+     * @return array [storage_period, start_date, end_date]
+     */
+    public function getStorageData(?Paddy $paddy, int $moisture_content)
     {
 
         $rules = $this->getStorageRules();
 
+        // Use existing start date for update, or now for create
+        $startDate = isset($paddy) && $paddy->storage_start_date
+            ? Carbon::parse($paddy->storage_start_date)
+            : Carbon::now();
+
         foreach ($rules as $rule) {
             if ($moisture_content <= $rule['max']) {
-                $startDate = Carbon::now();
                 $endDate = isset($rule['add']['months'])
                     ? $startDate->copy()->addMonths($rule['add']['months'])
                     : $startDate->copy()->addDays($rule['add']['days']);
 
                 return [
                     'maximum_storage_duration' => $rule['label'],
-                    'storage_start_date' => $startDate->toDateString(),
-                    'storage_end_date' => $endDate->toDateString(),
+                    'storage_start_date' => $startDate,
+                    'storage_end_date' => $endDate,
                 ];
             }
         }
@@ -29,7 +41,7 @@ class PaddyService
         // Fallback case if no rules match
         return [
             'maximum_storage_duration' => 'Too wet to store safely.',
-            'storage_start_date' => Carbon::now(),
+            'storage_start_date' => $startDate,
             'storage_end_date' => null,
         ];
     }
