@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Carbon\Carbon;
 use App\Models\Paddy;
+use Illuminate\Support\Facades\Log;
 
 class PaddyService
 {
@@ -16,34 +17,45 @@ class PaddyService
      */
     public function getStorageData(?Paddy $paddy, int $moisture_content)
     {
+        try {
 
-        $rules = $this->getStorageRules();
+            $rules = $this->getStorageRules();
 
-        // Use existing start date for update, or now for create
-        $startDate = isset($paddy) && $paddy->storage_start_date
-            ? Carbon::parse($paddy->storage_start_date)
-            : Carbon::now();
+            // Use existing start date for update, or now for create
+            $startDate = isset($paddy) && $paddy->storage_start_date
+                ? Carbon::parse($paddy->storage_start_date)
+                : Carbon::now();
 
-        foreach ($rules as $rule) {
-            if ($moisture_content <= $rule['max']) {
-                $endDate = isset($rule['add']['months'])
-                    ? $startDate->copy()->addMonths($rule['add']['months'])
-                    : $startDate->copy()->addDays($rule['add']['days']);
+            foreach ($rules as $rule) {
+                if ($moisture_content <= $rule['max']) {
+                    $endDate = isset($rule['add']['months'])
+                        ? $startDate->copy()->addMonths($rule['add']['months'])
+                        : $startDate->copy()->addDays($rule['add']['days']);
 
-                return [
-                    'maximum_storage_duration' => $rule['label'],
-                    'storage_start_date' => $startDate,
-                    'storage_end_date' => $endDate,
-                ];
+                    return [
+                        'maximum_storage_duration' => $rule['label'],
+                        'storage_start_date' => $startDate,
+                        'storage_end_date' => $endDate,
+                    ];
+                }
             }
-        }
 
-        // Fallback case if no rules match
-        return [
-            'maximum_storage_duration' => 'Too wet to store safely.',
-            'storage_start_date' => $startDate,
-            'storage_end_date' => null,
-        ];
+            // Fallback case if no rules match
+            return [
+                'maximum_storage_duration' => 'Too wet to store safely.',
+                'storage_start_date' => $startDate,
+                'storage_end_date' => null,
+            ];
+        } catch (\Exception $e) {
+            // Handle the exception (log it, rethrow, return a default value, etc.)
+            // Example: log and return a default error response
+            Log::error('Error in getStorageData: ' . $e->getMessage());
+            return [
+                'maximum_storage_duration' => 'Error calculating storage.',
+                'storage_start_date' => null,
+                'storage_end_date' => null,
+            ];
+        }
     }
 
     public function getStorageRules()
