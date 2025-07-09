@@ -91,4 +91,17 @@ class PaddyController extends Controller
             return back()->with('error', 'An error occurred while updating the paddy: '.$e->getMessage());
         }
     }
+
+    public function destroy(Paddy $paddy)
+    {
+        try {
+            $paddy->delete();
+
+            return redirect()->route('admin.paddies.index')->with('success', 'Paddy is deleted successfully.');
+        } catch (\Exception $e) {
+            Log::error('Failed to delete paddy: '.$e->getMessage());
+
+            return back()->with('error', 'An error occurred while deleting the paddy: '.$e->getMessage());
+        }
+    }
 }
