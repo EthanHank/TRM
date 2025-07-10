@@ -18,8 +18,25 @@
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 @endif
-<div class="d-flex justify-content-end mb-4">
+<div class="d-flex justify-content-start mb-4">
     <a href="{{ route('admin.users.create') }}" class="btn btn-success"> + Add User</a>
+</div>
+<div class="row mb-3">
+    <div class="col-md-6 offset-md-6">
+        <form method="GET" action="{{ route('admin.users.index') }}" class="input-group">
+            <input
+                type="text"
+                name="search"
+                class="form-control"
+                placeholder="Search users by name or email..."
+                value="{{ request('search') }}"
+                aria-label="Search users"
+            >
+            <button class="btn btn-search me-2" type="submit">
+                <i class="bi bi-search"></i> Search
+            </button>
+        </form>
+    </div>
 </div>
 <!-- Roles Table -->
 <div class="col-md-12">

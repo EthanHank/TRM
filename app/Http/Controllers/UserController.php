@@ -32,16 +32,24 @@ class UserController extends Controller implements HasMiddleware
         return view('users.dashboard');
     }
 
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $users = User::select('id', 'name', 'email', 'is_opened', 'status')
+            $query = User::select('id', 'name', 'email', 'is_opened', 'status')
                 ->with('roles:id,name')
                 ->whereDoesntHave('roles', function ($query) {
                     $query->whereIn('name', ['superadmin']);
                 })
-                ->where('is_opened', 1)
-                ->orderBy('id', 'desc')->paginate(5);
+                ->where('is_opened', 1);
+
+            if ($search = $request->input('search')) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%")
+                      ->orWhere('email', 'like', "%{$search}%");
+                });
+            }
+
+            $users = $query->orderBy('id', 'desc')->paginate(5)->withQueryString();
 
             return view('admin.users.index', compact('users'));
         } catch (\Exception $e) {
