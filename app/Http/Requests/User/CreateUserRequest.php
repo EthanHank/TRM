@@ -59,9 +59,7 @@ class CreateUserRequest extends FormRequest
             'role.*.exists' => 'The role does not exist.',
             'name.unique' => 'The username has already been taken.',
             'phone.unique' => 'The phone has already been taken.',
-            'nrc.unique' => 'The NRC has already been taken.',
             'password.min' => 'The password must be at least 8 characters.',
-            'gender.required' => 'The gender field is required.',
         ];
     }
 }
