@@ -12,7 +12,8 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
-
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PaddyEnrolled;
 
 class PaddyController extends Controller implements HasMiddleware
 {
@@ -68,7 +69,12 @@ class PaddyController extends Controller implements HasMiddleware
             $data = $request->validated();
             $storageData = $paddyService->getStorageData(null, $data['moisture_content']);
 
-            Paddy::create(array_merge($data, $storageData));
+            $paddy = Paddy::create(array_merge($data, $storageData));
+
+            // Send email notification to the user
+            $user = User::find($data['user_id']);
+            Mail::to($user->email)->queue(new PaddyEnrolled($user, $paddy));
+                
 
             return redirect()->route('admin.paddies.index')->with('success', 'Paddy is created successfully.');
         } catch (\Exception $e) {
