@@ -21,6 +21,24 @@
 <div class="d-flex justify-content-end mb-4">
     <a href="{{ route('admin.appointment_types.create') }}" class="btn btn-success"> + Add Appointment Type</a>
 </div>
+<!-- Search for appointment types by name. -->
+<div class="row mb-3">
+    <div class="col-md-6 offset-md-6">
+        <form method="GET" action="{{ route('admin.appointment_types.index') }}" class="input-group">
+            <input
+                type="text"
+                name="search"
+                class="form-control"
+                placeholder="Search appointment types by name..."
+                value="{{ request('search') }}"
+                aria-label="Search appointment types"
+            >
+            <button class="btn btn-search me-2" type="submit">
+                <i class="bi bi-search"></i> Search
+            </button>
+        </form>
+    </div>
+</div>
 <!-- Roles Table -->
 <div class="col-md-12">
     <div class="card">

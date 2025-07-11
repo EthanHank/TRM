@@ -120,6 +120,26 @@ class PermissionSeeder extends Seeder
                 'guard_name' => 'web',
             ],
             [
+                'name' => 'create-paddy',
+                'category' => 'Paddy Management',
+                'guard_name' => 'web',
+            ],
+            [
+                'name' => 'edit-paddy',
+                'category' => 'Paddy Management',
+                'guard_name' => 'web',
+            ],
+            [
+                'name' => 'delete-paddy',
+                'category' => 'Paddy Management',
+                'guard_name' => 'web',
+            ],
+            [
+                'name' => 'view-paddy',
+                'category' => 'Paddy Management',
+                'guard_name' => 'web',
+            ],
+            [
                 'name' => 'user-dashboard',
                 'category' => 'Portal Management',
                 'guard_name' => 'web',

@@ -28,17 +28,16 @@
                 type="text"
                 name="search"
                 class="form-control"
-                placeholder="Search users by name or email..."
+                placeholder="Search users by name, email or role..."
                 value="{{ request('search') }}"
-                aria-label="Search users"
-            >
+                aria-label="Search users">
             <button class="btn btn-search me-2" type="submit">
                 <i class="bi bi-search"></i> Search
             </button>
         </form>
     </div>
 </div>
-<!-- Roles Table -->
+<!-- Users Table -->
 <div class="col-md-12">
     <div class="card">
         <div class="card-header bg-white">
@@ -69,23 +68,23 @@
                             <td>{{ $user->email }}</td>
                             <td>
                                 @if($user->is_opened == 1)
-                                    <span class="badge bg-success">Yes</span>
+                                <span class="badge bg-success">Yes</span>
                                 @else
-                                    <span class="badge bg-danger">No</span>
+                                <span class="badge bg-danger">No</span>
                                 @endif
                             </td>
                             <td>
                                 @if($user->roles->count() > 0)
-                                    {{ $user->roles->pluck('name')->implode(', ') }}
+                                {{ $user->roles->pluck('name')->implode(', ') }}
                                 @else
-                                    <span class="text-muted">No role assigned</span>
+                                <span class="text-muted">No role assigned</span>
                                 @endif
                             </td>
                             <td>
                                 @if($user->status == 1)
-                                    <span class="badge bg-success">Active</span>
+                                <span class="badge bg-success">Active</span>
                                 @else
-                                    <span class="badge bg-danger">Inactive</span>
+                                <span class="badge bg-danger">Inactive</span>
                                 @endif
                             </td>
                             <td>
@@ -110,13 +109,13 @@
                     </tbody>
                 </table>
             </div>
-            
+
             <div class="mt-3">
-                    @if($users->hasPages())
-                        {{ $users->links('vendor.pagination.custom-pagination') }}
-                    @else
-                        <small class="text-muted">Showing all results ({{ $users->total() }} total)</small>
-                    @endif
+                @if($users->hasPages())
+                {{ $users->links('vendor.pagination.custom-pagination') }}
+                @else
+                <small class="text-muted">Showing all results ({{ $users->total() }} total)</small>
+                @endif
             </div>
         </div>
     </div>

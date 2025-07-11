@@ -12,4 +12,11 @@ class ResultType extends Model
     protected $fillable = ['name', 'description'];
 
     protected $table = 'result_types';
+
+    public function scopeSearch($query, $search)
+    {
+        return $query->where(function ($q) use ($search){
+            $q->where('name', 'like', "%{$search}%");
+        });
+    }
 }

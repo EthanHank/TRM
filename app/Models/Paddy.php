@@ -27,4 +27,17 @@ class Paddy extends Model
     {
         return $this->belongsTo(PaddyType::class);
     }
+
+    public function scopeSearch($query, $search)
+    {
+        return $query->where(function ($q) use ($search) {
+            $q->whereHas('user', function ($query) use ($search) {
+                $query->where('name', 'like', "%{$search}%");
+            })->orWhereHas('paddy_type', function ($query) use ($search) {
+                $query->where('name', 'like', "%{$search}%");
+            })
+            ->orWhere('moisture_content', 'like', "%{$search}%")
+            ->orWhere('maximum_storage_duration', 'like', "%{$search}%");
+        });
+    }
 }

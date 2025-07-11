@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Spatie\Permission\Middleware\PermissionMiddleware;
@@ -16,9 +17,14 @@ class PermissionController extends Controller implements HasMiddleware
         ];
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $permissions = Permission::orderBy('id', 'desc')->paginate(8);
+        $permissions = Permission::select('name', 'category', 'created_at', 'updated_at')
+            ->when($request->input('search'), function ($query, $search) {
+                $query->search($search);
+            })
+            ->orderBy('id', 'desc')
+            ->paginate(8)->withQueryString();
 
         return view('admin.permissions.index', compact('permissions'));
     }

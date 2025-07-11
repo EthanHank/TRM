@@ -23,9 +23,15 @@ class RoleController extends Controller implements HasMiddleware
         ];
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $roles = Role::whereNotIn('name', ['superadmin'])->orderBy('id', 'desc')->paginate(5);
+        $roles = Role::whereNotIn('name', ['superadmin'])
+            ->when($request->input('search'), function ($query, $search) {
+                $query->search($search);
+            })
+            ->orderBy('id', 'desc')
+            ->paginate(5)->withQueryString();
+
 
         return view('admin.roles.index', compact('roles'));
     }
@@ -82,6 +88,5 @@ class RoleController extends Controller implements HasMiddleware
         $role->revokePermissionTo($permission->name);
 
         return back()->with('revoke_success', 'Permission revoked successfully');
-
     }
 }

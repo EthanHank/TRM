@@ -6,8 +6,25 @@
 <div>
     <h6 class="text-muted mb-4">Admin > Permissions</h6>
 </div>
-
-<!-- Roles Table -->
+<!-- Search for permissions by name or category. -->
+<div class="row mb-3">
+    <div class="col-md-6 offset-md-6">
+        <form method="GET" action="{{ route('admin.permissions.index') }}" class="input-group">
+            <input
+                type="text"
+                name="search"
+                class="form-control"
+                placeholder="Search permissions by name or category..."
+                value="{{ request('search') }}"
+                aria-label="Search permissions"
+            >
+            <button class="btn btn-search me-2" type="submit">
+                <i class="bi bi-search"></i> Search
+            </button>
+        </form>
+    </div>
+</div>
+<!-- Permissions Table -->
 <div class="col-md-12">
     <div class="card">
         <div class="card-header bg-white">

@@ -9,6 +9,7 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Middleware\PermissionMiddleware;
+use Illuminate\Http\Request;
 
 class PaddyTypeController extends Controller implements HasMiddleware
 {
@@ -22,14 +23,19 @@ class PaddyTypeController extends Controller implements HasMiddleware
         ];
     }
 
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $paddy_types = PaddyType::select('id', 'name', 'description')->paginate(5);
+            $paddy_types = PaddyType::select('id', 'name', 'description')
+                ->when($request->input('search'), function ($query, $search) {
+                    $query->search($search);
+                })
+                ->orderBy('id', 'desc')
+                ->paginate(5)->withQueryString();
 
             return view('admin.paddy_types.index', compact('paddy_types'));
         } catch (\Exception $e) {
-            Log::error('Failed to retrieve paddy types: '.$e->getMessage());
+            Log::error('Failed to retrieve paddy types: ' . $e->getMessage());
 
             return back()->with('error', 'Failed to load paddy types. Please try again.');
         }
@@ -47,7 +53,7 @@ class PaddyTypeController extends Controller implements HasMiddleware
 
             return redirect()->route('admin.paddy_types.index')->with('success', 'Paddy Type is created successfully');
         } catch (\Exception $e) {
-            Log::error('Failed to create paddy type: '.$e->getMessage());
+            Log::error('Failed to create paddy type: ' . $e->getMessage());
 
             return back()->withInput()->with('error', 'Failed to create paddy type. Please try again.');
         }
@@ -65,7 +71,7 @@ class PaddyTypeController extends Controller implements HasMiddleware
 
             return redirect()->route('admin.paddy_types.index')->with('success', 'Paddy Type is updated successfully');
         } catch (\Exception $e) {
-            Log::error('Failed to update paddy type: '.$e->getMessage());
+            Log::error('Failed to update paddy type: ' . $e->getMessage());
 
             return back()->withInput()->with('error', 'Failed to update paddy type. Please try again.');
         }
@@ -78,7 +84,7 @@ class PaddyTypeController extends Controller implements HasMiddleware
 
             return redirect()->route('admin.paddy_types.index')->with('success', 'Paddy Type is deleted successfully');
         } catch (\Exception $e) {
-            Log::error('Failed to delete paddy type: '.$e->getMessage());
+            Log::error('Failed to delete paddy type: ' . $e->getMessage());
 
             return back()->with('error', 'Failed to delete paddy type. Please try again.');
         }

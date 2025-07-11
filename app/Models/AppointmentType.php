@@ -12,4 +12,11 @@ class AppointmentType extends Model
     protected $table = 'appointment_types';
 
     protected $fillable = ['name', 'description'];
+
+    public function scopeSearch($query, $search)
+    {
+        return $query->where(function ($q) use ($search) {
+            $q->where('name', 'like', "%{$search}%");
+        });
+    }
 }

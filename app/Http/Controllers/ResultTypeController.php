@@ -9,6 +9,7 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Middleware\PermissionMiddleware;
+use Illuminate\Http\Request;
 
 class ResultTypeController extends Controller implements HasMiddleware
 {
@@ -22,11 +23,16 @@ class ResultTypeController extends Controller implements HasMiddleware
         ];
     }
 
-    public function index()
+    public function index(Request $request)
     {
         try {
             // Retrieve all result types with selected fields and paginate
-            $result_types = ResultType::select('id', 'name', 'description')->paginate(5);
+            $result_types = ResultType::select('id', 'name', 'description')
+                ->when($request->input('search'), function ($query, $search) {
+                    $query->search($search);
+                })
+                ->orderBy('id', 'desc')
+                ->paginate(5)->withQueryString();
 
             // Logic to retrieve and display result types
             return view('admin.result_types.index', compact('result_types'));

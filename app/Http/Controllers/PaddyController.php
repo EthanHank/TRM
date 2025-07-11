@@ -8,16 +8,34 @@ use App\Models\PaddyType;
 use App\Models\User;
 use App\Services\PaddyService;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Spatie\Permission\Middleware\PermissionMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 
-class PaddyController extends Controller
+
+class PaddyController extends Controller implements HasMiddleware
 {
-    public function index()
+
+    public static function middleware()
+    {
+        return [
+            new Middleware(PermissionMiddleware::using('view-paddy'), only: ['index']),
+            new Middleware(PermissionMiddleware::using('create-paddy'), only: ['create', 'store']),
+            new Middleware(PermissionMiddleware::using('edit-paddy'), only: ['edit', 'update']),
+            new Middleware(PermissionMiddleware::using('delete-paddy'), only: ['destroy']),
+        ];
+    }
+    public function index(Request $request)
     {
         try {
             $paddies = Paddy::select('id', 'user_id', 'paddy_type_id', 'bag_quantity', 'moisture_content', 'storage_start_date', 'storage_end_date', 'maximum_storage_duration')
                 ->with(['user:id,name', 'paddy_type:id,name'])
+                ->when($request->input('search'), function ($query, $search) {
+                    $query->search($search);
+                })
                 ->orderBy('id', 'desc')
-                ->paginate(5);
+                ->paginate(5)->withQueryString();
 
             return view('admin.paddies.index', compact('paddies'));
         } catch (\Exception $e) {
