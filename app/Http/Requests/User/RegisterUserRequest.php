@@ -36,7 +36,7 @@ class RegisterUserRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => 'The name field is required.',
+            'name.required' => 'The username field is required.',
             'full_name.required' => 'The full name field is required.',
             'phone.required' => 'The phone field is required.',
             'email.required' => 'The email field is required.',
@@ -45,7 +45,7 @@ class RegisterUserRequest extends FormRequest
             'gender.required' => 'The gender field is required.',
             'date_of_birth.required' => 'The date of birth field is required.',
             'date_of_birth.date' => 'The date of birth field must be a date.',
-            'name.unique' => 'The name has already been taken.',
+            'name.unique' => 'The username has already been taken.',
             'phone.unique' => 'The phone has already been taken.',
             'email.unique' => 'The email has already been taken.',
             'nrc.unique' => 'The nrc has already been taken.',

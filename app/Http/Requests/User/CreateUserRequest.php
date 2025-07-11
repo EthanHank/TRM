@@ -40,7 +40,7 @@ class CreateUserRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => 'The name field is required.',
+            'name.required' => 'The username field is required.',
             'full_name.required' => 'The full name field is required.',
             'phone.required' => 'The phone field is required.',
             'email.required' => 'The email field is required.',
@@ -57,7 +57,7 @@ class CreateUserRequest extends FormRequest
             'role.required' => 'The role field is required.',
             'role.*.required' => 'The role field is required.',
             'role.*.exists' => 'The role does not exist.',
-            'name.unique' => 'The name has already been taken.',
+            'name.unique' => 'The username has already been taken.',
             'phone.unique' => 'The phone has already been taken.',
             'nrc.unique' => 'The NRC has already been taken.',
             'password.min' => 'The password must be at least 8 characters.',
