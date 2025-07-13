@@ -50,7 +50,6 @@ class UpdateUserRequest extends FormRequest
             'gender.required' => 'The gender field is required.',
             'date_of_birth.required' => 'The date of birth field is required.',
             'date_of_birth.date' => 'The date of birth must be a valid date.',
-            'address.required' => 'The address field is required.',
         ];
     }
 }

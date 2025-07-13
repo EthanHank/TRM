@@ -31,7 +31,6 @@ class CreateRoleRequest extends FormRequest
         return [
             'name.required' => 'The name field is required.',
             'name.regex' => 'The name field must contain only letters and no spaces.',
-            'name.max' => 'The name field must not be greater than 255 characters.',
             'name.unique' => 'The name field already exists.',
         ];
     }
