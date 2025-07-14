@@ -15,7 +15,7 @@
     <div class="card">
         <div class="card-header bg-white">
             <h5 class="card-title mb-0">
-                Update Merchants 
+                Confirm Merchants 
                 (<span class="text-primary">{{ $merchant->name }}</span>)
             </h5>
         </div>
@@ -44,7 +44,7 @@
                     @enderror
                 </div>
                 <div class="d-flex justify-content-start gap-2 mt-3">
-                    <button type="submit" class="btn btn-primary col-md-6">Update</button>
+                    <button type="submit" class="btn btn-primary col-md-6">Confirm</button>
                 </div>
             </form>
         </div>
