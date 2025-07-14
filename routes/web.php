@@ -1,15 +1,15 @@
 <?php
 
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\AppointmentTypeController;
-use App\Http\Controllers\MerchantController;
-use App\Http\Controllers\PaddyController;
-use App\Http\Controllers\PaddyTypeController;
-use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AppointmentTypeController;
+use App\Http\Controllers\Admin\MerchantController;
+use App\Http\Controllers\Admin\PaddyController;
+use App\Http\Controllers\Admin\PaddyTypeController;
+use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ResultTypeController;
-use App\Http\Controllers\RoleController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\Admin\ResultTypeController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {

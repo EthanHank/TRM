@@ -1,4 +1,8 @@
-@extends('layouts.admin')
+@php
+    $layout = Auth::user()->hasPermissionTo('admin-dashboard') ? 'layouts.admin' : 'layouts.user';
+@endphp
+
+@extends($layout)
 
 @section('title', 'Profile - Tun Rice Milling')
 
@@ -162,7 +166,7 @@
             </div>
 
             <!-- Delete Account -->
-            <div class="card profile-card">
+            <div class="card profile-card mb-3">
                 <div class="card-header bg-white">
                     <h5 class="card-title mb-0 text-danger">Delete Account</h5>
                 </div>

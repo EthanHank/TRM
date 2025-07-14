@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\AppointmentType\CreateAppointmentTypeRequest;
 use App\Http\Requests\AppointmentType\UpdateAppointmentTypeRequest;
@@ -10,6 +10,7 @@ use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class AppointmentTypeController extends Controller implements HasMiddleware
 {

@@ -68,8 +68,8 @@
                         @endif
                         @foreach ($paddies as $paddy)
                         <tr class="text-center align-middle">
-                            <td>{{ $paddy->paddy_type->name }}</td>
-                            <td>{{ $paddy->user->name }}</td>
+                            <td>{{ $paddy->paddy_type ? $paddy->paddy_type->name : 'Deleted Paddy Type' }}</td>
+                            <td>{{ $paddy->user ? $paddy->user->name : '[Deleted User]' }}</td>
                             <td>{{ $paddy->bag_quantity }} bags</td>
                             <td>{{ $paddy->moisture_content }}%</td>
                             <td>{{ $paddy->storage_start_date }}</td>

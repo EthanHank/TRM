@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Paddy\CreatePaddyRequest;
 use App\Models\Paddy;
@@ -14,6 +14,7 @@ use Spatie\Permission\Middleware\PermissionMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\PaddyEnrolled;
+use App\Http\Controllers\Controller;
 
 class PaddyController extends Controller implements HasMiddleware
 {
@@ -31,7 +32,7 @@ class PaddyController extends Controller implements HasMiddleware
     {
         try {
             $paddies = Paddy::select('id', 'user_id', 'paddy_type_id', 'bag_quantity', 'moisture_content', 'storage_start_date', 'storage_end_date', 'maximum_storage_duration')
-                ->with(['user:id,name', 'paddy_type:id,name'])
+                ->with(['user:id,name,deleted_at', 'paddy_type:id,name,deleted_at'])
                 ->when($request->input('search'), function ($query, $search) {
                     $query->search($search);
                 })

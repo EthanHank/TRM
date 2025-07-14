@@ -1,0 +1,18 @@
+@extends('layouts.user')
+
+@section('header')
+    User Dashboard
+@endsection
+
+@section('content')
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h4 class="card-title mb-3">Welcome, {{ Auth::user()->name }}!</h4>
+                <p class="card-text text-muted">This is your dashboard. More features coming soon.</p>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection

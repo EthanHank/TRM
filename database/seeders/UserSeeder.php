@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class UserSeeder extends Seeder
 {
@@ -43,6 +45,11 @@ class UserSeeder extends Seeder
             ],
         ];
 
+        $role = Role::where('name', 'merchant')->first();
+
+        $permissions = Permission::where('name', 'user-dashboard')->get();
+        $role->syncPermissions($permissions);
+
         foreach ($users as $user) {
             $data = User::create([
                 'name' => $user['name'],
@@ -60,6 +67,7 @@ class UserSeeder extends Seeder
             ]);
 
             $data->assignRole('merchant');
+            
         }
     }
 }

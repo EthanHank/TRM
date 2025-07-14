@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\User\CreateUserRequest;
 use App\Http\Requests\User\RegisterUserRequest;
@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use Spatie\Permission\Models\Role;
+use App\Http\Controllers\Controller;
 
 class UserController extends Controller implements HasMiddleware
 {
@@ -152,6 +153,9 @@ class UserController extends Controller implements HasMiddleware
     public function destroy(User $user)
     {
         try {
+            $user->is_opened = false;
+            $user->status = false;
+            $user->save();
             $user->delete();
 
             return redirect()->route('admin.users.index')->with('success', 'User is deleted successfully');
