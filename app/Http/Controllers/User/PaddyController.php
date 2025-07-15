@@ -19,12 +19,12 @@ class PaddyController extends Controller
                 ->with(['user:id,name', 'paddy_type:id,name'])
                 ->where('user_id', $user->id)
                 ->when($request->input('search'), function ($query, $search) {
-                    $query->search($search);
+                    $query->userSearch($search);
                 })
                 ->orderBy('id', 'desc')
                 ->paginate(5)->withQueryString();
 
-            return view('admin.paddies.index', compact('paddies'));
+            return view('users.paddies.index', compact('paddies'));
         } catch (\Exception $e) {
             // Handle the exception and return an error message
             Log::error('Failed to retrieve users: '.$e->getMessage());

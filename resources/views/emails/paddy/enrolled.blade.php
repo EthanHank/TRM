@@ -18,7 +18,7 @@
                             <p style="font-size: 1rem; color: #333; margin: 0;">
                                 <strong>Paddy Type:</strong> {{ $paddy->paddy_type->name ?? 'N/A' }}<br>
                                 <strong>Moisture Content:</strong> {{ $paddy->moisture_content }}%<br>
-                                <strong>Storage Duration:</strong> {{ $paddy->maximum_storage_duration }} days<br>
+                                <strong>Storage Duration:</strong> {{ $paddy->maximum_storage_duration }}<br>
                                 <strong>Storage Start Date:</strong> {{ $paddy->storage_start_date ? \Carbon\Carbon::parse($paddy->storage_start_date)->format('F j, Y') : 'N/A' }}<br>
                                 <strong>Storage End Date:</strong> {{ $paddy->storage_end_date ? \Carbon\Carbon::parse($paddy->storage_end_date)->format('F j, Y') : 'N/A' }}
                             </p>

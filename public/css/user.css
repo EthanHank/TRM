@@ -45,3 +45,10 @@
 .btn-danger:hover {
     background: linear-gradient(135deg, #e63a61 0%, #e64426 100%);
 } 
+.btn-search{
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+.btn-search:hover{
+    color: white;
+}

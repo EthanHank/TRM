@@ -10,6 +10,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\ResultTypeController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\User\PaddyController as UserPaddyController;
+use App\Http\Controllers\User\DryingResultCalculationController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -19,6 +21,9 @@ Route::post('/register', [UserController::class, 'register'])->name('register');
 
 Route::middleware('auth')->name('users.')->prefix('users')->group(function () {
     Route::get('/dashboard', [UserController::class, 'dashboard'])->name('dashboard')->middleware('permission:user-dashboard');
+    Route::resource('/paddies', UserPaddyController::class);
+    Route::resource('/drying_result_calculations', DryingResultCalculationController::class)->only(['create', 'edit']);
+
 });
 
 Route::middleware(['auth'])->name('admin.')->prefix('admin')->group(function () {

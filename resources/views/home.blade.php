@@ -459,7 +459,7 @@
             </div>
             <hr class="mt-4">
             <div class="text-center">
-                <p>&copy; 2025 Tun Rice Milling. All rights reserved.</p>
+                <p>&copy; {{ date('Y') }} Tun Rice Milling. All rights reserved.</p>
             </div>
         </div>
     </footer>

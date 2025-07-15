@@ -22,23 +22,26 @@
             <div class="collapse navbar-collapse" id="userNavbar">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('users.dashboard') ? 'active' : '' }}" href="{{ route('users.dashboard') }}">Dashboard</a>
+                        <a class="nav-link m-2 text-center {{ request()->routeIs('users.dashboard') ? 'active' : '' }}" href="{{ route('users.dashboard') }}">Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('profile.edit') ? 'active' : '' }}" href="{{ route('profile.edit') }}">Profile</a>
+                        <a class="nav-link m-2 text-center {{ request()->routeIs('users.paddies.*') ? 'active' : '' }}" href="{{ route('users.paddies.index') }}">Paddies</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link m-2 text-center {{ request()->routeIs('users.paddies.*') ? 'active' : '' }}" href="{{ route('users.paddies.index') }}">Appointments</a>
                     </li>
                 </ul>
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 text-center">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle mb-1" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-person-circle me-1"></i>{{ Auth::user()->name }}
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="{{ route('profile.edit') }}"><i class="bi bi-person me-2"></i>Profile</a></li>
+                            <li><a class="dropdown-item text-center" href="{{ route('profile.edit') }}"><i class="bi bi-person me-2"></i>Profile</a></li>
                             <li>
                                 <form action="{{ route('logout') }}" method="POST" class="d-inline">
                                     @csrf
-                                    <button type="submit" class="dropdown-item border-0"><i class="bi bi-box-arrow-right me-2"></i>Logout</button>
+                                    <button type="submit" class="dropdown-item border-0 text-center"><i class="bi bi-box-arrow-right me-2"></i>Logout</button>
                                 </form>
                             </li>
                         </ul>
@@ -60,5 +63,9 @@
     <!-- Bootstrap Bundle with Popper -->
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
     @yield('scripts')
+
+    <footer class="bg-light text-center text-muted py-3 mt-5 border-top">
+        &copy; {{ date('Y') }} Tun Rice Milling. All rights reserved.
+    </footer>
 </body>
 </html> 
