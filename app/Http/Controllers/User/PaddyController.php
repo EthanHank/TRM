@@ -32,4 +32,10 @@ class PaddyController extends Controller
             return back()->with('error', 'An error occurred while fetching paddies: '.$e->getMessage());
         }
     }
+
+    public function show(Paddy $paddy)
+    {
+        $dryingResults = $paddy->drying_result_calculations()->orderBy('created_at', 'desc')->paginate(2)->withQueryString();
+        return view('users.paddies.show', compact('paddy', 'dryingResults'));
+    }
 }

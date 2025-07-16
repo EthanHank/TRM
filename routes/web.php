@@ -22,8 +22,10 @@ Route::post('/register', [UserController::class, 'register'])->name('register');
 Route::middleware('auth')->name('users.')->prefix('users')->group(function () {
     Route::get('/dashboard', [UserController::class, 'dashboard'])->name('dashboard')->middleware('permission:user-dashboard');
     Route::resource('/paddies', UserPaddyController::class);
-    Route::resource('/drying_result_calculations', DryingResultCalculationController::class)->only(['create', 'edit']);
-
+    // Explicit edit route for drying result calculation by Paddy
+    Route::get('/drying_result_calculations/{paddy}/edit', [DryingResultCalculationController::class, 'edit'])->name('drying_result_calculations.edit');
+    Route::post('/drying_result_calculations/calculate', [DryingResultCalculationController::class, 'calculate'])->name('drying_result_calculations.calculate');
+    Route::post('/drying_result_calculations', [DryingResultCalculationController::class, 'store'])->name('drying_result_calculations.store');
 });
 
 Route::middleware(['auth'])->name('admin.')->prefix('admin')->group(function () {

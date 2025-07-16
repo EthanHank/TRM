@@ -58,6 +58,27 @@ class PaddyService
         }
     }
 
+    public function calculateDryResult(int $initail_moisture, int $final_moisture, int $initial_bag_quantity): array
+    {
+        if ($final_moisture >= $initail_moisture || $final_moisture >= 100) {
+            return [
+                'approximate_loss' => 0,
+                'final_bag_quantity' => $initial_bag_quantity,
+            ];
+        }
+
+        $percentLoss = ($initail_moisture - $final_moisture) / (100 - $final_moisture) * 100;
+        $actualLoss = ($percentLoss / 100) * $initial_bag_quantity;
+        // Calculate final bag quantity
+        $finnal_bag_quantity = $initial_bag_quantity - $actualLoss;
+
+
+        return [      
+            'approximate_loss' => round($actualLoss),
+            'final_bag_quantity' => round($finnal_bag_quantity), // ✅ nearest integer, e.g. 23kg
+        ];
+    }
+
     public function getStorageRules()
     {
         return [

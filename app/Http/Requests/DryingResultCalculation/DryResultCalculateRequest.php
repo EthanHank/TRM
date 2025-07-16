@@ -3,6 +3,7 @@
 namespace App\Http\Requests\DryingResultCalculation;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\Paddy;
 
 class DryResultCalculateRequest extends FormRequest
 {
@@ -22,16 +23,30 @@ class DryResultCalculateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'paddy_type_id' => 'required|exists:paddy_types,id',
+            'paddy_id' => 'required|exists:paddies,id',
             'initial_moisture_content' => 'required|integer|min:14|max:23',
             'final_moisture_content' => 'required|integer|min:13|max:14',
             'initial_bag_quantity' => 'required|integer|min:100',
         ];
     }
+
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $paddyId = $this->input('paddy_id');
+            $initialBagQuantity = $this->input('initial_bag_quantity');
+            $paddy = Paddy::find($paddyId);
+
+            if ($paddy && $initialBagQuantity > $paddy->bag_quantity) {
+                $validator->errors()->add('initial_bag_quantity', "Initial bag quantity must not exceed the paddy's bag quantity (" . $paddy->bag_quantity . ").");
+            }
+        });
+    }
+
     public function messages(): array
     {
         return [
-            'paddy_type_id.required' => 'Paddy type is required.',
+            'paddy_id.required' => 'Paddy is required.',
             'initial_moisture_content.required' => 'Initial moisture content is required.',
             'final_moisture_content.required' => 'Final moisture content is required.',
             'initial_bag_quantity.required' => 'Initial bag quantity is required.',
