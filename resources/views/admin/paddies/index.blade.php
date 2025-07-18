@@ -53,6 +53,8 @@
                             <th>Paddy Type</th>
                             <th>Merchant</th>
                             <th>Bag Quantity</th>
+                            <th>Bag Weight</th>
+                            <th>Total Weight</th>
                             <th>Moisture Content</th>
                             <th>Storage Start</th>
                             <th>Storage End</th>
@@ -63,7 +65,7 @@
                     <tbody>
                         @if ($paddies->count() == 0)
                         <tr>
-                            <td colspan="8" class="text-center text-muted py-4">No paddies found! T_T</td>
+                            <td colspan="10" class="text-center text-muted py-4">No paddies found! T_T</td>
                         </tr>
                         @endif
                         @foreach ($paddies as $paddy)
@@ -71,6 +73,8 @@
                             <td>{{ $paddy->paddy_type ? $paddy->paddy_type->name : 'Deleted Paddy Type' }}</td>
                             <td>{{ $paddy->user ? $paddy->user->name : '[Deleted User]' }}</td>
                             <td>{{ $paddy->bag_quantity }} bags</td>
+                            <td>{{ $paddy->bag_weight }} kg</td>
+                            <td>{{ $paddy->total_bag_weight }} kg</td>
                             <td>{{ $paddy->moisture_content }}%</td>
                             <td>{{ $paddy->storage_start_date }}</td>
                             <td>{{ $paddy->storage_end_date }}</td>

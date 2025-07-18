@@ -15,7 +15,7 @@ class ResultType extends Model
 
     public function scopeSearch($query, $search)
     {
-        return $query->where(function ($q) use ($search){
+        return $query->where(function ($q) use ($search) {
             $q->where('name', 'like', "%{$search}%");
         });
     }

@@ -14,7 +14,9 @@ class PaddyEnrolled extends Mailable implements ShouldQueue
     use Queueable, SerializesModels;
 
     public $paddy;
+
     public $user;
+
     /**
      * Create a new message instance.
      */

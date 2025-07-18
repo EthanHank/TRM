@@ -6,12 +6,12 @@ use App\Http\Controllers\Admin\MerchantController;
 use App\Http\Controllers\Admin\PaddyController;
 use App\Http\Controllers\Admin\PaddyTypeController;
 use App\Http\Controllers\Admin\PermissionController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\ResultTypeController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\User\PaddyController as UserPaddyController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\DryingResultCalculationController;
+use App\Http\Controllers\User\PaddyController as UserPaddyController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -26,6 +26,7 @@ Route::middleware('auth')->name('users.')->prefix('users')->group(function () {
     Route::get('/drying_result_calculations/{paddy}/edit', [DryingResultCalculationController::class, 'edit'])->name('drying_result_calculations.edit');
     Route::post('/drying_result_calculations/calculate', [DryingResultCalculationController::class, 'calculate'])->name('drying_result_calculations.calculate');
     Route::post('/drying_result_calculations', [DryingResultCalculationController::class, 'store'])->name('drying_result_calculations.store');
+    Route::delete('/drying_result_calculations/{drying_result_calculation}', [DryingResultCalculationController::class, 'destroy'])->name('drying_result_calculations.destroy');
 });
 
 Route::middleware(['auth'])->name('admin.')->prefix('admin')->group(function () {

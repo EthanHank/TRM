@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Merchant\MerchantUpdateRequest;
 use App\Mail\MerchantConfirmed;
 use App\Models\User;
@@ -12,7 +13,6 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use Spatie\Permission\Models\Role;
-use App\Http\Controllers\Controller;
 
 class MerchantController extends Controller implements HasMiddleware
 {

@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\ResultType\CreateResultTypeRequest;
 use App\Http\Requests\ResultType\UpdateResultTypeRequest;
 use App\Models\ResultType;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Middleware\PermissionMiddleware;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
 class ResultTypeController extends Controller implements HasMiddleware
 {

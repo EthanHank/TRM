@@ -58,6 +58,13 @@
                     @enderror
                 </div>
                 <div class="col-md-6 mb-3">
+                    <label for="bag_weight" class="form-label">Bag Weight (kg)</label>
+                    <input type="text" class="form-control" id="bag_weight" name="bag_weight" value="{{ old('bag_weight', $paddy->bag_weight) }}">
+                    @error('bag_weight')
+                    <div class="text-danger my-1">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="col-md-6 mb-3">
                     <label for="moisture_content" class="form-label">Moisture Content</label>
                     <input type="text" class="form-control" id="moisture_content" name="moisture_content" value="{{ old('moisture_content', $paddy->moisture_content) }}">
                     @error('moisture_content')

@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\DryingResultCalculation\DryResultCalculateRequest;
 use App\Models\DryingResultCalculation;
 use App\Models\Paddy;
-use Illuminate\Support\Facades\Log;
 use App\Services\PaddyService;
+use Illuminate\Support\Facades\Log;
 
 class DryingResultCalculationController extends Controller
 {
@@ -19,27 +19,33 @@ class DryingResultCalculationController extends Controller
     public function calculate(DryResultCalculateRequest $request, PaddyService $paddyService)
     {
         $data = $request->validated();
+        $paddy = \App\Models\Paddy::find($data['paddy_id']);
+        $bag_weight = $paddy->bag_weight ?? 50;
         $result = $paddyService->calculateDryResult(
             $data['initial_moisture_content'],
             $data['final_moisture_content'],
-            $data['initial_bag_quantity']
+            $data['initial_bag_quantity'],
+            $bag_weight
         );
-        $paddy = \App\Models\Paddy::find($data['paddy_id']);
+
         return view('users.drying_result_calculations.edit', [
             'paddy' => $paddy,
             'dryingResult' => (object) array_merge($data, $result),
-            'calculated' => true
+            'calculated' => true,
         ]);
     }
 
     public function store(DryResultCalculateRequest $request, PaddyService $paddyService)
     {
-        try{
+        try {
             $data = $request->validated();
+            $paddy = \App\Models\Paddy::find($data['paddy_id']);
+            $bag_weight = $paddy->bag_weight ?? 50;
             $result = $paddyService->calculateDryResult(
                 $data['initial_moisture_content'],
                 $data['final_moisture_content'],
-                $data['initial_bag_quantity']
+                $data['initial_bag_quantity'],
+                $bag_weight
             );
             $dryingResult = DryingResultCalculation::create([
                 'paddy_id' => $data['paddy_id'],
@@ -48,17 +54,28 @@ class DryingResultCalculationController extends Controller
                 'initial_bag_quantity' => $data['initial_bag_quantity'],
                 'final_bag_quantity' => $result['final_bag_quantity'],
                 'approximate_loss' => $result['approximate_loss'],
+                'initial_total_bag_weight' => $result['initial_total_bag_weight'],
+                'final_total_bag_weight' => $result['final_total_bag_weight'],
             ]);
 
             return view('users.drying_result_calculations.edit', [
                 'dryingResult' => $dryingResult,
-                'success' => 'Drying result calculated and saved successfully.'
+                'success' => 'Drying result calculated and saved successfully.',
             ]);
-            
+
+        } catch (\Exception $e) {
+            Log::error('Calculation store error: '.$e->getMessage());
+
+            return redirect()->back()->withErrors(['error' => 'Saving failed: '.$e->getMessage()]);
         }
-        catch (\Exception $e) {
-            Log::error('Calculation error: ' . $e->getMessage());
-            return redirect()->back()->withErrors(['error' => 'Calculation failed: ' . $e->getMessage()]);
-        }
+    }
+
+    public function destroy(DryingResultCalculation $dryingResultCalculation)
+    {
+        $paddyId = $dryingResultCalculation->paddy_id;
+        $dryingResultCalculation->delete();
+
+        return redirect()->route('users.paddies.show', $paddyId)
+            ->with('success', 'Drying result calculation deleted successfully.');
     }
 }

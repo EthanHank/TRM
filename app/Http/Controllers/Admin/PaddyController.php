@@ -2,23 +2,22 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Paddy\CreatePaddyRequest;
+use App\Mail\PaddyEnrolled;
 use App\Models\Paddy;
 use App\Models\PaddyType;
 use App\Models\User;
 use App\Services\PaddyService;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
-use Spatie\Permission\Middleware\PermissionMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\PaddyEnrolled;
-use App\Http\Controllers\Controller;
+use Spatie\Permission\Middleware\PermissionMiddleware;
 
 class PaddyController extends Controller implements HasMiddleware
 {
-
     public static function middleware()
     {
         return [
@@ -28,10 +27,11 @@ class PaddyController extends Controller implements HasMiddleware
             new Middleware(PermissionMiddleware::using('delete-paddy'), only: ['destroy']),
         ];
     }
+
     public function index(Request $request)
     {
         try {
-            $paddies = Paddy::select('id', 'user_id', 'paddy_type_id', 'bag_quantity', 'moisture_content', 'storage_start_date', 'storage_end_date', 'maximum_storage_duration')
+            $paddies = Paddy::select('id', 'user_id', 'paddy_type_id', 'bag_quantity', 'bag_weight', 'total_bag_weight', 'moisture_content', 'storage_start_date', 'storage_end_date', 'maximum_storage_duration')
                 ->with(['user:id,name,deleted_at', 'paddy_type:id,name,deleted_at'])
                 ->when($request->input('search'), function ($query, $search) {
                     $query->search($search);
@@ -68,6 +68,7 @@ class PaddyController extends Controller implements HasMiddleware
     {
         try {
             $data = $request->validated();
+            $data['total_bag_weight'] = $data['bag_quantity'] * $data['bag_weight'];
             $storageData = $paddyService->getStorageData(null, $data['moisture_content']);
 
             $paddy = Paddy::create(array_merge($data, $storageData));
@@ -75,7 +76,6 @@ class PaddyController extends Controller implements HasMiddleware
             // Send email notification to the user
             $user = User::find($data['user_id']);
             Mail::to($user->email)->queue(new PaddyEnrolled($user, $paddy));
-                
 
             return redirect()->route('admin.paddies.index')->with('success', 'Paddy is created successfully.');
         } catch (\Exception $e) {
@@ -105,6 +105,7 @@ class PaddyController extends Controller implements HasMiddleware
     {
         try {
             $data = $request->validated();
+            $data['total_bag_weight'] = $data['bag_quantity'] * $data['bag_weight'];
             $storageData = $paddyService->getStorageData($paddy, $data['moisture_content']);
 
             $paddy->update(array_merge($data, $storageData));

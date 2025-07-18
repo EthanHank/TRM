@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use Carbon\Carbon;
 use App\Models\Paddy;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 
 class PaddyService
@@ -11,8 +11,8 @@ class PaddyService
     /**
      * Calculates and applies storage values to a Paddy model.
      *
-     * @param Paddy|null $paddy (pass null when creating)
-     * @param int $moisture
+     * @param  Paddy|null  $paddy  (pass null when creating)
+     * @param  int  $moisture
      * @return array [storage_period, start_date, end_date]
      */
     public function getStorageData(?Paddy $paddy, int $moisture_content)
@@ -49,7 +49,8 @@ class PaddyService
         } catch (\Exception $e) {
             // Handle the exception (log it, rethrow, return a default value, etc.)
             // Example: log and return a default error response
-            Log::error('Error in getStorageData: ' . $e->getMessage());
+            Log::error('Error in getStorageData: '.$e->getMessage());
+
             return [
                 'maximum_storage_duration' => 'Error calculating storage.',
                 'storage_start_date' => null,
@@ -58,24 +59,33 @@ class PaddyService
         }
     }
 
-    public function calculateDryResult(int $initail_moisture, int $final_moisture, int $initial_bag_quantity): array
-    {
-        if ($final_moisture >= $initail_moisture || $final_moisture >= 100) {
+    public function calculateDryResult(
+        int $initial_moisture,
+        int $final_moisture,
+        int $initial_bag_quantity,
+        int $bag_weight = 50
+    ): array {
+        $initial_total_bag_weight = $initial_bag_quantity * $bag_weight;
+        if ($final_moisture >= $initial_moisture || $final_moisture >= 100) {
             return [
                 'approximate_loss' => 0,
                 'final_bag_quantity' => $initial_bag_quantity,
+                'initial_total_bag_weight' => $initial_total_bag_weight,
+                'final_total_bag_weight' => $initial_total_bag_weight,
             ];
         }
 
-        $percentLoss = ($initail_moisture - $final_moisture) / (100 - $final_moisture) * 100;
-        $actualLoss = ($percentLoss / 100) * $initial_bag_quantity;
-        // Calculate final bag quantity
-        $finnal_bag_quantity = $initial_bag_quantity - $actualLoss;
+        $percentLoss = ($initial_moisture - $final_moisture) / (100 - $final_moisture) * 100;
+        $actualLossBags = ($percentLoss / 100) * $initial_bag_quantity;
+        $final_bag_quantity = $initial_bag_quantity - $actualLossBags;
 
+        $final_total_bag_weight = $final_bag_quantity * $bag_weight;
 
-        return [      
-            'approximate_loss' => round($actualLoss),
-            'final_bag_quantity' => round($finnal_bag_quantity), // ✅ nearest integer, e.g. 23kg
+        return [
+            'approximate_loss' => (int) round($actualLossBags),
+            'final_bag_quantity' => (int) round($final_bag_quantity),
+            'initial_total_bag_weight' => (int) round($initial_total_bag_weight),
+            'final_total_bag_weight' => (int) round($final_total_bag_weight),
         ];
     }
 

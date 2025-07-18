@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Role\CreateRoleRequest;
 use App\Http\Requests\Role\UpdateRoleRequest;
 use Illuminate\Http\Request;
@@ -10,7 +11,6 @@ use Illuminate\Routing\Controllers\Middleware;
 use Spatie\Permission\Middleware\PermissionMiddleware;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
-use App\Http\Controllers\Controller;
 
 class RoleController extends Controller implements HasMiddleware
 {
@@ -32,7 +32,6 @@ class RoleController extends Controller implements HasMiddleware
             })
             ->orderBy('id', 'desc')
             ->paginate(5)->withQueryString();
-
 
         return view('admin.roles.index', compact('roles'));
     }

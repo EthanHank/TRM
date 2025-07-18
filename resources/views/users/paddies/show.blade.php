@@ -4,13 +4,15 @@
 
 @section('content')
 <div class="container mt-5">
-    <h2 class="mb-4">Paddy Details</h2>
-    <div class="card mb-4 shadow-sm">
+    <h2 class="mb-4" data-aos="fade-down">Paddy Details</h2>
+    <div class="card mb-4 shadow-sm" data-aos="fade-up">
         <div class="card-body">
             <h5 class="card-title">Paddy #{{ $paddy->id }}</h5>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item"><strong>Type:</strong> {{ $paddy->paddy_type->name ?? 'N/A' }}</li>
                 <li class="list-group-item"><strong>Bag Quantity:</strong> {{ $paddy->bag_quantity }}</li>
+                <li class="list-group-item"><strong>Bag Weight (kg):</strong> {{ $paddy->bag_weight ?? '-' }}</li>
+                <li class="list-group-item"><strong>Total Bag Weight (kg):</strong> {{ $paddy->total_bag_weight ?? '-' }}</li>
                 <li class="list-group-item"><strong>Moisture Content:</strong> {{ $paddy->moisture_content }}%</li>
                 <li class="list-group-item"><strong>Storage Start Date:</strong> {{ $paddy->storage_start_date }}</li>
                 <li class="list-group-item"><strong>Storage End Date:</strong> {{ $paddy->storage_end_date }}</li>
@@ -19,14 +21,21 @@
         </div>
     </div>
 
-    <h4 class="mb-3" id="drying-history">Drying Result Calculation History</h4>
+    <h4 class="mb-3" id="drying-history" data-aos="fade-right">Drying Result Calculation History</h4>
     @if($dryingResults->isEmpty())
         <div class="alert alert-info">No drying result calculations found.</div>
     @else
         <div class="row">
             @foreach($dryingResults as $result)
-                <div class="col-md-6 mb-4">
-                    <div class="card shadow-sm border-0 fade-in-result" style="max-width: 500px; margin: 0 auto;">
+                <div class="col-md-6 mb-4" data-aos="fade-up">
+                    <div class="card shadow-sm border-0 fade-in-result" style="max-width: 500px; margin: 0 auto; position: relative;">
+                        <form action="{{ route('users.drying_result_calculations.destroy', $result->id) }}" method="POST" style="position: absolute; top: 10px; right: 10px; z-index: 2;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this calculation result?')">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </form>
                         <div class="card-body">
                             <h5 class="card-title mb-3 text-center" style="color: #667eea;">
                                 <i class="bi bi-calculator"></i> Calculation Result
@@ -51,6 +60,14 @@
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <span><i class="bi bi-box2-heart me-2 text-warning"></i>Final Bags</span>
                                     <span class="fw-bold text-success">{{ $result->final_bag_quantity }}</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span><i class="bi bi-bag me-2" style="color: deeppink;"></i>Initial Total Bag Weight (kg)</span>
+                                    <span class="fw-bold">{{ $result->initial_total_bag_weight }}</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span><i class="bi bi-bag-check me-2" style="color: darkblue;"></i>Final Total Bag Weight (kg)</span>
+                                    <span class="fw-bold">{{ $result->final_total_bag_weight }}</span>
                                 </li>
                             </ul>
                             <div class="text-center mt-2">

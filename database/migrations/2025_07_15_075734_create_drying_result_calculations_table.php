@@ -19,6 +19,8 @@ return new class extends Migration
             $table->integer('initial_bag_quantity');
             $table->integer('final_bag_quantity');
             $table->integer('approximate_loss');
+            $table->integer('initial_total_bag_weight');
+            $table->integer('final_total_bag_weight');
             $table->timestamps();
         });
     }

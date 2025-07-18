@@ -4,18 +4,19 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Paddy;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class PaddyController extends Controller
 {
-    public function index(Request $request){
+    public function index(Request $request)
+    {
 
         $user = Auth::user();
 
         try {
-            $paddies = Paddy::select('id', 'user_id', 'paddy_type_id', 'bag_quantity', 'moisture_content', 'storage_start_date', 'storage_end_date', 'maximum_storage_duration')
+            $paddies = Paddy::select('id', 'user_id', 'paddy_type_id', 'bag_quantity', 'bag_weight', 'total_bag_weight', 'moisture_content', 'storage_start_date', 'storage_end_date', 'maximum_storage_duration')
                 ->with(['user:id,name', 'paddy_type:id,name'])
                 ->where('user_id', $user->id)
                 ->when($request->input('search'), function ($query, $search) {
@@ -36,6 +37,7 @@ class PaddyController extends Controller
     public function show(Paddy $paddy)
     {
         $dryingResults = $paddy->drying_result_calculations()->orderBy('created_at', 'desc')->paginate(2)->withQueryString();
+
         return view('users.paddies.show', compact('paddy', 'dryingResults'));
     }
 }

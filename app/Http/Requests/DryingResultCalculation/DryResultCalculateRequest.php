@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests\DryingResultCalculation;
 
-use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Paddy;
+use Illuminate\Foundation\Http\FormRequest;
 
 class DryResultCalculateRequest extends FormRequest
 {
@@ -38,7 +38,7 @@ class DryResultCalculateRequest extends FormRequest
             $paddy = Paddy::find($paddyId);
 
             if ($paddy && $initialBagQuantity > $paddy->bag_quantity) {
-                $validator->errors()->add('initial_bag_quantity', "Initial bag quantity must not exceed the paddy's bag quantity (" . $paddy->bag_quantity . ").");
+                $validator->errors()->add('initial_bag_quantity', "Initial bag quantity must not exceed the paddy's bag quantity (".$paddy->bag_quantity.').');
             }
         });
     }

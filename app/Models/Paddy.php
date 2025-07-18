@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Paddy extends Model
 {
     use SoftDeletes;
-    
+
     protected $table = 'paddies';
 
     protected $fillable = [
@@ -19,6 +19,8 @@ class Paddy extends Model
         'storage_start_date',
         'storage_end_date',
         'maximum_storage_duration',
+        'bag_weight',
+        'total_bag_weight',
     ];
 
     public function user()
@@ -44,8 +46,8 @@ class Paddy extends Model
             })->orWhereHas('paddy_type', function ($query) use ($search) {
                 $query->where('name', 'like', "%{$search}%");
             })
-            ->orWhere('moisture_content', 'like', "%{$search}%")
-            ->orWhere('maximum_storage_duration', 'like', "%{$search}%");
+                ->orWhere('moisture_content', 'like', "%{$search}%")
+                ->orWhere('maximum_storage_duration', 'like', "%{$search}%");
         });
     }
 
@@ -55,8 +57,8 @@ class Paddy extends Model
             $q->orWhereHas('paddy_type', function ($query) use ($search) {
                 $query->where('name', 'like', "%{$search}%");
             })
-            ->orWhere('moisture_content', 'like', "%{$search}%")
-            ->orWhere('maximum_storage_duration', 'like', "%{$search}%");
+                ->orWhere('moisture_content', 'like', "%{$search}%")
+                ->orWhere('maximum_storage_duration', 'like', "%{$search}%");
         });
     }
 }

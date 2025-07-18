@@ -26,6 +26,7 @@ class CreatePaddyRequest extends FormRequest
             'paddy_type_id' => 'required|exists:paddy_types,id',
             'bag_quantity' => 'required|numeric|min:1',
             'moisture_content' => 'required|numeric|min:13|max:23',
+            'bag_weight' => 'required|numeric|min:1',
         ];
     }
 
@@ -37,6 +38,9 @@ class CreatePaddyRequest extends FormRequest
             'bag_quantity.required' => 'The bag quantity field is required.',
             'bag_quantity.numeric' => 'The bag quantity must be a number.',
             'bag_quantity.min' => 'The bag quantity must be at least 1.',
+            'bag_weight.required' => 'The bag weight field is required.',
+            'bag_weight.numeric' => 'The bag weight must be a number.',
+            'bag_weight.min' => 'The bag weight must be at least 1.',
             'user_id.exists' => 'The selected user does not exist.',
             'paddy_type_id.exists' => 'The selected paddy type does not exist.',
             'moisture_content.numeric' => 'Moisture content must be a number.',

@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('paddy_type_id')->constrained('paddy_types')->onDelete('cascade');
             $table->integer('bag_quantity');
+            $table->integer('bag_weight');
+            $table->integer('total_bag_weight');
             $table->integer('moisture_content');
             $table->date('storage_start_date')->nullable();
             $table->date('storage_end_date')->nullable();

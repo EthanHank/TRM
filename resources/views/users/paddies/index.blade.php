@@ -4,7 +4,7 @@
 
 @section('content')
 <div>
-    <h6 class="text-muted mb-4">User &gt; My Paddies</h6>
+    <h6 class="text-muted mb-4" data-aos="fade-right">User &gt; My Paddies</h6>
 </div>
 @if (session('success'))
 <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -38,18 +38,20 @@
 </div>
 <!-- Paddies Table -->
 <div class="col-md-12">
-    <div class="card">
+    <div class="card" data-aos="fade-up">
         <div class="card-header bg-white">
-            <h5 class="card-title mb-0">My Paddies</h5>
+            <h5 class="card-title mb-0" data-aos="fade-down">My Paddies</h5>
         </div>
         <div class="card-body">
-            <div class="table-responsive">
+            <div class="table-responsive" data-aos="fade-up">
                 <table class="table table-hover">
                     <thead>
                         <tr class="text-center align-middle">
                             <th>Paddy Type</th>
                             <th>Merchant</th>
                             <th>Bag Quantity</th>
+                            <th>Bag Weight (kg)</th>
+                            <th>Total Bag Weight (kg)</th>
                             <th>Moisture Content</th>
                             <th>Storage Start</th>
                             <th>Storage End</th>
@@ -68,6 +70,8 @@
                             <td>{{ $paddy->paddy_type ? $paddy->paddy_type->name : 'Deleted Paddy Type' }}</td>
                             <td>{{ $paddy->user->name }}</td>
                             <td>{{ $paddy->bag_quantity }} bags</td>
+                            <td>{{ $paddy->bag_weight ?? '-' }} kg</td>
+                            <td>{{ $paddy->total_bag_weight ?? '-' }} kg</td>
                             <td>{{ $paddy->moisture_content }}%</td>
                             <td>{{ $paddy->storage_start_date }}</td>
                             <td>{{ $paddy->storage_end_date }}</td>
