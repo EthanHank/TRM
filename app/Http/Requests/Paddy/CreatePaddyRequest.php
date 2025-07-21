@@ -33,15 +33,13 @@ class CreatePaddyRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'user_id.required' => 'The user field is required.',
-            'paddy_type_id.required' => 'The paddy type field is required.',
             'bag_quantity.required' => 'The bag quantity field is required.',
             'bag_quantity.numeric' => 'The bag quantity must be a number.',
             'bag_quantity.min' => 'The bag quantity must be at least 1.',
             'bag_weight.required' => 'The bag weight field is required.',
             'bag_weight.numeric' => 'The bag weight must be a number.',
-            'bag_weight.min' => 'The bag weight must be at least 1.',
-            'bag_weight.max' => 'The bag weight must not exceed 80.',
+            'bag_weight.min' => 'The bag weight must be at least 50kg.',
+            'bag_weight.max' => 'The bag weight must not exceed 80kg.',
             'moisture_content.numeric' => 'Moisture content must be a number.',
             'moisture_content.required' => 'The moisture content field is required.',
             'moisture_content.min' => 'Moisture content must be at least 13%.',
