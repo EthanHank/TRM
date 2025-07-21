@@ -20,8 +20,14 @@
                                 <strong>Moisture Content:</strong> {{ $paddy->moisture_content }}%<br>
                                 <strong>Storage Duration:</strong> {{ $paddy->maximum_storage_duration }}<br>
                                 <strong>Storage Start Date:</strong> {{ $paddy->storage_start_date ? \Carbon\Carbon::parse($paddy->storage_start_date)->format('F j, Y') : 'N/A' }}<br>
-                                <strong>Storage End Date:</strong> {{ $paddy->storage_end_date ? \Carbon\Carbon::parse($paddy->storage_end_date)->format('F j, Y') : 'N/A' }}
+                                <strong>Storage End Date:</strong> {{ $paddy->storage_end_date ? \Carbon\Carbon::parse($paddy->storage_end_date)->format('F j, Y') : 'N/A' }}<br>
+                                <strong>Bag Quantity:</strong> {{ $paddy->bag_quantity }}<br>
+                                <strong>Bag Weight:</strong> {{ $paddy->bag_weight }}<br>
+                                <strong>Total Bag Weight:</strong> {{ $paddy->total_bag_weight }}
                             </p>
+                        </div>
+                        <div style="margin: 24px 0;">
+                            <a href="{{ url('/users/paddies') }}" style="display: inline-block; background: #667eea; color: #fff; padding: 12px 28px; border-radius: 8px; font-weight: 600; text-decoration: none; font-size: 1.1rem; box-shadow: 0 2px 8px #667eea22;">View My Paddies</a>
                         </div>
                         <hr style="margin: 32px 0; border: none; border-top: 1px solid #e2e8f0;">
                         <p style="color: #888; font-size: 0.98rem;">If you have any questions, feel free to reply to this email.<br>Thanks,<br><span style="color: #667eea; font-weight: 600;">{{ config('app.name') }}</span></p>

@@ -13,6 +13,15 @@ return new class extends Migration
     {
         Schema::create('milling_result_calculations', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('paddy_id')->constrained('paddies')->onDelete('cascade');
+            $table->integer('initial_moisture_content');
+            $table->integer('final_moisture_content');
+            $table->integer('initial_bag_quantity');
+            $table->integer('adjusted_weight');
+            $table->integer('white_rice_bags');
+            $table->integer('broken_rice_bags');
+            $table->integer('bran_bags');
+            $table->integer('husk_bags');
             $table->timestamps();
         });
     }

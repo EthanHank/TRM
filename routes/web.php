@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\DryingResultCalculationController;
 use App\Http\Controllers\User\PaddyController as UserPaddyController;
+use App\Http\Controllers\User\MillingResultCalculationController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -27,6 +28,11 @@ Route::middleware('auth')->name('users.')->prefix('users')->group(function () {
     Route::post('/drying_result_calculations/calculate', [DryingResultCalculationController::class, 'calculate'])->name('drying_result_calculations.calculate');
     Route::post('/drying_result_calculations', [DryingResultCalculationController::class, 'store'])->name('drying_result_calculations.store');
     Route::delete('/drying_result_calculations/{drying_result_calculation}', [DryingResultCalculationController::class, 'destroy'])->name('drying_result_calculations.destroy');
+    // Explicit edit route for milling result calculation by Paddy
+    Route::get('/milling_result_calculations/{paddy}/edit', [MillingResultCalculationController::class, 'edit'])->name('milling_result_calculations.edit');
+    Route::post('/milling_result_calculations/calculate', [MillingResultCalculationController::class, 'calculate'])->name('milling_result_calculations.calculate');
+    Route::post('/milling_result_calculations', [MillingResultCalculationController::class, 'store'])->name('milling_result_calculations.store');
+    Route::delete('/milling_result_calculations/{milling_result_calculation}', [MillingResultCalculationController::class, 'destroy'])->name('milling_result_calculations.destroy');
 });
 
 Route::middleware(['auth'])->name('admin.')->prefix('admin')->group(function () {

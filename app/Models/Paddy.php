@@ -38,6 +38,11 @@ class Paddy extends Model
         return $this->hasMany(DryingResultCalculation::class);
     }
 
+    public function milling_result_calculations()
+    {
+        return $this->hasMany(MillingResultCalculation::class);
+    }
+
     public function scopeSearch($query, $search)
     {
         return $query->where(function ($q) use ($search) {

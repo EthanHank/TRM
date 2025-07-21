@@ -86,7 +86,7 @@
                                 <a href="{{ route('users.drying_result_calculations.edit', $paddy->id) }}" class="btn btn-outline-success btn-sm mb-1">
                                     <i class="bi bi-calculator"></i> Calculate Drying Result
                                 </a><br>
-                                <a href="{{ route('users.paddies.create', $paddy->id) }}" class="btn btn-outline-warning btn-sm mb-1">
+                                <a href="{{ route('users.milling_result_calculations.edit', $paddy->id) }}" class="btn btn-outline-warning btn-sm mb-1">
                                     <i class="bi bi-calculator"></i> Calculate Milling Result
                                 </a>
                             </td>

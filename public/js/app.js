@@ -49,3 +49,39 @@ document.addEventListener("DOMContentLoaded", function() {
         allowInput: true
     });
 });
+
+// Paddy Show: Pagination hash and scroll logic
+(function() {
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add hash to drying paginator links
+        document.querySelectorAll('.drying-pagination a.page-link').forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                if (!link.hash || link.hash === '#') {
+                    e.preventDefault();
+                    window.location = link.href + '#drying-history';
+                }
+            });
+        });
+        // Add hash to milling paginator links
+        document.querySelectorAll('.milling-pagination a.page-link').forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                if (!link.hash || link.hash === '#') {
+                    e.preventDefault();
+                    window.location = link.href + '#milling-history';
+                }
+            });
+        });
+
+        // Scroll to the correct section if hash is present
+        if (window.location.hash === '#drying-history' || window.location.hash === '#milling-history') {
+            var el = document.getElementById(window.location.hash.substring(1));
+            if (el) {
+                setTimeout(function() {
+                    var yOffset = -80;
+                    var y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                    window.scrollTo({ top: y, behavior: 'smooth' });
+                }, 300);
+            }
+        }
+    });
+})();

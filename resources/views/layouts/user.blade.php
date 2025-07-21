@@ -64,13 +64,18 @@
     </div>
     <!-- Bootstrap Bundle with Popper -->
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
     <!-- AOS Animate On Scroll JS -->
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
     <script>
-      AOS.init({
-        duration: 700, // Animation duration in ms
-        once: true     // Only animate once
-      });
+        AOS.init({
+            duration: 1000, 
+            once: false,    // Animates only once
+            offset: 150,    
+            delay: 100,   
+            easing: 'ease-in-out', // Smoother, less dramatic easing
+            anchorPlacement: 'top-bottom'
+        });
     </script>
     @yield('scripts')
 

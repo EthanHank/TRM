@@ -47,7 +47,7 @@ class DryingResultCalculationController extends Controller
                 $data['initial_bag_quantity'],
                 $bag_weight
             );
-            $dryingResult = DryingResultCalculation::create([
+            DryingResultCalculation::create([
                 'paddy_id' => $data['paddy_id'],
                 'initial_moisture_content' => $data['initial_moisture_content'],
                 'final_moisture_content' => $data['final_moisture_content'],
@@ -59,7 +59,7 @@ class DryingResultCalculationController extends Controller
             ]);
 
             return view('users.drying_result_calculations.edit', [
-                'dryingResult' => $dryingResult,
+                'paddy' => $paddy,
                 'success' => 'Drying result calculated and saved successfully.',
             ]);
 
@@ -76,6 +76,6 @@ class DryingResultCalculationController extends Controller
         $dryingResultCalculation->delete();
 
         return redirect()->route('users.paddies.show', $paddyId)
-            ->with('success', 'Drying result calculation deleted successfully.');
+            ->with('dry-result-delete', 'Drying result calculation deleted successfully.');
     }
 }

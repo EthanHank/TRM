@@ -34,10 +34,17 @@ class PaddyController extends Controller
         }
     }
 
-    public function show(Paddy $paddy)
+    public function show(Paddy $paddy, Request $request)
     {
-        $dryingResults = $paddy->drying_result_calculations()->orderBy('created_at', 'desc')->paginate(2)->withQueryString();
+        $dryingResults = $paddy->drying_result_calculations()
+            ->orderBy('created_at', 'desc')
+            ->paginate(2, ['*'], 'drying_page')
+            ->withQueryString();
+        $millingResults = $paddy->milling_result_calculations()
+            ->orderBy('created_at', 'desc')
+            ->paginate(2, ['*'], 'milling_page')
+            ->withQueryString();
 
-        return view('users.paddies.show', compact('paddy', 'dryingResults'));
+        return view('users.paddies.show', compact('paddy', 'dryingResults', 'millingResults'));
     }
 }
