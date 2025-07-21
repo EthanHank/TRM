@@ -41,8 +41,6 @@ class CreatePaddyRequest extends FormRequest
             'bag_weight.required' => 'The bag weight field is required.',
             'bag_weight.numeric' => 'The bag weight must be a number.',
             'bag_weight.min' => 'The bag weight must be at least 1.',
-            'user_id.exists' => 'The selected user does not exist.',
-            'paddy_type_id.exists' => 'The selected paddy type does not exist.',
             'moisture_content.numeric' => 'Moisture content must be a number.',
             'moisture_content.required' => 'The moisture content field is required.',
             'moisture_content.min' => 'Moisture content must be at least 13%.',
