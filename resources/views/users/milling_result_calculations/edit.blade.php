@@ -4,7 +4,7 @@
 
 @section('content')
 <div>
-    <h6 class="text-muted mb-4" data-aos="fade-right">User &gt; Milling Result Calculation</h6>
+    <h6 class="text-muted mb-4" data-aos="fade-right">User &gt; My Paddies Milling &gt; Result Calculation</h6>
 </div>
 
 @if(isset($millingResult) && !isset($success))

@@ -48,6 +48,21 @@ document.addEventListener("DOMContentLoaded", function() {
         altFormat: "F j, Y",
         allowInput: true
     });
+
+    // Appointment date (tomorrow and onward, no weekends)
+    flatpickr("#appointmentstartdate", {
+        dateFormat: "Y-m-d",
+        minDate: new Date().fp_incr(1), // tomorrow
+        disable: [
+            function(date) {
+                // Disable weekends
+                return (date.getDay() === 0 || date.getDay() === 6); // Sunday = 0, Saturday = 6
+            }
+        ],
+        altInput: true,
+        altFormat: "F j, Y",
+        allowInput: true
+    });
 });
 
 // Paddy Show: Pagination hash and scroll logic

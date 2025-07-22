@@ -13,6 +13,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\DryingResultCalculationController;
 use App\Http\Controllers\User\PaddyController as UserPaddyController;
 use App\Http\Controllers\User\MillingResultCalculationController;
+use App\Http\Controllers\User\AppointmentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -23,6 +24,7 @@ Route::post('/register', [UserController::class, 'register'])->name('register');
 Route::middleware('auth')->name('users.')->prefix('users')->group(function () {
     Route::get('/dashboard', [UserController::class, 'dashboard'])->name('dashboard')->middleware('permission:user-dashboard');
     Route::resource('/paddies', UserPaddyController::class);
+    Route::get('/appointments/{paddy}/check', [AppointmentController::class, 'check'])->name('appointments.check');
     // Explicit edit route for drying result calculation by Paddy
     Route::get('/drying_result_calculations/{paddy}/edit', [DryingResultCalculationController::class, 'edit'])->name('drying_result_calculations.edit');
     Route::post('/drying_result_calculations/calculate', [DryingResultCalculationController::class, 'calculate'])->name('drying_result_calculations.calculate');

@@ -1,10 +1,10 @@
 @extends('layouts.user')
 
-@section('title', 'Tun Rice Milling - My Paddies')
+@section('title', 'Tun Rice Milling - Drying Result Calculation')
 
 @section('content')
 <div>
-    <h6 class="text-muted mb-4" data-aos="fade-right">User &gt; Drying Result Calculation</h6>
+    <h6 class="text-muted mb-4" data-aos="fade-right">User &gt; My Paddies &gt; Drying Result Calculation</h6>
 </div>
 
 @if(isset($dryingResult) && !isset($success))

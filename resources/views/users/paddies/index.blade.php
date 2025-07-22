@@ -77,7 +77,7 @@
                             <td>{{ $paddy->storage_end_date }}</td>
                             <td>{{ $paddy->maximum_storage_duration }}</td>
                             <td>
-                                <a href="{{ route('users.paddies.edit', $paddy->id) }}" class="btn btn-outline-primary btn-sm mb-1">
+                                <a href="{{ route('users.appointments.check', $paddy->id) }}" class="btn btn-outline-primary btn-sm mb-1">
                                     <i class="bi bi-calendar-plus"></i> Make Appointment
                                 </a><br>
                                 <a href="{{ route('users.paddies.show', $paddy->id) }}" class="btn btn-outline-info btn-sm mb-1">

@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('paddy_id')->constrained('paddies')->onDelete('cascade');
+            $table->foreignId('appointment_type_id')->constrained('appointment_types')->onDelete('cascade');
+            $table->date('appointment_start_date');
+            $table->date('appointment_end_date');
+            $table->integer('bag_quantity');
+            $table->string('status')->default('pending');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

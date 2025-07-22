@@ -10,7 +10,7 @@
 </style>
 <div class="container mt-5">
     <div>
-        <h6 class="text-muted mb-4" data-aos="fade-right">User &gt; My Paddies</h6>
+        <h6 class="text-muted mb-4" data-aos="fade-right">User &gt; My Paddies &gt; Paddy Details</h6>
     </div>
     <h2 class="mb-4" data-aos="fade-down">Paddy Details</h2>
     <div class="card mb-4 shadow-sm" data-aos="fade-up">
