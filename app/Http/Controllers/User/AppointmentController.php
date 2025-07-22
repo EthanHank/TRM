@@ -37,18 +37,26 @@ class AppointmentController extends Controller
         $appointment_start_date = $data['appointment_start_date'];
         $bag_quantity = $data['bag_quantity'];
 
-        $appointment_end_date = $appointmentService->calculateEndDate($appointment_start_date, $bag_quantity);
-        
+        $result = $appointmentService->calculateEndDate($appointment_start_date, $bag_quantity);
+        $appointment_end_date = $result['end_date'];
+        $duration = $result['duration'];
 
         $existingAppointment = Appointment::where('appointment_type_id', $appointment_type_id)
             ->where('appointment_end_date', $appointment_end_date)
             ->first();
 
         if ($existingAppointment) {
-            return back()->with('error', 'This time slot is already booked. Please choose another time.');
+            return back()->with('error', 'This appointment date is already booked. Please choose another date.');
         }
 
-        return back()->with('success', 'This time slot is available!');
+        $appointment = new Appointment();
+        $appointment->appointment_type_id = $appointment_type_id;
+        $appointment->appointment_start_date = $appointment_start_date;
+        $appointment->appointment_end_date = $appointment_end_date;
+        $appointment->duration = $duration;
+        $appointment->bag_quantity = $bag_quantity;
+
+        return view('users.appointments.make', compact('appointment'))->with('success', 'This appointment date is available!');
     }
 
     /**

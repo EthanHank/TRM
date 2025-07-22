@@ -15,6 +15,7 @@ class Appointment extends Model
         'appointment_start_date',
         'appointment_end_date',
         'bag_quantity',
+        'duration',
         'status',
     ];
 }

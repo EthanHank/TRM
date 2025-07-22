@@ -18,6 +18,7 @@ return new class extends Migration
             $table->date('appointment_start_date');
             $table->date('appointment_end_date');
             $table->integer('bag_quantity');
+            $table->integer('duration');
             $table->string('status')->default('pending');
             $table->softDeletes();
             $table->timestamps();

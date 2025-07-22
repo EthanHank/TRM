@@ -19,7 +19,7 @@ class DryingResultCalculationController extends Controller
     public function calculate(DryResultCalculateRequest $request, PaddyService $paddyService)
     {
         $data = $request->validated();
-        $paddy = \App\Models\Paddy::find($data['paddy_id']);
+        $paddy = Paddy::find($data['paddy_id']);
         $bag_weight = $paddy->bag_weight ?? 50;
         $result = $paddyService->calculateDryResult(
             $data['initial_moisture_content'],
@@ -39,7 +39,7 @@ class DryingResultCalculationController extends Controller
     {
         try {
             $data = $request->validated();
-            $paddy = \App\Models\Paddy::find($data['paddy_id']);
+            $paddy = Paddy::find($data['paddy_id']);
             $bag_weight = $paddy->bag_weight ?? 50;
             $result = $paddyService->calculateDryResult(
                 $data['initial_moisture_content'],

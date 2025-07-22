@@ -7,13 +7,13 @@ use Carbon\Carbon;
 class AppointmentService
 {
     /**
-     * Calculate appointment end date based on start date and bag quantity.
+     * Calculate appointment end date and duration based on start date and bag quantity.
      *
      * @param string $startDate (Y-m-d)
      * @param int $bagQuantity
-     * @return string (Y-m-d)
+     * @return array
      */
-    public function calculateEndDate(string $startDate, int $bagQuantity): string
+    public function calculateEndDate(string $startDate, int $bagQuantity): array
     {
         $start = Carbon::parse($startDate);
         $workingDaysNeeded = (int) ceil($bagQuantity / 1000);
@@ -33,6 +33,9 @@ class AppointmentService
             }
         }
 
-        return $currentDate->toDateString(); // Y-m-d
+        return [
+            'end_date' => $currentDate->toDateString(),
+            'duration' => $workingDaysNeeded,
+        ];
     }
 }
