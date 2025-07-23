@@ -87,8 +87,18 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         });
 
+        // Add hash to appointments paginator links
+        document.querySelectorAll('.appointments-pagination a.page-link').forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                if (!link.hash || link.hash === '#') {
+                    e.preventDefault();
+                    window.location = link.href + '#appointments-history';
+                }
+            });
+        });
+ 
         // Scroll to the correct section if hash is present
-        if (window.location.hash === '#drying-history' || window.location.hash === '#milling-history') {
+        if (window.location.hash === '#drying-history' || window.location.hash === '#milling-history' || window.location.hash === '#appointments-history') {
             var el = document.getElementById(window.location.hash.substring(1));
             if (el) {
                 setTimeout(function() {

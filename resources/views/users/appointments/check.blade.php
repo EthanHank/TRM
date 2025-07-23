@@ -4,14 +4,25 @@
 
 @section('content')
 <div class="container">
-<div>
-    <h6 class="text-muted mb-4" data-aos="fade-right">User &gt; My Paddies &gt; Check Appointment Availability</h6>
-</div>
-    <h1>Check Appointment Availability</h1>
+    <div class="progress-bar-container" data-aos="fade-down">
+        <div class="progress-bar-segment active">
+            Check Availability
+        </div>
+        <div class="progress-bar-segment">
+            Make Appointment
+        </div>
+    </div>
+    <h2>Check Appointment Availability</h2>
 
     @if(session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
         </div>
     @endif
 
@@ -25,8 +36,8 @@
         </div>
     @endif
 
-    <form action="" method="POST">
-        @csrf
+    <form action="{{ route('users.appointments.check-availability') }}" method="GET" data-aos="fade-up">
+        <input type="hidden" name="paddy_id" value="{{ $paddy->id }}">
         <div class="form-group mb-3">
             <label for="appointment_type_id">Appointment Type</label>
             <select name="appointment_type_id" id="appointment_type_id" class="form-control">
@@ -44,6 +55,7 @@
             <input type="text" name="bag_quantity" id="bag_quantity" value="{{ $paddy->bag_quantity }}" class="form-control">
         </div>
         <button type="submit" class="btn btn-primary">Check Availability</button>
+        <a href="{{ route('users.paddies.index') }}" class="btn btn-outline-dark">Back to Paddies</a>
     </form>
 </div>
 @endsection

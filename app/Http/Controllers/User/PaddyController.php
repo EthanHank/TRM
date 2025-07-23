@@ -28,23 +28,37 @@ class PaddyController extends Controller
             return view('users.paddies.index', compact('paddies'));
         } catch (\Exception $e) {
             // Handle the exception and return an error message
-            Log::error('Failed to retrieve users: '.$e->getMessage());
+            Log::error('Failed to retrieve users: ' . $e->getMessage());
 
-            return back()->with('error', 'An error occurred while fetching paddies: '.$e->getMessage());
+            return back()->with('error', 'An error occurred while fetching paddies: ' . $e->getMessage());
         }
     }
 
     public function show(Paddy $paddy, Request $request)
     {
-        $dryingResults = $paddy->drying_result_calculations()
-            ->orderBy('created_at', 'desc')
-            ->paginate(2, ['*'], 'drying_page')
-            ->withQueryString();
-        $millingResults = $paddy->milling_result_calculations()
-            ->orderBy('created_at', 'desc')
-            ->paginate(2, ['*'], 'milling_page')
-            ->withQueryString();
+        try {
+            $dryingResults = $paddy->drying_result_calculations()
+                ->orderBy('created_at', 'desc')
+                ->paginate(2, ['*'], 'drying_page')
+                ->withQueryString();
 
-        return view('users.paddies.show', compact('paddy', 'dryingResults', 'millingResults'));
+            $millingResults = $paddy->milling_result_calculations()
+                ->orderBy('created_at', 'desc')
+                ->paginate(2, ['*'], 'milling_page')
+                ->withQueryString();
+
+            $appointments = $paddy->appointments()
+                ->with('appointment_type:id,name')
+                ->orderBy('created_at', 'desc')
+                ->paginate(2, ['*'], 'appointments_page')
+                ->withQueryString();
+
+            return view('users.paddies.show', compact('paddy', 'dryingResults', 'millingResults', 'appointments'));
+        } catch (\Exception $e) {
+            // Handle the exception and return an error message
+            Log::error('Failed to retrieve paddy details: ' . $e->getMessage());
+
+            return back()->with('error', 'An error occurred while fetching paddy details: ' . $e->getMessage());
+        }
     }
 }

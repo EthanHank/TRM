@@ -43,6 +43,11 @@ class Paddy extends Model
         return $this->hasMany(MillingResultCalculation::class);
     }
 
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class);
+    }
+
     public function scopeSearch($query, $search)
     {
         return $query->where(function ($q) use ($search) {

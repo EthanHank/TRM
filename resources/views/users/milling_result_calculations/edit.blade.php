@@ -32,19 +32,19 @@
                         <span class="fw-bold">{{ $millingResult->adjusted_weight }}</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span><i class="bi bi-cup-straw me-2 text-warning"></i>White Rice (bags)</span>
+                        <span><i class="bi bi-box2-heart me-2 text-warning"></i>White Rice (bags)</span>
                         <span class="fw-bold">{{ $millingResult->white_rice_bags }}</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span><i class="bi bi-cup-straw me-2 text-danger"></i>Broken Rice (bags)</span>
+                        <span><i class="bi bi-box2-heart me-2 text-danger"></i>Broken Rice (bags)</span>
                         <span class="fw-bold">{{ $millingResult->broken_rice_bags }}</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span><i class="bi bi-cup-straw me-2 text-info"></i>Bran (bags)</span>
+                        <span><i class="bi bi-box2-heart me-2 text-info"></i>Bran (bags)</span>
                         <span class="fw-bold">{{ $millingResult->bran_bags }}</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <span><i class="bi bi-cup-straw me-2 text-dark"></i>Husk (bags)</span>
+                        <span><i class="bi bi-box2-heart me-2 text-dark"></i>Husk (bags)</span>
                         <span class="fw-bold">{{ $millingResult->husk_bags }}</span>
                     </li>
                 </ul>

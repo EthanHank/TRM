@@ -25,6 +25,9 @@ Route::middleware('auth')->name('users.')->prefix('users')->group(function () {
     Route::get('/dashboard', [UserController::class, 'dashboard'])->name('dashboard')->middleware('permission:user-dashboard');
     Route::resource('/paddies', UserPaddyController::class);
     Route::get('/appointments/{paddy}/check', [AppointmentController::class, 'check'])->name('appointments.check');
+    Route::get('/appointments/check-availability', [AppointmentController::class, 'checkAvailability'])->name('appointments.check-availability');
+    Route::post('/appointments', [AppointmentController::class, 'store'])->name('appointments.store');
+    Route::get('/appointments', [AppointmentController::class, 'index'])->name('appointments.index');
     // Explicit edit route for drying result calculation by Paddy
     Route::get('/drying_result_calculations/{paddy}/edit', [DryingResultCalculationController::class, 'edit'])->name('drying_result_calculations.edit');
     Route::post('/drying_result_calculations/calculate', [DryingResultCalculationController::class, 'calculate'])->name('drying_result_calculations.calculate');

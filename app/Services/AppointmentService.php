@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Exceptions\AppointmentSlotNotAvailableException;
+use App\Models\Appointment;
 use Carbon\Carbon;
 
 class AppointmentService
@@ -37,5 +39,31 @@ class AppointmentService
             'end_date' => $currentDate->toDateString(),
             'duration' => $workingDaysNeeded,
         ];
+    }
+
+    public function checkAvailability(array $data): Appointment
+    {
+        $result = $this->calculateEndDate($data['appointment_start_date'], $data['bag_quantity']);
+        $appointment_end_date = $result['end_date'];
+        $duration = $result['duration'];
+
+        $existingAppointment = Appointment::where('appointment_type_id', $data['appointment_type_id'])
+            ->where('appointment_end_date', $appointment_end_date)
+            ->first();
+
+        if ($existingAppointment) {
+            throw new AppointmentSlotNotAvailableException('This appointment date is already booked. Please choose another date.');
+        }
+
+        $appointment = new Appointment();
+        $appointment->paddy_id = $data['paddy_id'];
+        $appointment->appointment_type_id = $data['appointment_type_id'];
+        $appointment->appointment_start_date = $data['appointment_start_date'];
+        $appointment->appointment_end_date = $appointment_end_date;
+        $appointment->duration = $duration;
+        $appointment->bag_quantity = $data['bag_quantity'];
+        $appointment->load('appointment_type');
+
+        return $appointment;
     }
 }

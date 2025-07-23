@@ -172,6 +172,68 @@
         {{ $millingResults->appends(request()->except(['drying_page', 'milling_page']) + ['milling_page' => $millingResults->currentPage()])->links('vendor.pagination.bootstrap-4') }}
     </div>
     @endif
+</div>
+
+<div class="container section-fullscreen">
+    <h4 class="mb-3 mt-5" id="appointments-history" data-aos="fade-right">Appointments History</h4>
+    @if($appointments->isEmpty())
+    <div class="alert alert-info">No appointments found.</div>
+    @else
+    <div class="row bg-color" data-aos="fade-right" data-aos-offset="300" data-aos-easing="ease-in-sine">
+        @foreach($appointments as $appointment)
+        <div class="col-md-6 mb-4 mt-4" data-aos="fade-up" data-aos-offset="400">
+            <div class="card shadow-sm border-0 fade-in-result" style="max-width: 500px; margin: 0 auto; position: relative;">
+                @if($appointment->status === 'Pending')
+                <form action="{{ route('users.milling_result_calculations.destroy', $result->id) }}" method="POST" style="position: absolute; top: 10px; right: 10px; z-index: 2;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this calculation result?')">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </form>
+                @endif
+                <div class="card-body">
+                    <h5 class="card-title mb-3 text-center" style="color: #667eea;">
+                        <i class="bi bi-calendar-check"></i> Appointment Details
+                    </h5>
+                    <ul class="list-group list-group-flush mb-3">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span><i class="bi bi-calendar-event me-2 text-primary"></i>Appointment Type</span>
+                            <span class="fw-bold">{{ $appointment->appointment_type->name }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span><i class="bi bi-calendar-plus me-2 text-info"></i>Start Date</span>
+                            <span class="fw-bold">{{ $appointment->appointment_start_date }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span><i class="bi bi-calendar-x me-2 text-danger"></i>End Date</span>
+                            <span class="fw-bold">{{ $appointment->appointment_end_date }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span><i class="bi bi-hourglass-split me-2 text-warning"></i>Duration</span>
+                            <span class="fw-bold">{{ $appointment->duration }} days</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span><i class="bi bi-box-seam me-2 text-success"></i>Bag Quantity</span>
+                            <span class="fw-bold">{{ $appointment->bag_quantity }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <span><i class="bi bi-compass-fill me-2 text-secondary"></i>Status</span>
+                            <span class="fw-bold">{{ $appointment->status }}</span>
+                        </li>
+                    </ul>
+                    <div class="text-center mt-2">
+                        <span class="badge rounded-pill bg-primary">{{ $appointment->created_at->format('Y-m-d H:i') }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </div>
+    <div class="d-flex justify-content-center mt-4 appointments-pagination">
+        {{ $appointments->appends(request()->except(['drying_page', 'milling_page', 'appointments_page']) + ['appointments_page' => $appointments->currentPage()])->links('vendor.pagination.bootstrap-4') }}
+    </div>
+    @endif
     <div class="mt-4">
         <a href="{{ route('users.paddies.index') }}" class="btn btn-outline-dark">Back to Paddies</a>
     </div>

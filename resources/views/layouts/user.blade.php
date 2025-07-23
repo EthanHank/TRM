@@ -13,6 +13,7 @@
     <!-- AOS Animate On Scroll CSS -->
     <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="{{ asset('css/progress-bar.css') }}">
     @yield('styles')
 </head>
 <body>
@@ -31,7 +32,7 @@
                         <a class="nav-link m-2 text-center {{ request()->routeIs('users.paddies.*') ? 'active' : '' }}" href="{{ route('users.paddies.index') }}">Paddies</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link m-2 text-center {{ request()->routeIs('users.paddies.*') ? 'active' : '' }}" href="{{ route('users.paddies.index') }}">Appointments</a>
+                        <a class="nav-link m-2 text-center {{ request()->routeIs('users.appointments.*') ? 'active' : '' }}" href="{{ route('users.appointments.index') }}">Appointments</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0 text-center">
@@ -81,7 +82,7 @@
     </script>
     @yield('scripts')
 
-    <footer class="bg-light text-center text-muted py-3 mt-5 border-top">
+    <footer class="text-center text-white py-3 mt-5 border-top navbar-user-gradient">
         &copy; {{ date('Y') }} Tun Rice Milling. All rights reserved.
     </footer>
 </body>

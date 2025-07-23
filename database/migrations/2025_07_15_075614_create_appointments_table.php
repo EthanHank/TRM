@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('appointment_end_date');
             $table->integer('bag_quantity');
             $table->integer('duration');
-            $table->string('status')->default('pending');
+            $table->string('status')->default('Pending');
             $table->softDeletes();
             $table->timestamps();
         });

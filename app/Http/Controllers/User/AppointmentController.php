@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Appointment;
 use App\Models\AppointmentType;
 use App\Models\Paddy;
-use Illuminate\Http\Request;
 use App\Http\Requests\Appointment\CheckAvailabilityRequest;
 use App\Services\AppointmentService;
+use App\Http\Requests\Appointment\StoreAppointmentRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class AppointmentController extends Controller
 {
@@ -17,7 +19,24 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $user = Auth::user();
+            $search = request()->input('search');
+
+            $appointments = Appointment::with(['appointment_type:id,name', 'paddy.paddy_type:id,name'])
+                ->whereHas('paddy', function ($query) use ($user) {
+                    $query->where('user_id', $user->id);
+                })
+                ->when($search, function ($query, $search) {
+                    return $query->search($search);
+                })
+                ->paginate(10);
+
+            return view('users.appointments.index', compact('appointments'));
+        } catch (\Exception $e) {
+            Log::error('Failed to retrieve appointments: ' . $e->getMessage());
+            return back()->with('error', 'An error occurred while fetching appointments: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -31,65 +50,39 @@ class AppointmentController extends Controller
 
     public function checkAvailability(CheckAvailabilityRequest $request, AppointmentService $appointmentService)
     {
-        $data = $request->validated();
-
-        $appointment_type_id = $data['appointment_type_id'];
-        $appointment_start_date = $data['appointment_start_date'];
-        $bag_quantity = $data['bag_quantity'];
-
-        $result = $appointmentService->calculateEndDate($appointment_start_date, $bag_quantity);
-        $appointment_end_date = $result['end_date'];
-        $duration = $result['duration'];
-
-        $existingAppointment = Appointment::where('appointment_type_id', $appointment_type_id)
-            ->where('appointment_end_date', $appointment_end_date)
-            ->first();
-
-        if ($existingAppointment) {
-            return back()->with('error', 'This appointment date is already booked. Please choose another date.');
+        try {
+            $appointment = $appointmentService->checkAvailability($request->validated());
+            return view('users.appointments.make', [
+                'appointment' => $appointment,
+                'success' => 'Appointment date is available.',
+            ]);
+        } catch (\App\Exceptions\AppointmentSlotNotAvailableException $e) {
+            return back()->with('error', $e->getMessage());
+        } catch (\Exception $e) {
+            Log::error('Appointment availability check error: ' . $e->getMessage());
+            return redirect()->back()->withErrors(['error' => 'Failed to check appointment availability: ' . $e->getMessage()]);
         }
-
-        $appointment = new Appointment();
-        $appointment->appointment_type_id = $appointment_type_id;
-        $appointment->appointment_start_date = $appointment_start_date;
-        $appointment->appointment_end_date = $appointment_end_date;
-        $appointment->duration = $duration;
-        $appointment->bag_quantity = $bag_quantity;
-
-        return view('users.appointments.make', compact('appointment'))->with('success', 'This appointment date is available!');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreAppointmentRequest $request)
     {
-        //
+        try {
+            Appointment::create($request->validated());
+
+            return redirect()->route('users.paddies.index')->with('success', 'Appointment is made successfully.');
+        } catch (\Exception $e) {
+            Log::error('Failed to create appointment: ' . $e->getMessage());
+            // Handle the exception and return an error message
+            return redirect()->back()->with('error', 'Failed to create appointment: ' . $e->getMessage());
+        }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.
