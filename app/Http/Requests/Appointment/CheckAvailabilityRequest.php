@@ -2,10 +2,7 @@
 
 namespace App\Http\Requests\Appointment;
 
-<<<<<<< HEAD
 use App\Models\Paddy;
-=======
->>>>>>> f9b296db933c0867d102e1edb53048082cbf7aa9
 use Illuminate\Foundation\Http\FormRequest;
 
 class CheckAvailabilityRequest extends FormRequest
@@ -29,7 +26,6 @@ class CheckAvailabilityRequest extends FormRequest
             'paddy_id' => 'required|exists:paddies,id',
             'appointment_type_id' => 'required|exists:appointment_types,id',
             'appointment_start_date' => 'required|date',
-<<<<<<< HEAD
             'bag_quantity' => 'required|numeric|min:500',
         ];
     }
@@ -47,12 +43,6 @@ class CheckAvailabilityRequest extends FormRequest
         });
     }
 
-=======
-            'bag_quantity' => 'required|numeric|min:500|max:5000',
-        ];
-    }
-
->>>>>>> f9b296db933c0867d102e1edb53048082cbf7aa9
     public function messages(): array
     {
         return [
@@ -61,10 +51,6 @@ class CheckAvailabilityRequest extends FormRequest
             'bag_quantity.required' => 'The bag quantity field is required.',
             'bag_quantity.numeric' => 'The bag quantity must be a number.',
             'bag_quantity.min' => 'The bag quantity must be at least 500.',
-<<<<<<< HEAD
-=======
-            'bag_quantity.max' => 'The bag quantity must not exceed 5000.',
->>>>>>> f9b296db933c0867d102e1edb53048082cbf7aa9
         ];
     }
 }
