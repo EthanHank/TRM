@@ -1,0 +1,42 @@
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.20);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.progress-bar-container {
+    display: flex;
+    width: 100%;
+    height: 30px;
+    background-color: #949393;
+    border-radius: 25px;
+    overflow: hidden;
+    margin-bottom: 75px;
+    margin-top: 75px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.progress-bar-segment {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    color: white;
+    font-weight: bold;
+    transition: background-color 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+.progress-bar-segment.active {
+    background-color: #007bff;
+    animation: pulse 2s infinite;
+}
+
+.progress-bar-segment.completed {
+    background-color: #28a745;
+}

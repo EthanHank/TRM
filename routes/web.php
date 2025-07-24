@@ -1,0 +1,75 @@
+<?php
+
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AppointmentTypeController;
+use App\Http\Controllers\Admin\MerchantController;
+use App\Http\Controllers\Admin\PaddyController;
+use App\Http\Controllers\Admin\PaddyTypeController;
+use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\ResultTypeController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\User\AppointmentController;
+use App\Http\Controllers\User\DryingResultCalculationController;
+use App\Http\Controllers\User\MillingResultCalculationController;
+use App\Http\Controllers\User\PaddyController as UserPaddyController;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/', function () {
+    return view('home');
+});
+Route::post('/register', [UserController::class, 'register'])->name('register');
+
+Route::middleware('auth')->name('users.')->prefix('users')->group(function () {
+    Route::get('/dashboard', [UserController::class, 'dashboard'])->name('dashboard')->middleware('permission:user-dashboard');
+    Route::resource('/paddies', UserPaddyController::class);
+    Route::get('/appointments/{paddy}/check', [AppointmentController::class, 'check'])->name('appointments.check');
+    Route::get('/appointments/check-availability', [AppointmentController::class, 'checkAvailability'])->name('appointments.check-availability');
+    Route::post('/appointments', [AppointmentController::class, 'store'])->name('appointments.store');
+    Route::get('/appointments', [AppointmentController::class, 'index'])->name('appointments.index');
+    Route::delete('/appointments/{appointment}', [AppointmentController::class, 'destroy'])->name('appointments.destroy');
+    // Explicit edit route for drying result calculation by Paddy
+    Route::get('/drying_result_calculations/{paddy}/edit', [DryingResultCalculationController::class, 'edit'])->name('drying_result_calculations.edit');
+    Route::post('/drying_result_calculations/calculate', [DryingResultCalculationController::class, 'calculate'])->name('drying_result_calculations.calculate');
+    Route::post('/drying_result_calculations', [DryingResultCalculationController::class, 'store'])->name('drying_result_calculations.store');
+    Route::delete('/drying_result_calculations/{drying_result_calculation}', [DryingResultCalculationController::class, 'destroy'])->name('drying_result_calculations.destroy');
+    // Explicit edit route for milling result calculation by Paddy
+    Route::get('/milling_result_calculations/{paddy}/edit', [MillingResultCalculationController::class, 'edit'])->name('milling_result_calculations.edit');
+    Route::post('/milling_result_calculations/calculate', [MillingResultCalculationController::class, 'calculate'])->name('milling_result_calculations.calculate');
+    Route::post('/milling_result_calculations', [MillingResultCalculationController::class, 'store'])->name('milling_result_calculations.store');
+    Route::delete('/milling_result_calculations/{milling_result_calculation}', [MillingResultCalculationController::class, 'destroy'])->name('milling_result_calculations.destroy');
+});
+
+Route::middleware(['auth'])->name('admin.')->prefix('admin')->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard')->middleware('permission:admin-dashboard');
+    // Users
+    Route::resource('/users', UserController::class);
+    Route::post('/users/{user}/roles/assign', [UserController::class, 'assignRole'])->name('users.roles.assign');
+    Route::delete('/users/{user}/roles/{role}', [UserController::class, 'revokeRole'])->name('users.roles.revoke');
+    Route::get('/users/{user}', [UserController::class, 'changeStatus'])->name('users.changeStatus');
+    // Permissions
+    Route::resource('/permissions', PermissionController::class)->only(['index']);
+    // Roles
+    Route::resource('/roles', RoleController::class);
+    Route::post('/roles/{role}/permissions/assign', [RoleController::class, 'assignPermissions'])->name('roles.permissions.assign');
+    Route::delete('/roles/{role}/permissions/{permission}', [RoleController::class, 'revokePermissions'])->name('roles.permissions.revoke');
+    // Merchants
+    Route::resource('/merchants', MerchantController::class);
+    // PaddyTypes
+    Route::resource('/paddy_types', PaddyTypeController::class);
+    // ResultTypes
+    Route::resource('/result_types', ResultTypeController::class);
+    // AppointmentTypes
+    Route::resource('/appointment_types', AppointmentTypeController::class);
+    // Paddies
+    Route::resource('/paddies', PaddyController::class);
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';
