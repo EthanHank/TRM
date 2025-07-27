@@ -18,7 +18,7 @@
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 @endif
-<div class="d-flex justify-content-end mb-4">
+<div class="d-flex justify-content-start mb-4">
     <a href="{{ route('admin.appointment_types.create') }}" class="btn btn-success"> + Add Appointment Type</a>
 </div>
 <!-- Search for appointment types by name. -->

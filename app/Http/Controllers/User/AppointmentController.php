@@ -69,24 +69,15 @@ class AppointmentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreAppointmentRequest $request)
+    public function store(StoreAppointmentRequest $request, AppointmentService $appointmentService)
     {
         try {
-            $data = $request->validated();
-            $appointment = Appointment::create($data);
-            $paddy = Paddy::find($appointment->paddy_id);
-            $paddy->bag_quantity -= $appointment->bag_quantity;
-            $paddy->save();
-
-            if ($paddy->bag_quantity <= 0) {
-                $paddy->delete();
-            }
+            $appointmentService->storeAppointment($request->validated());
 
             return redirect()->route('users.paddies.index')->with('success', 'Appointment is made successfully.');
         } catch (\Exception $e) {
             Log::error('Failed to create appointment: '.$e->getMessage());
 
-            // Handle the exception and return an error message
             return redirect()->back()->with('error', 'Failed to create appointment: '.$e->getMessage());
         }
     }
@@ -98,29 +89,16 @@ class AppointmentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Appointment $appointment)
+    public function destroy(Appointment $appointment, AppointmentService $appointmentService)
     {
         try {
-            if ($appointment->status === 'Confirmed') {
-                return redirect()->back()->with('error', 'Cannot delete a confirmed appointment.');
-            }
-            else{
-                $paddy = Paddy::withTrashed()->find($appointment->paddy_id);
-                if ($paddy) {
-                    $paddy->bag_quantity += $appointment->bag_quantity;
-                    $paddy->total_bag_weight = $paddy->bag_quantity * $paddy->bag_weight;
-                    $paddy->save();
-                    $paddy->restore();
-                }
-            }
-            $appointment->forceDelete();
+            $appointmentService->destroyAppointment($appointment);
 
             return redirect()->route('users.appointments.index')->with('success', 'Appointment is cancelled successfully');
         } catch (\Exception $e) {
             Log::error('Failed to delete appointment: '.$e->getMessage());
 
-            // Handle the exception and return an error message
-            return redirect()->back()->with('error', 'Failed to delete appointment: '.$e->getMessage());
+            return redirect()->back()->with('error', $e->getMessage());
         }
     }
 }

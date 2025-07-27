@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Exceptions\AppointmentSlotNotAvailableException;
 use App\Models\Appointment;
+use App\Models\Paddy;
 use Carbon\Carbon;
 
 class AppointmentService
@@ -66,5 +67,36 @@ class AppointmentService
         $appointment->load('appointment_type');
 
         return $appointment;
+    }
+
+    public function storeAppointment(array $data): Appointment
+    {
+        $appointment = Appointment::create($data);
+        $paddy = Paddy::find($appointment->paddy_id);
+        $paddy->bag_quantity -= $appointment->bag_quantity;
+        $paddy->total_bag_weight = $paddy->bag_quantity * $paddy->bag_weight;
+        $paddy->save();
+
+        if ($paddy->bag_quantity <= 0) {
+            $paddy->delete();
+        }
+
+        return $appointment;
+    }
+
+    public function destroyAppointment(Appointment $appointment): void
+    {
+        if ($appointment->status === 'Confirmed') {
+            throw new \Exception('Cannot delete a confirmed appointment.');
+        }
+
+        $paddy = Paddy::withTrashed()->find($appointment->paddy_id);
+        if ($paddy) {
+            $paddy->bag_quantity += $appointment->bag_quantity;
+            $paddy->total_bag_weight = $paddy->bag_quantity * $paddy->bag_weight;
+            $paddy->save();
+            $paddy->restore();
+        }
+        $appointment->forceDelete();
     }
 }
