@@ -42,4 +42,23 @@ class Appointment extends Model
                 });
         });
     }
+
+    public function scopeAdminSearch($query, $search)
+    {
+        return $query->where(function ($q) use ($search) {
+            $q->WhereHas('appointment_type', function ($query) use ($search) {
+                    $query->where('name', 'like', "%{$search}%");
+                })
+                ->orWhereHas('paddy.paddy_type', function ($query) use ($search) {
+                    $query->where('name', 'like', "%{$search}%");
+                });
+        });
+    }
+
+    public function scopeAdminSearchByStartDate($query, $search)
+    {
+        return $query->where(function ($q) use ($search) {
+            $q->where('appointment_start_date', 'like', "%{$search}%");
+        });
+    }
 }

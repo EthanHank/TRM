@@ -17,11 +17,15 @@ class AppointmentController extends Controller
     {
         try {
             $search = request()->input('search');
+            $startDate = request()->input('start_date');
 
             $appointments = Appointment::with(['appointment_type:id,name', 'paddy.paddy_type:id,name'])
                 ->where('status', '!=', 'Confirmed')
                 ->when($search, function ($query, $search) {
-                    return $query->search($search);
+                    return $query->adminSearch($search);
+                })
+                ->when($startDate, function ($query, $startDate) {
+                    return $query->adminSearchByStartDate($startDate);
                 })
                 ->orderBy('appointment_start_date', 'asc')
                 ->paginate(10)->withQueryString();

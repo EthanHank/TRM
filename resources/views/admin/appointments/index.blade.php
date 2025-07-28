@@ -18,6 +18,19 @@
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 @endif
+<!-- Search for appointments -->
+    <div class="container mb-4">
+        <form method="GET" action="{{ route('admin.appointments.index') }}" class="input-group">
+            <input type="text" name="search" class="form-control"
+                placeholder="Search by appointment type, paddy type" value="{{ request('search') }}"
+                aria-label="Search appointments">
+            <input type="date" name="start_date" class="form-control" id="appointmentstartdate"
+                placeholder="Search by start date" value="{{ request('start_date') }}" aria-label="Start Date">
+            <button class="btn btn-search me-2" type="submit">
+                <i class="bi bi-search"></i> Search
+            </button>
+        </form>
+    </div>
 <!-- Roles Table -->
 <div class="col-md-12">
     <div class="card">
