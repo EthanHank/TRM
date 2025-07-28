@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Appointment\CancelAppointmentRequest;
 use App\Mail\AppointmentCancelled;
 use App\Models\Appointment;
 use App\Services\AppointmentService;
@@ -65,12 +66,10 @@ class AppointmentController extends Controller
         }
     }
 
-    public function destroy(Request $request, Appointment $appointment, AppointmentService $appointmentService)
+    public function destroy(CancelAppointmentRequest $request, Appointment $appointment, AppointmentService $appointmentService)
     {
         try {
-            $validated = $request->validate([
-                'cancel_reason' => 'required|string|min:10',
-            ]);
+            $validated = $request->validated();
 
             // Get the merchant user
             $user = $appointment->paddy->user;
