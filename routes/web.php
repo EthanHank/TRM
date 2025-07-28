@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AppointmentController as AdminAppointmentController;
 use App\Http\Controllers\Admin\AppointmentTypeController;
 use App\Http\Controllers\Admin\MerchantController;
 use App\Http\Controllers\Admin\PaddyController;
@@ -64,6 +65,11 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')->group(function () 
     Route::resource('/appointment_types', AppointmentTypeController::class);
     // Paddies
     Route::resource('/paddies', PaddyController::class);
+    // Appointments
+    Route::get('/appointments', [AdminAppointmentController::class, 'index'])->name('appointments.index');
+    Route::get('/appointments/{appointment}/cancel', [AdminAppointmentController::class, 'cancel'])->name('appointments.cancel');
+    Route::delete('/appointments/{appointment}', [AdminAppointmentController::class, 'destroy'])->name('appointments.destroy');
+    Route::get('/appointments/{appointment}', [AdminAppointmentController::class, 'confirm'])->name('appointments.confirm');
 });
 
 Route::middleware('auth')->group(function () {

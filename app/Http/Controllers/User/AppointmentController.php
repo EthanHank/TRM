@@ -30,6 +30,7 @@ class AppointmentController extends Controller
                 ->when($search, function ($query, $search) {
                     return $query->search($search);
                 })
+                ->orderBy('appointment_start_date', 'asc')
                 ->paginate(10);
 
             return view('users.appointments.index', compact('appointments'));
@@ -46,6 +47,7 @@ class AppointmentController extends Controller
     public function check(Paddy $paddy)
     {
         $appointment_types = AppointmentType::select('id', 'name')->get();
+
         return view('users.appointments.check', compact('paddy', 'appointment_types'));
     }
 
@@ -53,6 +55,7 @@ class AppointmentController extends Controller
     {
         try {
             $appointment = $appointmentService->checkAvailability($request->validated());
+
             return view('users.appointments.make', [
                 'appointment' => $appointment,
                 'success' => 'Appointment date is available.',

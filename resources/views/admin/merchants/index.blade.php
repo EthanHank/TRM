@@ -22,7 +22,7 @@
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead>
-                        <tr>
+                        <tr class="text-center align-middle">
                             <th>Name</th>
                             <th>Email</th>
                             <th>Is Opened</th>
@@ -38,7 +38,7 @@
                         </tr>
                         @endif
                         @foreach ($merchants as $merchant)
-                        <tr>
+                        <tr class="text-center align-middle">
                             <td>{{ $merchant->name }}</td>
                             <td>{{ $merchant->email }}</td>
                             <td>

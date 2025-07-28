@@ -30,7 +30,7 @@
     </div>
 </div>
 
-<div class="container section-fullscreen">
+<div class="container">
     <h4 class="mb-3" id="drying-history" data-aos="fade-right">Drying Result Calculation History</h4>
     @if (session('dry-result-delete'))
     <div class="alert alert-success alert-dismissible fade show" data-aos="fade-right" role="alert">
@@ -100,7 +100,7 @@
     @endif
 </div>
 
-<div class="container section-fullscreen">
+<div class="container">
     <h4 class="mb-3 mt-5" id="milling-history" data-aos="fade-right">Milling Result Calculation History</h4>
     @if (session('mill-result-delete'))
     <div class="alert alert-success alert-dismissible fade show" data-aos="fade-right" role="alert">
@@ -174,7 +174,7 @@
     @endif
 </div>
 
-<div class="container section-fullscreen">
+<div class="container">
     <h4 class="mb-3 mt-5" id="appointments-history" data-aos="fade-right">Appointments History</h4>
     @if($appointments->isEmpty())
     <div class="alert alert-info">No appointments found.</div>

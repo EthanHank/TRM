@@ -45,6 +45,7 @@
                             <th>#</th>
                             <th>Appointment Type</th>
                             <th>Paddy Type</th>
+                            <th>Moisture Content</th>
                             <th>Start Date</th>
                             <th>End Date</th>
                             <th>Bag Quantity</th>
@@ -63,10 +64,13 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $appointment->appointment_type->name }}</td>
                             <td>{{ $appointment->paddy->paddy_type->name }}</td>
+                            <td>{{ $appointment->paddy->moisture_content }}%</td>
                             <td>{{ $appointment->appointment_start_date }}</td>
                             <td>{{ $appointment->appointment_end_date }}</td>
                             <td>{{ $appointment->bag_quantity }}</td>
-                            <td>{{ $appointment->status }}</td>
+                            <td>
+                                <span class="badge bg-{{ $appointment->status == 'Pending' ? 'secondary' : 'success' }}">{{ $appointment->status }}</span>
+                            </td>
                             <td>
                                 @if($appointment->status === "Pending")
                                 <form action="{{ route('users.appointments.destroy', $appointment->id) }}" method="POST" class="d-inline">
@@ -77,7 +81,7 @@
                                     </button>
                                 </form>
                                 @else
-                                <span class="badge bg-primary">Appointment is confirmed</span>
+                                <span class="badge bg-dark">No action available</span>
                                 @endif
                             </td>
                         </tr>

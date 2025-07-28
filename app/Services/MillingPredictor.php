@@ -43,6 +43,7 @@ class MillingPredictor
         if (in_array((int) $this->moistureIn, [13, 14])) {
             return $totalWeight;
         }
+
         return round($totalWeight * ((100 - $this->moistureIn) / (100 - $this->moistureOut)), 2);
     }
 

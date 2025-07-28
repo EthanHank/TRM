@@ -12,6 +12,12 @@
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 @endif
+@if (session('error'))
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ session('error') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
 <!-- Roles Table -->
 <div class="col-md-12">
     <div class="card">
@@ -22,10 +28,11 @@
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead>
-                        <tr>
+                        <tr class="text-center align-middle">
                             <th>#</th>
                             <th>Appointment Type</th>
                             <th>Paddy Type</th>
+                            <th>Moisture Content</th>
                             <th>Start Date</th>
                             <th>End Date</th>
                             <th>Bag Quantity</th>
@@ -36,30 +43,32 @@
                     <tbody>
                         @if ($appointments->count() == 0)
                         <tr>
-                            <td colspan="8" class="text-center text-muted py-4">No Appointments found! T_T</td>
+                            <td colspan="9" class="text-center text-muted py-4">No Appointments found! T_T</td>
                         </tr>
                         @endif
                         @foreach ($appointments as $appointment)
-                        <tr>
+                        <tr class="text-center align-middle">
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $appointment->appointment_type->name }}</td>
                             <td>{{ $appointment->paddy->paddy_type->name }}</td>
+                            <td>{{ $appointment->paddy->moisture_content }}%</td>
                             <td>{{ $appointment->appointment_start_date }}</td>
                             <td>{{ $appointment->appointment_end_date }}</td>
                             <td>{{ $appointment->bag_quantity }}</td>
-                            <td>{{ $appointment->status }}</td>
                             <td>
-                                @if($appointment->status === "Pending")
-                                <form action="{{ route('users.appointments.destroy', $appointment->id) }}" method="POST" class="d-inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to cancel this appointment?')">
-                                        <i class="bi bi-trash"></i> Cancel Appointment
-                                    </button>
-                                </form>
-                                @else
-                                <span class="badge bg-primary">Appointment is confirmed</span>
-                                @endif
+                                <span class="badge bg-secondary">{{ $appointment->status }}</span>
+                            </td>
+                            <td>
+                                <span class="btn btn-danger btn-sm mb-1">
+                                    <a class="text-white text-decoration-none" href="{{ route('admin.appointments.cancel', $appointment->id) }}">
+                                        <i class="bi bi-x-circle"></i> Cancel
+                                    </a>
+                                </span>
+                                <span class="btn btn-primary btn-sm mb-1">
+                                    <a class="text-white text-decoration-none" href="{{ route('admin.appointments.confirm', $appointment->id) }}">
+                                        <i class="bi bi-calendar-check-fill"></i> Confirm
+                                    </a>
+                                </span>
                             </td>
                         </tr>
                         @endforeach
@@ -68,10 +77,10 @@
             </div>
             
             <div class="mt-3">
-                    @if($merchants->hasPages())
-                        {{ $merchants->links('vendor.pagination.custom-pagination') }}
+                    @if($appointments->hasPages())
+                        {{ $appointments->links('vendor.pagination.custom-pagination') }}
                     @else
-                        <small class="text-muted">Showing all results ({{ $merchants->total() }} total)</small>
+                        <small class="text-muted">Showing all results ({{ $appointments->total() }} total)</small>
                     @endif
             </div>
         </div>
