@@ -95,6 +95,9 @@ class AppointmentController extends Controller
     public function destroy(Appointment $appointment, AppointmentService $appointmentService)
     {
         try {
+            if ($appointment->status === 'Confirmed') {
+                return redirect()->back()->with('error', 'Cannot cancel a confirmed appointment.');
+            }
             $appointmentService->destroyAppointment($appointment);
 
             return redirect()->route('users.appointments.index')->with('success', 'Appointment is cancelled successfully');

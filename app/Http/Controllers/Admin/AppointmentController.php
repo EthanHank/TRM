@@ -30,8 +30,19 @@ class AppointmentController extends Controller
                 })
                 ->orderBy('appointment_start_date', 'asc')
                 ->paginate(10)->withQueryString();
+            
+            $confirmed_appointments = Appointment::with(['appointment_type:id,name', 'paddy.paddy_type:id,name'])
+                ->where('status', '!=', 'Pending')
+                ->when($search, function ($query, $search) {
+                    return $query->adminSearch($search);
+                })
+                ->when($startDate, function ($query, $startDate) {
+                    return $query->adminSearchByStartDate($startDate);
+                })
+                ->orderBy('appointment_start_date', 'asc')
+                ->paginate(10)->withQueryString();
 
-            return view('admin.appointments.index', compact('appointments'));
+            return view('admin.appointments.index', compact('appointments', 'confirmed_appointments'));
         } catch (\Exception $e) {
             Log::error('Failed to retrieve appointments: '.$e->getMessage());
 
@@ -42,6 +53,11 @@ class AppointmentController extends Controller
     public function cancel(Appointment $appointment)
     {
         try {
+
+            if ($appointment->status === 'Confirmed') 
+            {
+                return redirect()->back()->with('error', 'Cannot cancel a confirmed appointment.');
+            }
             return view('admin.appointments.cancel', compact('appointment'));
         } catch (\Exception $e) {
             Log::error('Failed to cancel appointment: '.$e->getMessage());
@@ -53,6 +69,10 @@ class AppointmentController extends Controller
     public function confirm(Appointment $appointment)
     {
         try {
+            if ($appointment->status === 'Confirmed') {
+                return redirect()->back()->with('error', 'This appointment is already confirmed.');
+            }
+
             $appointment->update(['status' => 'Confirmed']);
             $user = $appointment->paddy->user;
 
@@ -69,6 +89,9 @@ class AppointmentController extends Controller
     public function destroy(CancelAppointmentRequest $request, Appointment $appointment, AppointmentService $appointmentService)
     {
         try {
+            if ($appointment->status === 'Confirmed') {
+                return redirect()->back()->with('error', 'Cannot cancel a confirmed appointment.');
+            }
             $validated = $request->validated();
 
             // Get the merchant user
