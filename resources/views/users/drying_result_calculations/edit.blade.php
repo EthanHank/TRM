@@ -7,7 +7,10 @@
     <h6 class="text-muted mb-4" data-aos="fade-right">User &gt; My Paddies &gt; Drying Result Calculation</h6>
 </div>
 
-@if(isset($dryingResult) && !isset($success))
+@if(session('dryingResult') && !session('success'))
+    @php
+        $dryingResult = session('dryingResult');
+    @endphp
     <div class="mt-5 fade-in-result" data-aos="fade-up">
         <div class="card shadow-sm border-0" style="max-width: 500px; margin: 0 auto;">
             <div class="card-body">
@@ -64,8 +67,10 @@
 
 <div class="container mt-5" data-aos="fade-up">
     <h4 class="mb-3" data-aos="fade-down">Calculate Drying Result</h4>
-    @if(isset($success))
-        <div class="alert alert-success">{{ $success }}</div>
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
     @endif
     @if($errors->any())
         <div class="alert alert-danger">
@@ -77,6 +82,7 @@
         </div>
     @endif
     <form method="POST" action="{{ route('users.drying_result_calculations.calculate') }}">
+        @method('POST')
         @csrf
         <input type="hidden" name="paddy_id" value="{{ old('paddy_id', $paddy->id ?? '') }}">
         <div class="mb-3">

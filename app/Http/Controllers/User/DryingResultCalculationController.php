@@ -13,7 +13,9 @@ class DryingResultCalculationController extends Controller
 {
     public function edit(Paddy $paddy)
     {
-        return view('users.drying_result_calculations.edit', compact('paddy'));
+        $dryingResult = session('dryingResult');
+
+        return view('users.drying_result_calculations.edit', compact('paddy', 'dryingResult'));
     }
 
     public function calculate(DryResultCalculateRequest $request, PaddyService $paddyService)
@@ -29,11 +31,10 @@ class DryingResultCalculationController extends Controller
                 $bag_weight
             );
 
-            return view('users.drying_result_calculations.edit', [
-                'paddy' => $paddy,
-                'dryingResult' => (object) array_merge($data, $result),
-                'calculated' => true,
-            ]);
+            $dryingResult = (object) array_merge($data, $result);
+
+            return redirect()->route('users.drying_result_calculations.edit', ['paddy' => $paddy->id])
+                ->with('dryingResult', $dryingResult);
         } catch (\Exception $e) {
             Log::error('Drying result calculation error: '.$e->getMessage());
 
@@ -53,12 +54,10 @@ class DryingResultCalculationController extends Controller
                 $data['initial_bag_quantity'],
                 $bag_weight
             );
-            DryingResultCalculation::create([array_merge($data, $result)]);
+            DryingResultCalculation::create(array_merge($data, $result));
 
-            return view('users.drying_result_calculations.edit', [
-                'paddy' => $paddy,
-                'success' => 'Drying result calculated and saved successfully.',
-            ]);
+            return redirect()->route('users.drying_result_calculations.edit', $paddy->id)
+                ->with('success', 'Drying result calculated and saved successfully.');
         } catch (\Exception $e) {
             Log::error('Calculation store error: '.$e->getMessage());
 

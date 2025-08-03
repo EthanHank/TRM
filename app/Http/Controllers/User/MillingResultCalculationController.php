@@ -13,7 +13,9 @@ class MillingResultCalculationController extends Controller
 {
     public function edit(Paddy $paddy)
     {
-        return view('users.milling_result_calculations.edit', compact('paddy'));
+        $millingResult = session('millingResult');
+
+        return view('users.milling_result_calculations.edit', compact('paddy', 'millingResult'));
     }
 
     public function calculate(MillingResultCalculateRequest $request)
@@ -30,10 +32,10 @@ class MillingResultCalculationController extends Controller
             );
             $result = $predictor->summary();
 
-            return view('users.milling_result_calculations.edit', [
-                'paddy' => $paddy,
-                'millingResult' => (object) array_merge($data, $result),
-            ]);
+            $millingResult = (object) array_merge($data, $result);
+
+            return redirect()->route('users.milling_result_calculations.edit', ['paddy' => $paddy->id])
+                ->with('millingResult', $millingResult);
         } catch (\Exception $e) {
             Log::error('Failed to calculate milling result: '.$e->getMessage());
 
@@ -44,13 +46,21 @@ class MillingResultCalculationController extends Controller
     public function store(MillingResultCalculateRequest $request)
     {
         try {
-            $millingResult = MillingResultCalculation::create($request->validated());
-            $paddy = Paddy::find($millingResult->paddy_id);
+            $data = $request->validated();
+            $paddy = Paddy::find($data['paddy_id']);
+            $bag_weight = $paddy->bag_weight ?? 50;
+            $predictor = new MillingPredictor(
+                $data['initial_bag_quantity'],
+                $bag_weight,
+                $data['initial_moisture_content'],
+                $data['final_moisture_content']
+            );
+            $result = $predictor->summary();
 
-            return view('users.milling_result_calculations.edit', [
-                'paddy' => $paddy,
-                'success' => 'Milling result calculated and saved successfully.',
-            ]);
+            MillingResultCalculation::create(array_merge($data, $result));
+
+            return redirect()->route('users.milling_result_calculations.edit', $paddy->id)
+                ->with('success', 'Milling result calculated and saved successfully.');
         } catch (\Exception $e) {
             Log::error('Failed to store milling result calculation: '.$e->getMessage());
 
