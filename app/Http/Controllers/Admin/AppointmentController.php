@@ -11,10 +11,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AppointmentConfirmed;
+use Illuminate\Support\Facades\App;
 
 class AppointmentController extends Controller
 {
-    public function index()
+    public function index(AppointmentService $appointmentService)
     {
         try {
             $search = request()->input('search');
@@ -31,8 +32,7 @@ class AppointmentController extends Controller
                 ->orderBy('appointment_start_date', 'asc')
                 ->paginate(10)->withQueryString();
             
-            $confirmed_appointments = Appointment::with(['appointment_type:id,name', 'paddy.paddy_type:id,name'])
-                ->where('status', '!=', 'Pending')
+            $confirmed_appointments = $appointmentService->confirmedAppointmentList()
                 ->when($search, function ($query, $search) {
                     return $query->adminSearch($search);
                 })

@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('appointments', function (Blueprint $table) {
+        Schema::create('millings', function (Blueprint $table) {
             $table->id()->primary();
-            $table->foreignId('paddy_id')->constrained('paddies')->onDelete('cascade');
-            $table->foreignId('appointment_type_id')->constrained('appointment_types')->onDelete('cascade');
-            $table->date('appointment_start_date');
-            $table->date('appointment_end_date');
+            $table->foreignId('appointment_id')
+                ->constrained('appointments')
+                ->onDelete('cascade');
+            $table->date('milling_start_date');
+            $table->date('milling_end_date')->nullable();
             $table->integer('bag_quantity');
-            $table->integer('duration');
-            $table->string('status')->default('Pending');
+            $table->string('status')->default('In Progress');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('appointments');
+        Schema::dropIfExists('millings');
     }
 };

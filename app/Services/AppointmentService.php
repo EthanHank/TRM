@@ -99,4 +99,10 @@ class AppointmentService
         }
         $appointment->forceDelete();
     }
+
+    public function confirmedAppointmentList()
+    {
+        return Appointment::with(['appointment_type:id,name', 'paddy.paddy_type:id,name'])
+            ->where('status', 'Confirmed');
+    }
 }

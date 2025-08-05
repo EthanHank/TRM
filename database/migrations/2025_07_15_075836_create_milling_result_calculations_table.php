@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('milling_result_calculations', function (Blueprint $table) {
-            $table->id();
+            $table->id()->primary();
             $table->foreignId('paddy_id')->constrained('paddies')->onDelete('cascade');
             $table->integer('initial_moisture_content');
             $table->integer('final_moisture_content');

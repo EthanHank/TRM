@@ -30,6 +30,11 @@ class Appointment extends Model
         return $this->belongsTo(Paddy::class)->withTrashed();
     }
 
+    public function milling()
+    {
+        return $this->hasOne(Milling::class);
+    }
+
     public function scopeSearch($query, $search)
     {
         return $query->where(function ($q) use ($search) {
