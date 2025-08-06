@@ -121,13 +121,12 @@
                             <th>End Date</th>
                             <th>Bag Quantity</th>
                             <th>Status</th>
-                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @if ($confirmed_appointments->count() == 0)
                         <tr>
-                            <td colspan="9" class="text-center text-muted py-4">No Appointments found! T_T</td>
+                            <td colspan="8" class="text-center text-muted py-4">No Appointments found! T_T</td>
                         </tr>
                         @endif
                         @foreach ($confirmed_appointments as $appointment)
@@ -141,18 +140,6 @@
                             <td>{{ $appointment->bag_quantity }}</td>
                             <td>
                                 <span class="badge bg-secondary">{{ $appointment->status }}</span>
-                            </td>
-                            <td>
-                                <span class="btn btn-danger btn-sm mb-1">
-                                    <a class="text-white text-decoration-none" href="{{ route('admin.appointments.cancel', $appointment->id) }}">
-                                        <i class="bi bi-x-circle"></i> Cancel
-                                    </a>
-                                </span>
-                                <span class="btn btn-primary btn-sm mb-1">
-                                    <a class="text-white text-decoration-none" href="{{ route('admin.appointments.confirm', $appointment->id) }}">
-                                        <i class="bi bi-calendar-check-fill"></i> Confirm
-                                    </a>
-                                </span>
                             </td>
                         </tr>
                         @endforeach

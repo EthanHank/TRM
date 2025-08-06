@@ -9,7 +9,29 @@ class MillingService
 {
     public function getAllMillings()
     {
-        return Milling::select('id', 'appointment_id', 'milling_start_date', 'milling_end_date','bag_quantity', 'status')
-            ->with(['appointment.paddy.paddy_type:name', 'appointment.appointment_type:name']);
+        return Milling::with([
+            'appointment' => function ($query) {
+                $query->with([
+                    'paddy' => function ($query) {
+                        $query->withTrashed();
+                    },
+                    'paddy.paddy_type',
+                    'appointment_type'
+                ])->withTrashed();
+            }
+        ]);
+    }
+
+    public function createMilling($appointment)
+    {
+        $milling = Milling::create([
+            'appointment_id' => $appointment->id,
+            'milling_start_date' => Carbon::now(),
+            'milling_end_date' => null, // Set to null initially
+            'bag_quantity' => $appointment->bag_quantity, // Assuming bag_quantity is part of the appointment
+            'status' => 'In Progress',
+        ]);
+
+        return $milling;
     }
 }

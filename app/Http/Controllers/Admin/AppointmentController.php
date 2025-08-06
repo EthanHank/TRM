@@ -7,11 +7,9 @@ use App\Http\Requests\Appointment\CancelAppointmentRequest;
 use App\Mail\AppointmentCancelled;
 use App\Models\Appointment;
 use App\Services\AppointmentService;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AppointmentConfirmed;
-use Illuminate\Support\Facades\App;
 
 class AppointmentController extends Controller
 {

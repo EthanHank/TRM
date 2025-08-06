@@ -43,6 +43,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('admin.millings.*') ? 'active' : '' }}" href="{{ route('admin.millings.index') }}">
+                        <i class="bi bi-box"></i>
+                        Millings
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('admin.appointments.*') ? 'active' : '' }}" href="{{ route('admin.appointments.index') }}">
                         <i class="bi bi-calendar3"></i>
                         Appointments
