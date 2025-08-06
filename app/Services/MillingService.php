@@ -32,6 +32,9 @@ class MillingService
             'status' => 'In Progress',
         ]);
 
+        $appointment->status = "Milling";
+        $appointment->save();
+
         return $milling;
     }
 }

@@ -35,6 +35,7 @@ Route::middleware('auth')->name('users.')->prefix('users')->group(function () {
     Route::post('/appointments', [AppointmentController::class, 'store'])->name('appointments.store');
     Route::get('/appointments', [AppointmentController::class, 'index'])->name('appointments.index');
     Route::delete('/appointments/{appointment}', [AppointmentController::class, 'destroy'])->name('appointments.destroy');
+    Route::get('/appointments/{appointment}', [AppointmentController::class, 'show'])->name('appointments.show');
 
     // Explicit edit route for drying result calculation by Paddy
     Route::get('/drying_result_calculations/{paddy}/edit', [DryingResultCalculationController::class, 'edit'])->name('drying_result_calculations.edit');

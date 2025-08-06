@@ -40,6 +40,12 @@ class AppointmentController extends Controller
             return back()->with('error', 'An error occurred while fetching appointments: ' . $e->getMessage());
         }
     }
+    public function show(Appointment $appointment)
+    {
+        $milling = $appointment->milling();
+
+        return view('users.appointments.show', compact('appointment','milling'));
+    }
 
     /**
      * Show the form for creating a new resource.

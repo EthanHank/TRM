@@ -20,12 +20,12 @@ class MillingController extends Controller
         ->paginate(10)->withQueryString();
 
         $completed_millings = $millingService->getAllMillings()
-            ->where('status', '!=', 'In Progress')
+            ->where('status', '=', 'Completed')
             ->orderBy('milling_start_date', 'asc')
             ->paginate(10)->withQueryString();
         
         $progress_millings = $millingService->getAllMillings()
-            ->where('status', '!=', 'Completed')
+            ->where('status', '=', 'In Progress')
             ->get();
 
         return view('admin.millings.index', compact('appointments', 'completed_millings', 'progress_millings'));

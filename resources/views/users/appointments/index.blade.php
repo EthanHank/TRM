@@ -80,8 +80,12 @@
                                         <i class="bi bi-trash"></i> Cancel Appointment
                                     </button>
                                 </form>
-                                @else
+                                @elseif ($appointment->status === "Confirmed")
                                 <span class="badge bg-dark">No action available</span>
+                                @else
+                                <a href="{{ route('users.appointments.show', $appointment->id) }}" class="btn btn-outline-primary btn-sm mb-1">
+                                    <i class="bi bi-eye"></i> View Details
+                                </a>
                                 @endif
                             </td>
                         </tr>

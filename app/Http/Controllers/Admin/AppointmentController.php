@@ -20,7 +20,7 @@ class AppointmentController extends Controller
             $startDate = request()->input('start_date');
 
             $appointments = Appointment::with(['appointment_type:id,name', 'paddy.paddy_type:id,name'])
-                ->where('status', '!=', 'Confirmed')
+                ->where('status', '=', 'Pending')
                 ->when($search, function ($query, $search) {
                     return $query->adminSearch($search);
                 })
@@ -47,7 +47,6 @@ class AppointmentController extends Controller
             return back()->with('error', 'An error occurred while fetching appointments: '.$e->getMessage());
         }
     }
-
     public function cancel(Appointment $appointment)
     {
         try {
