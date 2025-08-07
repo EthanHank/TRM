@@ -13,6 +13,11 @@ class ResultType extends Model
 
     protected $table = 'result_types';
 
+    public function results()
+    {
+        return $this->hasMany(Result::class);
+    }
+
     public function scopeSearch($query, $search)
     {
         return $query->where(function ($q) use ($search) {

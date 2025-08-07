@@ -49,6 +49,7 @@
                         @csrf
                         <input type="text" name="appointment_id" value="{{ $appointment->id }}" hidden>
                         <button type="submit" class="btn btn-success">Start Milling</button>
+                        <a href="{{ route('admin.millings.index') }}" class="btn btn-outline-secondary">Cancel</a>
                     </form>
                 </div>
             </div>

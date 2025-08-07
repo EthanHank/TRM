@@ -61,6 +61,11 @@ class User extends Authenticatable
         return $this->hasMany(Paddy::class);
     }
 
+    public function results()
+    {
+        return $this->hasMany(Result::class);
+    }
+
     public function scopeSearch($query, $search)
     {
         return $query->where(function ($q) use ($search) {

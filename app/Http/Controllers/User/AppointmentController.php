@@ -42,7 +42,12 @@ class AppointmentController extends Controller
     }
     public function show(Appointment $appointment)
     {
-        $milling = $appointment->milling();
+        $milling = $appointment->milling;
+
+        if (!$milling) 
+        {
+            return redirect()->back()->with('error', 'No milling information available for this appointment.');
+        }
 
         return view('users.appointments.show', compact('appointment','milling'));
     }

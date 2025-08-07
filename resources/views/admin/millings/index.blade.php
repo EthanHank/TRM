@@ -167,13 +167,12 @@
                             <th>Milling End Date</th>
                             <th>Bag Quantity</th>
                             <th>Status</th>
-                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @if ($completed_millings->count() == 0)
                         <tr>
-                            <td colspan="8" class="text-center text-muted py-4">No In Progress Millings found! T_T</td>
+                            <td colspan="7" class="text-center text-muted py-4">No In Progress Millings found! T_T</td>
                         </tr>
                         @endif
                         @foreach ($completed_millings as $milling)
@@ -186,13 +185,6 @@
                             <td>{{ $milling->bag_quantity }}</td>
                             <td>
                                 <span class="badge bg-secondary">{{ $milling->status }}</span>
-                            </td>
-                            <td>
-                                <span class="btn btn-primary btn-sm">
-                                    <a class="text-white text-decoration-none" href="{{ route('admin.millings.edit', $milling->id) }}">
-                                        Mark as Completed
-                                    </a>
-                                </span>
                             </td>
                         </tr>
                         @endforeach

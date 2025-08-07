@@ -22,4 +22,9 @@ class Milling extends Model
     {
         return $this->belongsTo(Appointment::class, 'appointment_id');
     }
+
+    public function results()
+    {
+        return $this->hasMany(Result::class);
+    }
 }
