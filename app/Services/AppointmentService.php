@@ -4,9 +4,9 @@ namespace App\Services;
 
 use App\Exceptions\AppointmentSlotNotAvailableException;
 use App\Models\Appointment;
+use App\Models\AppointmentType;
 use App\Models\Paddy;
 use Carbon\Carbon;
-use App\Models\AppointmentType;
 
 class AppointmentService
 {
@@ -46,12 +46,9 @@ class AppointmentService
         $appointmentType = AppointmentType::find($data['appointment_type_id']);
         $paddy = Paddy::find($data['paddy_id']);
 
-        if( $paddy->moisture_content > 14 && $appointmentType->name === 'milling') 
-        {
+        if ($paddy->moisture_content > 14 && $appointmentType->name === 'milling') {
             throw new AppointmentSlotNotAvailableException('Moisture content is too high for the milling appointment. Please dry first and ensure the moisture content is below 14% before scheduling.');
-        }
-        elseif ($paddy->moisture_content <= 14 && $appointmentType->name === 'drying') 
-        {
+        } elseif ($paddy->moisture_content <= 14 && $appointmentType->name === 'drying') {
             throw new AppointmentSlotNotAvailableException('Your paddy is already dry. No need for drying appointment.');
         }
 

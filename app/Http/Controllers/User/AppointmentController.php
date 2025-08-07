@@ -35,21 +35,21 @@ class AppointmentController extends Controller
 
             return view('users.appointments.index', compact('appointments'));
         } catch (\Exception $e) {
-            Log::error('Failed to retrieve appointments: ' . $e->getMessage());
+            Log::error('Failed to retrieve appointments: '.$e->getMessage());
 
-            return back()->with('error', 'An error occurred while fetching appointments: ' . $e->getMessage());
+            return back()->with('error', 'An error occurred while fetching appointments: '.$e->getMessage());
         }
     }
+
     public function show(Appointment $appointment)
     {
         $milling = $appointment->milling;
 
-        if (!$milling) 
-        {
+        if (! $milling) {
             return redirect()->back()->with('error', 'No milling information available for this appointment.');
         }
 
-        return view('users.appointments.show', compact('appointment','milling'));
+        return view('users.appointments.show', compact('appointment', 'milling'));
     }
 
     /**
@@ -74,9 +74,9 @@ class AppointmentController extends Controller
         } catch (\App\Exceptions\AppointmentSlotNotAvailableException $e) {
             return back()->with('error', $e->getMessage());
         } catch (\Exception $e) {
-            Log::error('Appointment availability check error: ' . $e->getMessage());
+            Log::error('Appointment availability check error: '.$e->getMessage());
 
-            return redirect()->back()->withErrors(['error' => 'Failed to check appointment availability: ' . $e->getMessage()]);
+            return redirect()->back()->withErrors(['error' => 'Failed to check appointment availability: '.$e->getMessage()]);
         }
     }
 
@@ -90,9 +90,9 @@ class AppointmentController extends Controller
 
             return redirect()->route('users.paddies.index')->with('success', 'Appointment is made successfully.');
         } catch (\Exception $e) {
-            Log::error('Failed to create appointment: ' . $e->getMessage());
+            Log::error('Failed to create appointment: '.$e->getMessage());
 
-            return redirect()->back()->with('error', 'Failed to create appointment: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Failed to create appointment: '.$e->getMessage());
         }
     }
 
@@ -113,7 +113,7 @@ class AppointmentController extends Controller
 
             return redirect()->route('users.appointments.index')->with('success', 'Appointment is cancelled successfully');
         } catch (\Exception $e) {
-            Log::error('Failed to delete appointment: ' . $e->getMessage());
+            Log::error('Failed to delete appointment: '.$e->getMessage());
 
             return redirect()->back()->with('error', $e->getMessage());
         }

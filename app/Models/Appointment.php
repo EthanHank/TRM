@@ -52,8 +52,8 @@ class Appointment extends Model
     {
         return $query->where(function ($q) use ($search) {
             $q->WhereHas('appointment_type', function ($query) use ($search) {
-                    $query->where('name', 'like', "%{$search}%");
-                })
+                $query->where('name', 'like', "%{$search}%");
+            })
                 ->orWhereHas('paddy.paddy_type', function ($query) use ($search) {
                     $query->where('name', 'like', "%{$search}%");
                 });

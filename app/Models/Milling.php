@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Milling extends Model
 {
     use SoftDeletes;
+
     protected $table = 'millings';
 
     protected $fillable = [

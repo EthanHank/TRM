@@ -3,7 +3,10 @@
 namespace App\Services;
 
 use App\Models\Milling;
+use App\Models\Result;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class MillingService
 {
@@ -16,9 +19,9 @@ class MillingService
                         $query->withTrashed();
                     },
                     'paddy.paddy_type',
-                    'appointment_type'
+                    'appointment_type',
                 ])->withTrashed();
-            }
+            },
         ]);
     }
 
@@ -32,9 +35,42 @@ class MillingService
             'status' => 'In Progress',
         ]);
 
-        $appointment->status = "Milling";
+        $appointment->status = 'Milling';
         $appointment->save();
 
         return $milling;
+    }
+
+    public function updateMilling(Milling $milling, array $data): bool
+    {
+        try {
+            DB::beginTransaction();
+
+            foreach ($data['results'] as $result_type_id => $bag_quantity) {
+                Result::create([
+                    'result_type_id' => $result_type_id,
+                    'milling_id' => $milling->id,
+                    'user_id' => $milling->appointment->paddy->user_id,
+                    'bag_quantity' => $bag_quantity,
+                ]);
+            }
+
+            $milling->status = 'Completed';
+            $milling->milling_end_date = now();
+            $milling->save();
+
+            // Update the appointment status to 'Completed'
+            $milling->appointment->status = 'Milled';
+            $milling->appointment->save();
+
+            DB::commit();
+
+            return true;
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Failed to update milling: '.$e->getMessage());
+
+            return false;
+        }
     }
 }

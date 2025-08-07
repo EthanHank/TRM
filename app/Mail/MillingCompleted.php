@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Milling;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -9,21 +10,18 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class AppointmentConfirmed extends Mailable implements ShouldQueue
+class MillingCompleted extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    public $appointment;
-
-    public $user;
+    public $milling;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($appointment, $user)
+    public function __construct(Milling $milling)
     {
-        $this->appointment = $appointment;
-        $this->user = $user;
+        $this->milling = $milling;
     }
 
     /**
@@ -32,7 +30,7 @@ class AppointmentConfirmed extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Appointment Confirmed',
+            subject: 'Milling Completed',
         );
     }
 
@@ -42,11 +40,7 @@ class AppointmentConfirmed extends Mailable implements ShouldQueue
     public function content(): Content
     {
         return new Content(
-            markdown: 'emails.appointment.confirmed',
-            with: [
-                'appointment' => $this->appointment,
-                'user' => $this->user,
-            ],
+            markdown: 'emails.millings.completed',
         );
     }
 

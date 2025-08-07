@@ -26,6 +26,7 @@ class UpdateRequest extends FormRequest
             'results.*' => 'required|integer|min:0',
         ];
     }
+
     /**
      * Get the error messages for the defined validation rules.
      */

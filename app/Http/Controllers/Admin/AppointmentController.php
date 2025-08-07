@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Appointment\CancelAppointmentRequest;
 use App\Mail\AppointmentCancelled;
+use App\Mail\AppointmentConfirmed;
 use App\Models\Appointment;
 use App\Services\AppointmentService;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\AppointmentConfirmed;
 
 class AppointmentController extends Controller
 {
@@ -29,7 +29,7 @@ class AppointmentController extends Controller
                 })
                 ->orderBy('appointment_start_date', 'asc')
                 ->paginate(10)->withQueryString();
-            
+
             $confirmed_appointments = $appointmentService->confirmedAppointmentList()
                 ->when($search, function ($query, $search) {
                     return $query->adminSearch($search);
@@ -47,14 +47,15 @@ class AppointmentController extends Controller
             return back()->with('error', 'An error occurred while fetching appointments: '.$e->getMessage());
         }
     }
+
     public function cancel(Appointment $appointment)
     {
         try {
 
-            if ($appointment->status === 'Confirmed') 
-            {
+            if ($appointment->status === 'Confirmed') {
                 return redirect()->back()->with('error', 'Cannot cancel a confirmed appointment.');
             }
+
             return view('admin.appointments.cancel', compact('appointment'));
         } catch (\Exception $e) {
             Log::error('Failed to cancel appointment: '.$e->getMessage());
