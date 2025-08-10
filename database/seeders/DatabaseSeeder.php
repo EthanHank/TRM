@@ -17,5 +17,6 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(AppointmentTypeSeeder::class);
         $this->call(ResultTypeSeeder::class);
+        $this->call(PaddyTypeSeeder::class);
     }
 }

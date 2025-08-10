@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\ResultTypeController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\DryingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\AppointmentController;
 use App\Http\Controllers\User\DryingResultCalculationController;
@@ -91,6 +92,10 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')->group(function () 
     // Milling
     Route::resource('/millings', MillingController::class)->except(['create']);
     Route::get('/millings/create/{appointment}', [MillingController::class, 'create'])->name('millings.create');
+
+    // Drying
+    Route::resource('/dryings', DryingController::class)->except(['create']);
+    Route::get('/dryings/create/{appointment}', [DryingController::class, 'create'])->name('dryings.create');
 });
 
 Route::middleware('auth')->group(function () {

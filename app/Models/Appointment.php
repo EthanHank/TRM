@@ -34,6 +34,10 @@ class Appointment extends Model
     {
         return $this->hasOne(Milling::class);
     }
+    public function drying()
+    {
+        return $this->hasOne(Drying::class);
+    }
 
     public function scopeSearch($query, $search)
     {

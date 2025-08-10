@@ -120,7 +120,7 @@
                     <tbody>
                         @if ($progress_millings->count() == 0)
                         <tr>
-                            <td colspan="7" class="text-center text-muted py-4">No In Progress Millings found! T_T</td>
+                            <td colspan="7" class="text-center text-muted py-4">No In Progress Milling found! T_T</td>
                         </tr>
                         @endif
                         @foreach ($progress_millings as $milling)
@@ -172,7 +172,7 @@
                     <tbody>
                         @if ($completed_millings->count() == 0)
                         <tr>
-                            <td colspan="7" class="text-center text-muted py-4">No In Progress Millings found! T_T</td>
+                            <td colspan="7" class="text-center text-muted py-4">No Completed Milling found! T_T</td>
                         </tr>
                         @endif
                         @foreach ($completed_millings as $milling)

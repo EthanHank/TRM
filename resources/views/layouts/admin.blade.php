@@ -44,13 +44,19 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('admin.millings.*') ? 'active' : '' }}" href="{{ route('admin.millings.index') }}">
-                        <i class="bi bi-box"></i>
+                        <i class="bi bi-building-fill-gear"></i>
                         Millings
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('admin.dryings.*') ? 'active' : '' }}" href="{{ route('admin.dryings.index') }}">
+                        <i class="bi bi-fire"></i>
+                        Dryings
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('admin.appointments.*') ? 'active' : '' }}" href="{{ route('admin.appointments.index') }}">
-                        <i class="bi bi-calendar3"></i>
+                        <i class="bi bi-calendar-check-fill"></i>
                         Appointments
                     </a>
                 </li>
