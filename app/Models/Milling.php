@@ -19,6 +19,11 @@ class Milling extends Model
         'status',
     ];
 
+    protected $casts = [
+        'milling_start_date' => 'datetime',
+        'milling_end_date' => 'datetime',
+    ];
+
     public function appointment()
     {
         return $this->belongsTo(Appointment::class, 'appointment_id');

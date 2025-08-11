@@ -7,7 +7,7 @@
                     <td style="padding: 48px 40px 32px 40px; text-align: center;">
                         <div style="margin-bottom: 24px;">
                             <h1 style="color: #667eea; font-size: 2rem; font-weight: bold; margin-bottom: 20px;">Tun Rice Milling</h1>
-                            <h2 style="color: #667eea; font-size: 1.5rem; font-weight: bold; margin-bottom: 20px;">Hello, {{ $milling->user->name }}!</h2>
+                            <h2 style="color: #667eea; font-size: 1.5rem; font-weight: bold; margin-bottom: 20px;">Hello, {{ optional($milling->appointment->paddy->user)->name }}!</h2>
                         </div>
                         <p style="font-size: 1.15rem; color: #333; margin-bottom: 18px;">
                             <span style="display: inline-block; background: #28a745; color: #fff; border-radius: 8px; padding: 4px 16px; font-weight: 600; font-size: 1rem; margin-bottom: 10px;">Milling Process Completed</span><br>
@@ -17,20 +17,19 @@
                             <p style="font-size: 1rem; color: #667eea; margin: 0 0 8px 0; font-weight: 600;">Milling Summary</p>
                             <p style="font-size: 1rem; color: #333; margin: 0;">
                                 <strong>Milling ID:</strong> {{ $milling->id }}<br>
-                                <strong>Paddy:</strong> {{ $milling->paddy->name }}<br>
-                                <strong>Date Completed:</strong> {{ $milling->milling_end_date->format('F d, Y') }}
+                                <strong>Appointment ID:</strong> {{ $milling->appointment->id }}<br>
+                                <strong>Paddy:</strong> {{ optional($milling->appointment->paddy->paddy_type)->name }}<br>
+                                <strong>Date Completed:</strong> {{ \Carbon\Carbon::parse($milling->milling_end_date)->format('F d, Y') }}<br>
+                                <strong>Bag Quantity:</strong> {{ $milling->bag_quantity }}
                             </p>
                         </div>
                         <div style="background: #f8fafc; border-radius: 12px; padding: 24px 20px; margin: 24px 0 18px 0; display: inline-block; text-align: left; box-shadow: 0 1px 4px #667eea11; min-width: 320px;">
                             <p style="font-size: 1rem; color: #667eea; margin: 0 0 8px 0; font-weight: 600;">Milling Results</p>
                             <p style="font-size: 1rem; color: #333; margin: 0;">
                                 @foreach ($milling->results as $result)
-                                    <strong>{{ $result->result_type->name }}:</strong> {{ $result->value }} {{ $result->result_type->unit }}<br>
+                                    <strong>{{ optional($result->result_type)->name }} :</strong> {{ $result->bag_quantity }} Bags<br>
                                 @endforeach
                             </p>
-                        </div>
-                        <div style="margin: 24px 0;">
-                            <a href="{{ url('users/results') }}" style="display: inline-block; background: #667eea; color: #fff; padding: 12px 28px; border-radius: 8px; font-weight: 600; text-decoration: none; font-size: 1.1rem; box-shadow: 0 2px 8px #667eea22;">View My Millings Results</a>
                         </div>
                         <hr style="margin: 32px 0; border: none; border-top: 1px solid #e2e8f0;">
                         <p style="color: #888; font-size: 0.98rem;">Thank you for your patience. Your final products are now ready for collection.<br>Thanks,<br><span style="color: #667eea; font-weight: 600;">{{ config('app.name') }}</span></p>

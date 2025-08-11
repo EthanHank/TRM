@@ -15,7 +15,7 @@ class Result extends Model
         'bag_quantity',
     ];
 
-    public function resultType()
+    public function result_type()
     {
         return $this->belongsTo(ResultType::class);
     }
