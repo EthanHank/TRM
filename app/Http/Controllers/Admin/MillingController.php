@@ -18,10 +18,15 @@ class MillingController extends Controller
 {
     public function index(AppointmentService $appointmentService, MillingService $millingService)
     {
+        $search = request()->input('search');
+        $startDate = request()->input('start_date');
+
         $appointments = $appointmentService->confirmedAppointmentList()
             ->whereHas('appointment_type', function ($query) {
                 $query->where('name', 'milling');
             })
+            ->when($search, fn ($query, $search) => $query->adminSearch($search))
+            ->when($startDate, fn ($query, $startDate) => $query->adminSearchByStartDate($startDate))
             ->orderBy('appointment_start_date', 'asc')
             ->paginate(10)->withQueryString();
 

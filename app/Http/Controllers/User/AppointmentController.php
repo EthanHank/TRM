@@ -27,9 +27,7 @@ class AppointmentController extends Controller
                 ->whereHas('paddy', function ($query) use ($user) {
                     $query->where('user_id', $user->id);
                 })
-                ->when($search, function ($query, $search) {
-                    return $query->search($search);
-                })
+                ->when($search, fn ($query, $search) => $query->search($search))
                 ->orderBy('appointment_start_date', 'asc')
                 ->paginate(10);
 
@@ -44,12 +42,12 @@ class AppointmentController extends Controller
     public function show(Appointment $appointment)
     {
         $milling = $appointment->milling;
+        $drying = $appointment->drying;
 
-        if (! $milling) {
-            return redirect()->back()->with('error', 'No milling information available for this appointment.');
-        }
-
-        return view('users.appointments.show', compact('appointment', 'milling'));
+        if (!$milling or !$drying) 
+            return redirect()->back()->with('error', 'No milling or drying information available for this appointment.');
+        else
+            return view('users.appointments.show', compact('appointment', 'milling', 'drying'));
     }
 
     /**

@@ -21,12 +21,8 @@ class AppointmentController extends Controller
 
             $appointments = Appointment::with(['appointment_type:id,name', 'paddy.paddy_type:id,name'])
                 ->where('status', '=', 'Pending')
-                ->when($search, function ($query, $search) {
-                    return $query->adminSearch($search);
-                })
-                ->when($startDate, function ($query, $startDate) {
-                    return $query->adminSearchByStartDate($startDate);
-                })
+                ->when($search, fn ($query, $search) => $query->adminSearch($search))
+                ->when($startDate, fn ($query, $startDate) => $query->adminSearchByStartDate($startDate))
                 ->orderBy('appointment_start_date', 'asc')
                 ->paginate(10)->withQueryString();
 
