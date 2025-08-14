@@ -35,6 +35,22 @@ class DryingController extends Controller
 
     public function create(Appointment $appointment)
     {
+        if ($appointment->appointment_type->name !== 'drying') 
+        {
+            return redirect()->back()->with('error', 'This appointment is not for drying.');
+        }
+
+        if($appointment->appointment_start_date > now()) 
+        {
+            return redirect()->back()->with('error', 'This appointment should not be dried today. Please check the appointment start date.');
+        }
+
+        $drying = Drying::where('status', '=', 'In Progress')->first();
+
+        if ($drying) {
+            return redirect()->back()->with('error', 'There is already a drying in progress.');
+        }
+        
         return view('admin.dryings.create', compact('appointment'));
     }
 

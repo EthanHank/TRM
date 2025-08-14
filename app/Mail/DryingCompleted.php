@@ -2,7 +2,7 @@
 
 namespace App\Mail;
 
-use App\Models\Milling;
+use App\Models\Drying;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -10,18 +10,18 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class MillingCompleted extends Mailable implements ShouldQueue
+class DryingCompleted extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    public $milling;
+    public $drying;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(Milling $milling)
+    public function __construct(Drying $drying)
     {
-        $this->milling = $milling;
+        $this->drying = $drying;
     }
 
     /**
@@ -30,7 +30,7 @@ class MillingCompleted extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Milling Completed',
+            subject: 'Drying Completed',
         );
     }
 
@@ -40,9 +40,9 @@ class MillingCompleted extends Mailable implements ShouldQueue
     public function content(): Content
     {
         return new Content(
-            markdown: 'emails.millings.completed',
+            markdown: 'emails.dryings.completed',
             with: [
-                'milling' => $this->milling
+                'drying' => $this->drying
             ]
         );
     }

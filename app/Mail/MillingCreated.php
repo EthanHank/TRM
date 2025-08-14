@@ -41,6 +41,9 @@ class MillingCreated extends Mailable implements ShouldQueue
     {
         return new Content(
             markdown: 'emails.millings.created',
+            with: [
+                'milling' => $this->milling
+            ]
         );
     }
 

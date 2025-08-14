@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Models\Milling;
 use App\Models\Result;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -29,7 +28,7 @@ class MillingService
     {
         $milling = Milling::create([
             'appointment_id' => $appointment->id,
-            'milling_start_date' => Carbon::now(),
+            'milling_start_date' => now(),
             'milling_end_date' => null, // Set to null initially
             'bag_quantity' => $appointment->bag_quantity, // Assuming bag_quantity is part of the appointment
             'status' => 'In Progress',

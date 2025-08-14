@@ -7,6 +7,9 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Services\PaddyService;
+use App\Mail\DryingStarted;
+use App\Mail\DryingCompleted;
+use Illuminate\Support\Facades\Mail;
 
 class DryingService
 {
@@ -44,6 +47,8 @@ class DryingService
         $appointment->status = 'Drying';
         $appointment->save();
 
+        Mail::to($appointment->paddy->user->email)->queue(new DryingStarted($drying));
+
         return $drying;
     }
 
@@ -75,6 +80,8 @@ class DryingService
             // Update the appointment status to 'Completed'
             $drying->appointment->status = 'Dried';
             $drying->appointment->save();
+
+            Mail::to($drying->appointment->paddy->user->email)->queue(new DryingCompleted($drying));
 
             DB::commit();
 
