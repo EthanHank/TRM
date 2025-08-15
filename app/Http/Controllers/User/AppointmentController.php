@@ -44,7 +44,7 @@ class AppointmentController extends Controller
         $milling = $appointment->milling;
         $drying = $appointment->drying;
 
-        if (!$milling or !$drying) 
+        if (($milling || $drying) === null) 
             return redirect()->back()->with('error', 'No milling or drying information available for this appointment.');
         else
             return view('users.appointments.show', compact('appointment', 'milling', 'drying'));
