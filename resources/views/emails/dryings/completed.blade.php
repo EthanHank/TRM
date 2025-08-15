@@ -23,6 +23,20 @@
                                 <strong>Bag Quantity:</strong> {{ $drying->bag_quantity }}
                             </p>
                         </div>
+                        <div style="background: #f8fafc; border-radius: 12px; padding: 24px 20px; margin: 24px 0 18px 0; display: inline-block; text-align: left; box-shadow: 0 1px 4px #667eea11; min-width: 320px;">
+                            <p style="font-size: 1rem; color: #667eea; margin: 0 0 8px 0; font-weight: 600;">Drying Results</p>
+                            <p>Your current paddy details has changed into the following:</p>
+                            <p style="font-size: 1rem; color: #333; margin: 0;">
+                                <strong>Paddy ID:</strong> {{ $drying->appointment->paddy->id }}<br>
+                                <strong>Moisture Content:</strong> {{ $drying->appointment->paddy->moisture_content }}%<br>
+                                <strong>Bag Weight:</strong> {{ $drying->appointment->paddy->bag_weight }} kg<br>
+                                <strong>Bag Quantity:</strong> {{ $drying->appointment->paddy->bag_quantity }} Bags<br>
+                                <strong>Total Bag Weight:</strong> {{ $drying->appointment->paddy->total_bag_weight }} kg<br>
+                                <strong>Storage Start Date:</strong> {{ $drying->appointment->paddy->storage_start_date }}<br>
+                                <strong>Storage End Date:</strong> {{ $drying->appointment->paddy->storage_end_date }}<br>
+                                <strong>Storage Duration:</strong> {{ $drying->appointment->paddy->maximum_storage_duration }}</strong>
+                            </p>
+                        </div>
                         <hr style="margin: 32px 0; border: none; border-top: 1px solid #e2e8f0;">
                         <p style="color: #888; font-size: 0.98rem;">Thank you for your patience. Your final products are now ready for collection.<br>Thanks,<br><span style="color: #667eea; font-weight: 600;">{{ config('app.name') }}</span></p>
                     </td>
