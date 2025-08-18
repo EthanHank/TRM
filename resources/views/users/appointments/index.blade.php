@@ -76,14 +76,14 @@
                                 <form action="{{ route('users.appointments.destroy', $appointment->id) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to cancel this appointment?')">
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to cancel this appointment?')" data-aos="fade-right" data-aos-delay="1000">
                                         <i class="bi bi-trash"></i> Cancel Appointment
                                     </button>
                                 </form>
                                 @elseif ($appointment->status === "Confirmed")
-                                <span class="badge bg-dark">No action available</span>
+                                <span class="badge bg-dark" data-aos="fade-right" data-aos-delay="1000">No action available</span>
                                 @else
-                                <a href="{{ route('users.appointments.show', $appointment->id) }}" class="btn btn-outline-primary btn-sm mb-1">
+                                <a href="{{ route('users.appointments.show', $appointment->id) }}" class="btn btn-outline-primary btn-sm mb-1" data-aos="fade-right" data-aos-delay="1000">
                                     <i class="bi bi-eye"></i> View Details
                                 </a>
                                 @endif

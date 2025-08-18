@@ -30,7 +30,7 @@
 </div>
 
 @if(isset($milling))
-<div class="container">
+<div class="container mb-5">
     <h4 class="mb-3" data-aos="fade-right">Milling Overview</h4>
     <div class="row bg-color" data-aos="fade-right" data-aos-offset="300" data-aos-easing="ease-in-sine">
         <div class="mb-4 mt-4" data-aos="fade-up" data-aos-offset="400">
@@ -61,6 +61,25 @@
                     <div class="text-center mt-2">
                         <span class="badge rounded-pill bg-primary">{{ $milling->created_at->format('Y-m-d H:i') }}</span>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <h4 class="mb-3" data-aos="fade-right">Results Overview</h4>
+    <div class="row bg-color" data-aos="fade-right" data-aos-offset="200" data-aos-easing="ease-in-sine">
+        <div class="mb-4 mt-4" data-aos="fade-up" data-aos-offset="300">
+            <div class="card shadow-sm border-0 fade-in-result" style="margin: 0 auto; position: relative;">
+                <div class="card-body">
+                    <ul class="list-group list-group-flush mb-3">
+                        @foreach ($milling->results as $result)
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span>{{ $result->result_type->name }}</span>
+                                <span class="fw-bold">{{ $result->bag_quantity }}</span>
+                            </li>
+                        @endforeach
+                    </ul>
                 </div>
             </div>
         </div>

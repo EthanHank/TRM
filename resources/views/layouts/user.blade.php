@@ -34,6 +34,9 @@
                     <li class="nav-item">
                         <a class="nav-link m-2 text-center {{ request()->routeIs('users.appointments.*') ? 'active' : '' }}" href="{{ route('users.appointments.index') }}">Appointments</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link m-2 text-center {{ request()->routeIs('users.results.*') ? 'active' : '' }}" href="{{ route('users.results.index') }}">Results</a>
+                    </li>
                 </ul>
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0 text-center">
                     <li class="nav-item dropdown">

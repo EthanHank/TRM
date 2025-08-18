@@ -12,11 +12,13 @@ use App\Http\Controllers\Admin\ResultTypeController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\DryingController;
+use App\Http\Controllers\Admin\ResultController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\AppointmentController;
 use App\Http\Controllers\User\DryingResultCalculationController;
 use App\Http\Controllers\User\MillingResultCalculationController;
 use App\Http\Controllers\User\PaddyController as UserPaddyController;
+use App\Http\Controllers\User\ResultController as UserResultController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -49,6 +51,9 @@ Route::middleware('auth')->name('users.')->prefix('users')->group(function () {
     Route::post('/milling_result_calculations/calculate', [MillingResultCalculationController::class, 'calculate'])->name('milling_result_calculations.calculate');
     Route::post('/milling_result_calculations', [MillingResultCalculationController::class, 'store'])->name('milling_result_calculations.store');
     Route::delete('/milling_result_calculations/{milling_result_calculation}', [MillingResultCalculationController::class, 'destroy'])->name('milling_result_calculations.destroy');
+
+    //Results
+    Route::resource('/results', UserResultController::class)->only(['index', 'destroy']);
 });
 
 Route::middleware(['auth'])->name('admin.')->prefix('admin')->group(function () {
@@ -96,6 +101,9 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')->group(function () 
     // Drying
     Route::resource('/dryings', DryingController::class)->except(['create']);
     Route::get('/dryings/create/{appointment}', [DryingController::class, 'create'])->name('dryings.create');
+
+    // Results
+    Route::resource('/results', ResultController::class)->except(['create','show']);
 });
 
 Route::middleware('auth')->group(function () {

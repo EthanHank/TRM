@@ -77,16 +77,16 @@
                             <td>{{ $paddy->storage_end_date }}</td>
                             <td>{{ $paddy->maximum_storage_duration }}</td>
                             <td>
-                                <a href="{{ route('users.appointments.check', $paddy->id) }}" class="btn btn-outline-primary btn-sm mb-1">
+                                <a href="{{ route('users.appointments.check', $paddy->id) }}" class="btn btn-outline-primary btn-sm mb-1" data-aos="fade-right" data-aos-delay="1000">
                                     <i class="bi bi-calendar-plus"></i> Make Appointment
                                 </a><br>
-                                <a href="{{ route('users.paddies.show', $paddy->id) }}" class="btn btn-outline-info btn-sm mb-1">
+                                <a href="{{ route('users.paddies.show', $paddy->id) }}" class="btn btn-outline-info btn-sm mb-1" data-aos="fade-right" data-aos-delay="1000">
                                     <i class="bi bi-eye"></i> View Paddy Details
                                 </a><br>
-                                <a href="{{ route('users.drying_result_calculations.edit', $paddy->id) }}" class="btn btn-outline-success btn-sm mb-1">
+                                <a href="{{ route('users.drying_result_calculations.edit', $paddy->id) }}" class="btn btn-outline-success btn-sm mb-1" data-aos="fade-right" data-aos-delay="1000">
                                     <i class="bi bi-calculator"></i> Calculate Drying Result
                                 </a><br>
-                                <a href="{{ route('users.milling_result_calculations.edit', $paddy->id) }}" class="btn btn-outline-warning btn-sm mb-1">
+                                <a href="{{ route('users.milling_result_calculations.edit', $paddy->id) }}" class="btn btn-outline-warning btn-sm mb-1" data-aos="fade-right" data-aos-delay="1000">
                                     <i class="bi bi-calculator"></i> Calculate Milling Result
                                 </a>
                             </td>
