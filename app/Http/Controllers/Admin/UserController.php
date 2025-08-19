@@ -28,11 +28,6 @@ class UserController extends Controller implements HasMiddleware
         ];
     }
 
-    public function dashboard()
-    {
-        return view('users.dashboard');
-    }
-
     public function index(Request $request)
     {
         try {

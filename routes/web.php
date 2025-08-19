@@ -13,12 +13,15 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\DryingController;
 use App\Http\Controllers\Admin\ResultController;
+use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\AppointmentController;
 use App\Http\Controllers\User\DryingResultCalculationController;
 use App\Http\Controllers\User\MillingResultCalculationController;
 use App\Http\Controllers\User\PaddyController as UserPaddyController;
 use App\Http\Controllers\User\ResultController as UserResultController;
+use App\Http\Controllers\User\DashboardController;
+use App\Http\Controllers\User\ReportController as UserReportController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -27,7 +30,7 @@ Route::get('/', function () {
 Route::post('/register', [UserController::class, 'register'])->name('register');
 
 Route::middleware('auth')->name('users.')->prefix('users')->group(function () {
-    Route::get('/dashboard', [UserController::class, 'dashboard'])->name('dashboard')->middleware('permission:user-dashboard');
+    Route::get('/dashboard', DashboardController::class)->name('dashboard')->middleware('permission:user-dashboard');
 
     // Paddies
     Route::resource('/paddies', UserPaddyController::class);
@@ -54,6 +57,14 @@ Route::middleware('auth')->name('users.')->prefix('users')->group(function () {
 
     //Results
     Route::resource('/results', UserResultController::class)->only(['index', 'destroy']);
+
+    // Reports
+    Route::get('/reports/appointment-history', [UserReportController::class, 'appointmentHistory'])->name('reports.appointment_history');
+    Route::get('/reports/paddy-processing', [UserReportController::class, 'paddyProcessing'])->name('reports.paddy_processing');
+
+    // PDF Exports
+    Route::get('/reports/appointment-history/pdf', [UserReportController::class, 'appointmentHistoryPdf'])->name('reports.appointment_history.pdf');
+    Route::get('/reports/paddy-processing/pdf', [UserReportController::class, 'paddyProcessingPdf'])->name('reports.paddy_processing.pdf');
 });
 
 Route::middleware(['auth'])->name('admin.')->prefix('admin')->group(function () {
@@ -104,6 +115,20 @@ Route::middleware(['auth'])->name('admin.')->prefix('admin')->group(function () 
 
     // Results
     Route::resource('/results', ResultController::class)->except(['create','show']);
+
+    // Reports
+    Route::get('/reports/overall-performance', [ReportController::class, 'overallPerformance'])->name('reports.overall_performance');
+    Route::get('/reports/paddy-type-performance', [ReportController::class, 'paddyTypePerformance'])->name('reports.paddy_type_performance');
+    Route::get('/reports/merchant-activity', [ReportController::class, 'merchantActivity'])->name('reports.merchant_activity');
+    Route::get('/reports/milling-prediction-accuracy', [ReportController::class, 'millingPredictionAccuracy'])->name('reports.milling_prediction_accuracy');
+    Route::get('/reports/appointment-history', [ReportController::class, 'appointmentHistory'])->name('reports.appointment_history');
+    Route::get('/reports/paddy-processing', [ReportController::class, 'paddyProcessing'])->name('reports.paddy_processing');
+
+    // PDF Exports
+    Route::get('/reports/overall-performance/pdf', [ReportController::class, 'overallPerformancePdf'])->name('reports.overall_performance.pdf');
+    Route::get('/reports/paddy-type-performance/pdf', [ReportController::class, 'paddyTypePerformancePdf'])->name('reports.paddy_type_performance.pdf');
+    Route::get('/reports/merchant-activity/pdf', [ReportController::class, 'merchantActivityPdf'])->name('reports.merchant_activity.pdf');
+    Route::get('/reports/milling-prediction-accuracy/pdf', [ReportController::class, 'millingPredictionAccuracyPdf'])->name('reports.milling_prediction_accuracy.pdf');
 });
 
 Route::middleware('auth')->group(function () {

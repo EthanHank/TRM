@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class MillingResultCalculation extends Model
 {
+    use HasFactory;
     protected $table = 'milling_result_calculations';
 
     protected $fillable = [

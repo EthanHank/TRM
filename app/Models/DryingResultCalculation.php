@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class DryingResultCalculation extends Model
 {
+    use HasFactory;
     protected $table = 'drying_result_calculations';
 
     protected $fillable = [
