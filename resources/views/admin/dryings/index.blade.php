@@ -97,7 +97,7 @@
     </div>
 </div>
 
-<!-- In Progress Milling Table -->
+<!-- In Progress Drying Table -->
 <div class="col-md-12 mb-5">
     <div class="card">
         <div class="card-header bg-white">
@@ -149,7 +149,7 @@
     </div>
 </div>
 
-<!-- Completed Milling Table -->
+<!-- Completed Drying Table -->
 <div class="col-md-12">
     <div class="card">
         <div class="card-header bg-white">

@@ -6,8 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Admin\ReportController;
 use App\Models\Appointment;
 use App\Models\Paddy;
-use App\Models\Result;
+use App\Models\PaddyType;
+use App\Models\ResultType;
 use App\Models\User;
+use App\Models\Milling;
+use App\Models\Drying;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -16,8 +19,17 @@ class AdminController extends Controller
     {
         $merchantCount = User::role('merchant')->count();
         $appointmentCount = Appointment::count();
+        $resultTypeCount = ResultType::count();
+        $paddyTypeCount = PaddyType::count();
+        $totalMillings = Milling::count();
+        $totalDryings = Drying::count();
+        $totalCompletedDryings = Drying::where('status', 'Completed')->count();
+        $totalCompletedMillings = Milling::where('status', 'Completed')->count();
+        $progress_millings = Milling::where('status', 'In Progress')->get();
+        $progress_dryings = Drying::where('status', 'In Progress')->get();
+        $pendingAppointmentCount = Appointment::where('status', 'Pending')->count();
         $totalPaddyWeight = Paddy::sum('bag_quantity');
-        $recentAppointments = Appointment::with('paddy.user', 'appointment_type')->latest()->take(5)->get();
+        $pendingAppointments = Appointment::with('paddy.user', 'appointment_type','paddy.paddy_type')->where('status', 'Pending')->latest()->take(5)->get();
 
         // Get report data
         $overallPerformance = $reportController->overallPerformance($request);
@@ -29,11 +41,20 @@ class AdminController extends Controller
             'merchantCount',
             'appointmentCount',
             'totalPaddyWeight',
-            'recentAppointments',
+            'pendingAppointments',
             'overallPerformance',
             'paddyTypePerformance',
             'merchantActivity',
-            'millingPredictionAccuracy'
+            'millingPredictionAccuracy',
+            'pendingAppointmentCount',
+            'resultTypeCount',
+            'paddyTypeCount',
+            'progress_millings',
+            'totalMillings',
+            'totalCompletedMillings',
+            'progress_dryings',
+            'totalDryings',
+            'totalCompletedDryings'
         ));
     }
 }

@@ -1,7 +1,7 @@
 @extends('layouts.user')
 
 @section('header')
-    User Dashboard
+User Dashboard
 @endsection
 
 @section('content')
@@ -23,7 +23,7 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
                         <h6 class="text-muted mb-2">Total Paddy Enrolled (bags)</h6>
-                        <h3 class="mb-0">{{ number_format($totalPaddySupplied, 2) }}</h3>
+                        <h3 class="mb-0">{{ number_format($totalPaddySupplied) }}</h3>
                     </div>
                     <div class="stat-icon bg-primary bg-opacity-10 text-primary">
                         <i class="bi bi-inbox"></i>
@@ -51,6 +51,62 @@
 
 <div class="row">
     <div class="col-md-12">
+        <div class="card shadow-sm mb-4" data-aos="fade-up">
+            <div class="card-body">
+                <h4 class="card-title mb-3">Recent Appointments</h4>
+                <div class="table-responsive" data-aos="fade-up">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                                <th>Paddy Type</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($recentAppointments as $appointment)
+                            <tr>
+                                <td>{{ $appointment->appointment_start_date->format('d M Y') }}</td>
+                                <td>{{ $appointment->appointment_end_date->format('d M Y') }}</td>
+                                <td>{{ $appointment->appointment_type->name }}</td>
+                                <td><span class="badge bg-{{ $appointment->status == 'Pending' ? 'secondary' : 'success' }}">{{ $appointment->status }}</span></td>
+                                <td>{{ $appointment->paddy->paddy_type->name }}</td>
+                                <td>
+                                    @if($appointment->status === "Pending")
+                                    <form action="{{ route('users.appointments.destroy', $appointment->id) }}" method="POST" class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to cancel this appointment?')" data-aos="fade-right" data-aos-delay="1000">
+                                            <i class="bi bi-trash"></i> Cancel Appointment
+                                        </button>
+                                    </form>
+                                    @elseif ($appointment->status === "Confirmed")
+                                    <span class="badge bg-dark" data-aos="fade-right" data-aos-delay="1000">No action available</span>
+                                    @else
+                                    <a href="{{ route('users.appointments.show', $appointment->id) }}" class="btn btn-outline-primary btn-sm mb-1" data-aos="fade-right" data-aos-delay="1000">
+                                        <i class="bi bi-eye"></i> View Details
+                                    </a>
+                                    @endif
+                                </td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan="6" class="text-center">No recent appointments.</td>
+                            </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
         <div class="card" data-aos="fade-down">
             <div class="card-header bg-white">
                 <ul class="nav nav-tabs card-header-tabs" id="reportsTab" role="tablist">
@@ -62,7 +118,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="card-body">
+            <div class="card-body" data-aos="fade-down">
                 <div class="tab-content" id="reportsTabContent">
                     <div class="tab-pane fade show active" id="appointment-history" role="tabpanel" aria-labelledby="appointment-history-tab">
                         <a href="{{ route('users.reports.appointment_history.pdf') }}" class="btn btn-primary btn-sm mb-3">Export to <i class="bi bi-filetype-pdf"></i></a>
@@ -81,11 +137,11 @@
 
 @push('scripts')
 <script>
-    $(document).ready(function(){
+    $(document).ready(function() {
         // Tab persistence with URL parameters
         var url = new URL(window.location.href);
         var activeTab = url.searchParams.get("tab");
-        if(activeTab){
+        if (activeTab) {
             $('#reportsTab button[data-bs-target="#' + activeTab + '"]').tab('show');
         }
 

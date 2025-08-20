@@ -20,7 +20,7 @@
                     <td>{{ $appointment->appointment_type->name }}</td>
                     <td>{{ $appointment->appointment_start_date }}</td>
                     <td>{{ $appointment->appointment_end_date }}</td>
-                    <td><span class="badge bg-{{ $appointment->status == 'completed' ? 'success' : 'warning' }}">{{ ucfirst($appointment->status) }}</span></td>
+                    <td><span class="badge bg-{{ $appointment->status == 'Pending' ? 'secondary' : 'success' }}">{{ ucfirst($appointment->status) }}</span></td>
                 </tr>
             @empty
                 <tr>
