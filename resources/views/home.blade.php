@@ -133,11 +133,18 @@
         }
 
         #home {
-            background-image: url('/images/home-section1.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
             position: relative;
+            overflow: hidden;
+        }
+
+        #homeVideo {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
         }
 
         #home::before {
@@ -147,26 +154,29 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: rgba(255, 255, 255, 0.80);
+            background-color: rgba(0, 0, 0, 0.5);
             z-index: 1;
         }
 
         #home .section-content {
             position: relative;
             z-index: 2;
-            color: rgb(56, 81, 191);
+            color: rgba(219, 227, 247, 1);
         }
 
         #home h1 {
             font-size: 2.5rem;
             font-weight: bold;
             margin-bottom: 1.5rem;
+            color: rgba(219, 227, 247, 1);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
 
         #home .lead {
             font-size: 1.5rem;
             margin-bottom: 1rem;
             font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
 
         #about,
@@ -289,6 +299,10 @@
     <div class="main-content">
         <!-- Home Section -->
         <section id="home" class="section-padding">
+            {{-- Replace the src with your video path --}}
+            <video autoplay muted loop playsinline id="homeVideo">
+                <source src="/videos/home-bg.mp4" type="video/mp4">
+            </video>
             <div class="container section-content">
                 <h1>Welcome to Tun Rice Milling</h1>
                 <p class="lead">Your trusted partner in quality rice milling services.</p>
