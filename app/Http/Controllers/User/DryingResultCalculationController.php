@@ -8,9 +8,19 @@ use App\Models\DryingResultCalculation;
 use App\Models\Paddy;
 use App\Services\PaddyService;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+use Spatie\Permission\Middleware\PermissionMiddleware;
 
-class DryingResultCalculationController extends Controller
+class DryingResultCalculationController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return [
+            new Middleware(PermissionMiddleware::using('user-dashboard'), only: ['edit', 'calculate', 'store', 'destroy']),
+        ];
+    }
+
     public function edit(Paddy $paddy)
     {
         $dryingResult = session('dryingResult');

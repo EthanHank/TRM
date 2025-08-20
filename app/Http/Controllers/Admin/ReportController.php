@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Appointment;
-use App\Models\Drying;
-use App\Models\Milling;
 use App\Models\MillingResultCalculation;
 use App\Models\Paddy;
 use App\Models\PaddyType;
@@ -13,9 +11,19 @@ use App\Models\Result;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+use Spatie\Permission\Middleware\PermissionMiddleware;
 
 class ReportController extends Controller
 {
+    public static function middleware()
+    {
+        return [
+            new Middleware(PermissionMiddleware::using('view-report'), only: ['overallPerformance', 'paddyTypePerformance', 'merchantActivity', 'millingPredictionAccuracy']),
+            new Middleware(PermissionMiddleware::using('download-report'), only: ['overallPerformancePdf', 'paddyTypePerformancePdf', 'merchantActivityPdf', 'millingPredictionAccuracyPdf']),
+        ];
+    }
     public function overallPerformance(Request $request)
     {
         $totalAppointments = Appointment::count();

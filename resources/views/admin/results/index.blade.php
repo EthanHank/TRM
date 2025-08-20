@@ -49,13 +49,15 @@
                             <th>Paddy Type</th>
                             <th>Username</th>
                             <th>Bag Quantity</th>
+                            @if(Auth::user()->hasPermissionTo('edit-result') || Auth::user()->hasPermissionTo('delete-result'))
                             <th>Action</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
                         @if ($results->count() == 0)
                         <tr>
-                            <td colspan="5" class="text-center text-muted py-4">No Results found! T_T</td>
+                            <td colspan="{{ Auth::user()->hasPermissionTo('edit-result') || Auth::user()->hasPermissionTo('delete-result') ? 5 : 4 }}" class="text-center text-muted py-4">No Results found! T_T</td>
                         </tr>
                         @endif
                         @foreach ($results as $result)
@@ -64,12 +66,16 @@
                             <td>{{ $result->milling->appointment->paddy->paddy_type->name }}</td>
                             <td>{{ $result->user->name }}</td>
                             <td>{{ $result->bag_quantity }}</td>
+                            @if(Auth::user()->hasPermissionTo('edit-result') || Auth::user()->hasPermissionTo('delete-result'))
                             <td>
+                                @if(Auth::user()->hasPermissionTo('edit-result'))
                                 <span class="btn btn-primary mb-1">
                                     <a class="text-white" href="{{ route('admin.results.edit', $result->id) }}">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
                                 </span>
+                                @endif
+                                @if(Auth::user()->hasPermissionTo('delete-result'))
                                 <form action="{{ route('admin.results.destroy', $result->id) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
@@ -77,7 +83,9 @@
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </form>
+                                @endif
                             </td>
+                            @endif
                         </tr>
                         @endforeach
                     </tbody>

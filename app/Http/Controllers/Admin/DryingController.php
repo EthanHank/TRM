@@ -9,9 +9,21 @@ use App\Services\AppointmentService;
 use App\Services\DryingService;
 use App\Http\Requests\Drying\MakeDryingRequest;
 use App\Models\Drying;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+use Spatie\Permission\Middleware\PermissionMiddleware;
 
-class DryingController extends Controller
+class DryingController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return [
+            new Middleware(PermissionMiddleware::using('view-drying'), only: ['index']),
+            new Middleware(PermissionMiddleware::using('create-drying'), only: ['create', 'store']),
+            new Middleware(PermissionMiddleware::using('complete-drying'), only: ['edit', 'update']),
+        ];
+    }
+
     public function index(AppointmentService $appointmentService, DryingService $dryingService)
     {
         $search = request()->input('search');

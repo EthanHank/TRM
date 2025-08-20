@@ -18,9 +18,11 @@
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 @endif
+@if(Auth::user()->hasPermissionTo('create-user'))
 <div class="d-flex justify-content-start mb-4">
     <a href="{{ route('admin.users.create') }}" class="btn btn-success"> + Add User</a>
 </div>
+@endif
 <div class="row mb-3">
     <div class="col-md-6 offset-md-6">
         <form method="GET" action="{{ route('admin.users.index') }}" class="input-group">
@@ -53,13 +55,15 @@
                             <th>Is Opened</th>
                             <th>Role</th>
                             <th>Status</th>
+                            @if (Auth::user()->hasPermissionTo('edit-user') || Auth::user()->hasPermissionTo('delete-user'))
                             <th>Action</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
                         @if ($users->count() == 0)
                         <tr>
-                            <td colspan="6" class="text-center text-muted py-4">No users found! T_T</td>
+                            <td colspan="{{ Auth::user()->hasPermissionTo('edit-user') || Auth::user()->hasPermissionTo('delete-user') ? 6 : 5 }}" class="text-center text-muted py-4">No users found! T_T</td>
                         </tr>
                         @endif
                         @foreach ($users as $user)
@@ -87,12 +91,16 @@
                                 <span class="badge bg-danger">Inactive</span>
                                 @endif
                             </td>
+                            @if (Auth::user()->hasPermissionTo('edit-user') || Auth::user()->hasPermissionTo('delete-user'))
                             <td>
+                                @if(Auth::user()->hasPermissionTo('edit-user'))
                                 <span class="btn btn-primary mb-1">
                                     <a class="text-white" href="{{ route('admin.users.edit', $user->id) }}">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
                                 </span>
+                                @endif
+                                @if(Auth::user()->hasPermissionTo('delete-user'))
                                 <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
@@ -103,7 +111,9 @@
                                 <span class="btn btn-secondary">
                                     <a href="{{ route('admin.users.changeStatus', $user->id) }}" class="text-white"><i class="bi bi-toggle-on"></i></a>
                                 </span>
+                                @endif
                             </td>
+                            @endif
                         </tr>
                         @endforeach
                     </tbody>

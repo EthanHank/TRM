@@ -18,9 +18,11 @@
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 @endif
+@if(Auth::user()->hasPermissionTo('create-paddy'))
 <div class="d-flex justify-content-start mb-4">
     <a href="{{ route('admin.paddies.create') }}" class="btn btn-success"> + Add Paddy</a>
 </div>
+@endif
 <!-- Search for paddies by name. -->
 <div class="row mb-3">
     <div class="col-md-6 offset-md-6">
@@ -59,13 +61,15 @@
                             <th>Storage Start</th>
                             <th>Storage End</th>
                             <th>Maximum Storage Duration</th>
+                            @if(Auth::user()->hasPermissionTo('edit-paddy') || Auth::user()->hasPermissionTo('delete-paddy'))
                             <th>Action</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
                         @if ($paddies->count() == 0)
                         <tr>
-                            <td colspan="10" class="text-center text-muted py-4">No paddies found! T_T</td>
+                            <td colspan="{{ Auth::user()->hasPermissionTo('edit-paddy') || Auth::user()->hasPermissionTo('delete-paddy') ? 10 : 9 }}" class="text-center text-muted py-4">No paddies found! T_T</td>
                         </tr>
                         @endif
                         @foreach ($paddies as $paddy)
@@ -79,12 +83,16 @@
                             <td>{{ $paddy->storage_start_date }}</td>
                             <td>{{ $paddy->storage_end_date }}</td>
                             <td>{{ $paddy->maximum_storage_duration }}</td>
+                            @if(Auth::user()->hasPermissionTo('edit-paddy') || Auth::user()->hasPermissionTo('delete-paddy'))
                             <td>
+                                @if(Auth::user()->hasPermissionTo('edit-paddy'))
                                 <span class="btn btn-primary mb-1">
                                     <a class="text-white" href="{{ route('admin.paddies.edit', $paddy->id) }}">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
                                 </span>
+                                @endif
+                                @if(Auth::user()->hasPermissionTo('delete-paddy'))
                                 <form action="{{ route('admin.paddies.destroy', $paddy->id) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
@@ -92,7 +100,9 @@
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </form>
+                                @endif
                             </td>
+                            @endif
                         </tr>
                         @endforeach
                     </tbody>

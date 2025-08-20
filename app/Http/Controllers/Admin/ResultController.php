@@ -5,9 +5,20 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Result;
 use App\Http\Requests\Result\ResultUpdateRequest;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+use Spatie\Permission\Middleware\PermissionMiddleware;
 
 class ResultController extends Controller
 {
+    public static function middleware()
+    {
+        return [
+            new Middleware(PermissionMiddleware::using('view-result'), only: ['index']),
+            new Middleware(PermissionMiddleware::using('edit-result'), only: ['edit', 'update']),
+            new Middleware(PermissionMiddleware::using('delete-result'), only: ['destroy']),
+        ];
+    }
     public function index()
     {
         $search = request()->input('search');

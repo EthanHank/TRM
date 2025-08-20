@@ -102,7 +102,9 @@
     <div class="card">
         <div class="card-header bg-white d-flex justify-content-between align-items-center">
             <h5 class="card-title mb-0">Pending Appointments</h5>
+            @if(Auth::user()->hasPermissionTo('view-appointment'))
             <a href="{{ route('admin.appointments.index') }}" class="btn btn-sm btn-primary float-end">View All</a>
+            @endif
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -117,13 +119,15 @@
                             <th>End Date</th>
                             <th>Bag Quantity</th>
                             <th>Status</th>
+                            @if(Auth::user()->hasPermissionTo('cancel-appointment') || Auth::user()->hasPermissionTo('confirm-appointment'))
                             <th>Action</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
                         @if ($pendingAppointments->count() == 0)
                         <tr>
-                            <td colspan="9" class="text-center text-muted py-4">No Appointments found! T_T</td>
+                            <td colspan="{{ Auth::user()->hasPermissionTo('cancel-appointment') || Auth::user()->hasPermissionTo('confirm-appointment') ? 9 : 8 }}" class="text-center text-muted py-4">No Appointments found! T_T</td>
                         </tr>
                         @endif
                         @foreach ($pendingAppointments as $appointment)
@@ -138,18 +142,24 @@
                             <td>
                                 <span class="badge bg-secondary">{{ $appointment->status }}</span>
                             </td>
+                            @if(Auth::user()->hasPermissionTo('cancel-appointment') || Auth::user()->hasPermissionTo('confirm-appointment'))
                             <td>
+                                @if (Auth::user()->hasPermissionTo('cancel-appointment'))
                                 <span class="btn btn-danger btn-sm mb-1">
                                     <a class="text-white text-decoration-none" href="{{ route('admin.appointments.cancel', $appointment->id) }}">
                                         <i class="bi bi-x-circle"></i> Cancel
                                     </a>
                                 </span>
+                                @endif
+                                @if (Auth::user()->hasPermissionTo('confirm-appointment'))
                                 <span class="btn btn-primary btn-sm mb-1">
                                     <a class="text-white text-decoration-none" href="{{ route('admin.appointments.confirm', $appointment->id) }}">
                                         <i class="bi bi-calendar-check-fill"></i> Confirm
                                     </a>
                                 </span>
+                                @endif
                             </td>
+                            @endif
                         </tr>
                         @endforeach
                     </tbody>
@@ -198,7 +208,9 @@
     <div class="card">
         <div class="card-header bg-white d-flex justify-content-between align-items-center">
             <h5 class="card-title mb-0">Milling - In Progress</h5>
+            @if(Auth::user()->hasPermissionTo('view-milling'))
             <a href="{{ route('admin.millings.index') }}" class="btn btn-sm btn-primary float-end">View All</a>
+            @endif
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -211,13 +223,15 @@
                             <th>Milling Start Date</th>
                             <th>Bag Quantity</th>
                             <th>Status</th>
+                            @if(Auth::user()->hasPermissionTo('complete-milling'))
                             <th>Action</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
                         @if ($progress_millings->count() == 0)
                         <tr>
-                            <td colspan="7" class="text-center text-muted py-4">No In Progress Milling found! T_T</td>
+                            <td colspan="{{ Auth::user()->hasPermissionTo('complete-milling') ? 7 : 6 }}" class="text-center text-muted py-4">No In Progress Milling found! T_T</td>
                         </tr>
                         @endif
                         @foreach ($progress_millings as $milling)
@@ -230,6 +244,7 @@
                             <td>
                                 <span class="badge bg-secondary">{{ $milling->status }}</span>
                             </td>
+                            @if(Auth::user()->hasPermissionTo('complete-milling'))
                             <td>
                                 <span class="btn btn-primary btn-sm">
                                     <a class="text-white text-decoration-none" href="{{ route('admin.millings.edit', $milling->id) }}">
@@ -237,6 +252,7 @@
                                     </a>
                                 </span>
                             </td>
+                            @endif
                         </tr>
                         @endforeach
                     </tbody>
@@ -285,7 +301,9 @@
     <div class="card">
         <div class="card-header bg-white d-flex justify-content-between align-items-center">
             <h5 class="card-title mb-0">Drying - In Progress</h5>
+            @if(Auth::user()->hasPermissionTo('view-drying'))
             <a href="{{ route('admin.dryings.index') }}" class="btn btn-sm btn-primary float-end">View All</a>
+            @endif
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -298,13 +316,15 @@
                             <th>Drying Start Date</th>
                             <th>Bag Quantity</th>
                             <th>Status</th>
+                            @if(Auth::user()->hasPermissionTo('complete-drying'))
                             <th>Action</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
                         @if ($progress_dryings->count() == 0)
                         <tr>
-                            <td colspan="7" class="text-center text-muted py-4">No In Progress Drying found! T_T</td>
+                            <td colspan="{{ Auth::user()->hasPermissionTo('complete-drying') ? 7 : 6 }}" class="text-center text-muted py-4">No In Progress Drying found! T_T</td>
                         </tr>
                         @endif
                         @foreach ($progress_dryings as $drying)
@@ -317,6 +337,7 @@
                             <td>
                                 <span class="badge bg-secondary">{{ $drying->status }}</span>
                             </td>
+                            @if(Auth::user()->hasPermissionTo('complete-drying'))
                             <td>
                                 <span class="btn btn-primary btn-sm">
                                     <a class="text-white text-decoration-none" href="{{ route('admin.dryings.edit', $drying->id) }}">
@@ -324,6 +345,7 @@
                                     </a>
                                 </span>
                             </td>
+                            @endif
                         </tr>
                         @endforeach
                     </tbody>
@@ -334,6 +356,7 @@
 </div>
 
 <!-- Reports -->
+@if (Auth::user()->hasPermissionTo('view-report'))
 <div class="card">
     <div class="card-header bg-white">
         <ul class="nav nav-tabs card-header-tabs" id="reportsTab" role="tablist">
@@ -354,24 +377,42 @@
     <div class="card-body">
         <div class="tab-content" id="reportsTabContent">
             <div class="tab-pane fade show active" id="overall-performance" role="tabpanel" aria-labelledby="overall-performance-tab">
-                <a href="{{ route('admin.reports.overall_performance.pdf') }}" class="btn btn-primary mb-3 btn-sm">Export to <i class="bi bi-filetype-pdf"></i></a>
+                @if (Auth::user()->hasPermissionTo('download-report'))
+                <a href="{{ route('admin.reports.overall_performance.pdf') }}" class="btn btn-primary mb-3 btn-sm">
+                    Export to <i class="bi bi-filetype-pdf"></i>
+                </a>
+                @endif
                 @include('admin.reports.overall_performance', ['data' => $overallPerformance])
             </div>
             <div class="tab-pane fade" id="paddy-type-performance" role="tabpanel" aria-labelledby="paddy-type-performance-tab">
-                <a href="{{ route('admin.reports.paddy_type_performance.pdf') }}" class="btn btn-primary btn-sm mb-3">Export to <i class="bi bi-filetype-pdf"></i></a>
+                @if (Auth::user()->hasPermissionTo('download-report'))
+                <a href="{{ route('admin.reports.paddy_type_performance.pdf') }}" class="btn btn-primary btn-sm mb-3">
+                    Export to <i class="bi bi-filetype-pdf"></i>
+                </a>
+                @endif
                 @include('admin.reports.paddy_type_performance', ['paddyTypePerformance' => $paddyTypePerformance])
             </div>
             <div class="tab-pane fade" id="merchant-activity" role="tabpanel" aria-labelledby="merchant-activity-tab">
-                <a href="{{ route('admin.reports.merchant_activity.pdf') }}" class="btn btn-primary btn-sm mb-3">Export to <i class="bi bi-filetype-pdf"></i></a>
+                @if (Auth::user()->hasPermissionTo('download-report'))
+                <a href="{{ route('admin.reports.merchant_activity.pdf') }}" class="btn btn-primary btn-sm mb-3">
+                    Export to <i class="bi bi-filetype-pdf"></i>
+                </a>
+                @endif
                 @include('admin.reports.merchant_activity', ['merchantActivity' => $merchantActivity])
             </div>
             <div class="tab-pane fade" id="milling-prediction-accuracy" role="tabpanel" aria-labelledby="milling-prediction-accuracy-tab">
-                <a href="{{ route('admin.reports.milling_prediction_accuracy.pdf') }}" class="btn btn-primary btn-sm mb-3">Export to <i class="bi bi-filetype-pdf"></i></a>
+                @if (Auth::user()->hasPermissionTo('download-report'))
+                <a href="{{ route('admin.reports.milling_prediction_accuracy.pdf') }}" class="btn btn-primary btn-sm mb-3">
+                    Export to <i class="bi bi-filetype-pdf"></i>
+                </a>
+                @endif
                 @include('admin.reports.milling_prediction_accuracy', ['millingPredictionAccuracy' => $millingPredictionAccuracy])
             </div>
         </div>
     </div>
 </div>
+@endif
+
 @endsection
 
 @push('scripts')

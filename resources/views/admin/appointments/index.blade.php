@@ -52,13 +52,15 @@
                             <th>End Date</th>
                             <th>Bag Quantity</th>
                             <th>Status</th>
+                            @if(Auth::user()->hasPermissionTo('cancel-appointment') || Auth::user()->hasPermissionTo('confirm-appointment'))
                             <th>Action</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
                         @if ($appointments->count() == 0)
                         <tr>
-                            <td colspan="9" class="text-center text-muted py-4">No Appointments found! T_T</td>
+                            <td colspan="{{ Auth::user()->hasPermissionTo('cancel-appointment') || Auth::user()->hasPermissionTo('confirm-appointment') ? 9 : 8 }}" class="text-center text-muted py-4">No Appointments found! T_T</td>
                         </tr>
                         @endif
                         @foreach ($appointments as $appointment)
@@ -73,18 +75,24 @@
                             <td>
                                 <span class="badge bg-secondary">{{ $appointment->status }}</span>
                             </td>
+                            @if(Auth::user()->hasPermissionTo('cancel-appointment') || Auth::user()->hasPermissionTo('confirm-appointment'))
                             <td>
+                                @if(Auth::user()->hasPermissionTo('cancel-appointment'))
                                 <span class="btn btn-danger btn-sm mb-1">
                                     <a class="text-white text-decoration-none" href="{{ route('admin.appointments.cancel', $appointment->id) }}">
                                         <i class="bi bi-x-circle"></i> Cancel
                                     </a>
                                 </span>
+                                @endif
+                                @if(Auth::user()->hasPermissionTo('confirm-appointment'))
                                 <span class="btn btn-primary btn-sm mb-1">
                                     <a class="text-white text-decoration-none" href="{{ route('admin.appointments.confirm', $appointment->id) }}">
                                         <i class="bi bi-calendar-check-fill"></i> Confirm
                                     </a>
                                 </span>
+                                @endif
                             </td>
+                            @endif
                         </tr>
                         @endforeach
                     </tbody>

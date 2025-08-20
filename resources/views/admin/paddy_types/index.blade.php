@@ -18,9 +18,11 @@
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 @endif
+@if(Auth::user()->hasPermissionTo('create-paddy-type'))
 <div class="d-flex justify-content-start mb-4">
     <a href="{{ route('admin.paddy_types.create') }}" class="btn btn-success"> + Add Paddy Type</a>
 </div>
+@endif
 <!-- Search for paddy types by name. -->
 <div class="row mb-3">
     <div class="col-md-6 offset-md-6">
@@ -52,25 +54,31 @@
                         <tr class="text-center align-middle">
                             <th>Name</th>
                             <th>Description</th>
+                            @if (Auth::user()->hasPermissionTo('edit-paddy-type') || Auth::user()->hasPermissionTo('delete-paddy-type'))
                             <th>Action</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
                         @if ($paddy_types->count() == 0)
                         <tr>
-                            <td colspan="4" class="text-center text-muted py-4">No paddy types found! T_T</td>
+                            <td colspan="{{ Auth::user()->hasPermissionTo('edit-paddy-type') || Auth::user()->hasPermissionTo('delete-paddy-type') ? 3 : 2 }}" class="text-center text-muted py-4">No paddy types found! T_T</td>
                         </tr>
                         @endif
                         @foreach ($paddy_types as $paddy_type)
                         <tr class="text-center align-middle">
                             <td>{{ $paddy_type->name }}</td>
                             <td>{{ $paddy_type->description }}</td>
+                            @if (Auth::user()->hasPermissionTo('edit-paddy-type') || Auth::user()->hasPermissionTo('delete-paddy-type'))
                             <td>
+                                @if(Auth::user()->hasPermissionTo('edit-paddy-type'))
                                 <span class="btn btn-primary mb-1">
                                     <a class="text-white" href="{{ route('admin.paddy_types.edit', $paddy_type->id) }}">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
                                 </span>
+                                @endif
+                                @if(Auth::user()->hasPermissionTo('delete-paddy-type'))
                                 <form action="{{ route('admin.paddy_types.destroy', $paddy_type->id) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
@@ -78,7 +86,9 @@
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </form>
+                                @endif
                             </td>
+                            @endif
                         </tr>
                         @endforeach
                     </tbody>

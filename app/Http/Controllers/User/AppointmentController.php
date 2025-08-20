@@ -11,9 +11,18 @@ use App\Models\Paddy;
 use App\Services\AppointmentService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+use Spatie\Permission\Middleware\PermissionMiddleware;
 
-class AppointmentController extends Controller
+class AppointmentController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return [
+            new Middleware(PermissionMiddleware::using('user-dashboard'), only: ['index', 'show', 'check', 'checkAvailability', 'store', 'destroy']),
+        ];
+    }
     /**
      * Display a listing of the resource.
      */

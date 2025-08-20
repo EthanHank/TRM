@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,6 +17,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     @yield('styles')
 </head>
+
 <body>
     <!-- Sidebar -->
     <nav class="sidebar" id="sidebar">
@@ -24,66 +26,87 @@
         </div>
         <div class="sidebar-menu">
             <ul class="nav flex-column">
+                @if (Auth::user()->hasPermissionTo('admin-dashboard'))
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">
                         <i class="bi bi-speedometer2"></i>
                         Dashboard
                     </a>
                 </li>
+                @endif
+                @if (Auth::user()->hasPermissionTo('view-user'))
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('admin.merchants.*') ? 'active' : '' }}" href="{{ route('admin.merchants.index') }}">
                         <i class="bi bi-person-square"></i>
                         Merchants
                     </a>
                 </li>
+                @endif
+                @if (Auth::user()->hasPermissionTo('view-paddy'))
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('admin.paddies.*') ? 'active' : '' }}" href="{{ route('admin.paddies.index') }}">
                         <i class="bi bi-box"></i>
                         Paddies
                     </a>
-                </li>
+                </li>  
+                @endif
+                @if (Auth::user()->hasPermissionTo('view-result'))
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('admin.results.*') ? 'active' : '' }}" href="{{ route('admin.results.index') }}">
                         <i class="bi bi-box-seam-fill"></i>
                         Results
                     </a>
-                </li>
+                </li>   
+                @endif
+                @if (Auth::user()->hasPermissionTo('view-milling'))
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('admin.millings.*') ? 'active' : '' }}" href="{{ route('admin.millings.index') }}">
                         <i class="bi bi-building-fill-gear"></i>
                         Millings
                     </a>
-                </li>
+                </li>    
+                @endif
+                @if (Auth::user()->hasPermissionTo('view-drying'))
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('admin.dryings.*') ? 'active' : '' }}" href="{{ route('admin.dryings.index') }}">
                         <i class="bi bi-fire"></i>
                         Dryings
                     </a>
-                </li>
+                </li>    
+                @endif
+                @if (Auth::user()->hasPermissionTo('view-appointment'))
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('admin.appointments.*') ? 'active' : '' }}" href="{{ route('admin.appointments.index') }}">
                         <i class="bi bi-calendar-check-fill"></i>
                         Appointments
                     </a>
                 </li>
+                @endif
+                @if (Auth::user()->hasPermissionTo('view-appointment-type'))
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('admin.appointment_types.*') ? 'active' : '' }}" href="{{ route('admin.appointment_types.index') }}">
                         <i class="bi bi-calendar3"></i>
                         Appointment Types
                     </a>
                 </li>
+                @endif
+                @if (Auth::user()->hasPermissionTo('view-result-type'))
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('admin.result_types.*') ? 'active' : '' }}" href="{{ route('admin.result_types.index') }}">
                         <i class="bi bi-boxes"></i>
                         Result Types
                     </a>
                 </li>
-                 <li class="nav-item">
+                @endif
+                @if (Auth::user()->hasPermissionTo('view-paddy-type'))
+                <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('admin.paddy_types.*') ? 'active' : '' }}" href="{{ route('admin.paddy_types.index') }}">
                         <i class="bi bi-backpack4-fill"></i>
                         Paddy Types
                     </a>
                 </li>
+                @endif
+                @if (Auth::user()->hasPermissionTo('view-user'))
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('admin.users.*') ? 'active' : '' }}" href="#" data-bs-toggle="collapse" data-bs-target="#userManagementSubmenu">
                         <i class="bi bi-person-gear"></i>
@@ -110,6 +133,7 @@
                         </ul>
                     </div>
                 </li>
+                @endif
             </ul>
         </div>
     </nav>
@@ -168,4 +192,5 @@
     </script>
     @yield('scripts')
 </body>
-</html> 
+
+</html>

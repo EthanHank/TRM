@@ -18,9 +18,11 @@
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 @endif
+@if(Auth::user()->hasPermissionTo('create-role'))
 <div class="d-flex justify-content-start mb-4">
     <a href="{{ route('admin.roles.create') }}" class="btn btn-success"> + Add Role</a>
 </div>
+@endif
 <div class="row mb-3">
     <div class="col-md-6 offset-md-6">
         <form method="GET" action="{{ route('admin.roles.index') }}" class="input-group">
@@ -52,13 +54,15 @@
                             <th>Name</th>
                             <th>Created At</th>
                             <th>Updated At</th>
+                            @if (Auth::user()->hasPermissionTo('edit-role') || Auth::user()->hasPermissionTo('delete-role'))
                             <th>Action</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
                         @if ($roles->count() == 0)
                         <tr>
-                            <td colspan="4" class="text-center text-muted py-4">No roles found! T_T</td>
+                            <td colspan="{{ Auth::user()->hasPermissionTo('edit-role') || Auth::user()->hasPermissionTo('delete-role') ? 4 : 3 }}" class="text-center text-muted py-4">No roles found! T_T</td>
                         </tr>
                         @endif
                         @foreach ($roles as $role)
@@ -66,12 +70,17 @@
                             <td>{{ $role->name }}</td>
                             <td>{{ $role->created_at }}</td>
                             <td>{{ $role->updated_at }}</td>
+                            <!-- Action buttons for editing and deleting roles -->
+                            @if (Auth::user()->hasPermissionTo('edit-role') || Auth::user()->hasPermissionTo('delete-role'))
                             <td>
+                                @if(Auth::user()->hasPermissionTo('edit-role'))
                                 <span class="btn btn-primary mb-1">
                                     <a class="text-white" href="{{ route('admin.roles.edit', $role->id) }}">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
                                 </span>
+                                @endif
+                                @if(Auth::user()->hasPermissionTo('delete-role'))
                                 <form action="{{ route('admin.roles.destroy', $role->id) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
@@ -79,7 +88,9 @@
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </form>
+                                @endif
                             </td>
+                            @endif
                         </tr>
                         @endforeach
                     </tbody>

@@ -13,9 +13,21 @@ use App\Models\ResultType;
 use App\Services\AppointmentService;
 use App\Services\MillingService;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+use Spatie\Permission\Middleware\PermissionMiddleware;
 
-class MillingController extends Controller
+class MillingController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return [
+            new Middleware(PermissionMiddleware::using('view-milling'), only: ['index']),
+            new Middleware(PermissionMiddleware::using('create-milling'), only: ['create', 'store']),
+            new Middleware(PermissionMiddleware::using('complete-milling'), only: ['edit', 'update']),
+        ];
+    }
+
     public function index(AppointmentService $appointmentService, MillingService $millingService)
     {
         $search = request()->input('search');

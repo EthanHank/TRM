@@ -18,9 +18,11 @@
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 @endif
+@if(Auth::user()->hasPermissionTo('create-result-type'))
 <div class="d-flex justify-content-start mb-4">
     <a href="{{ route('admin.result_types.create') }}" class="btn btn-success"> + Add Result Type</a>
 </div>
+@endif
 <!-- Search for result types by name. -->
 <div class="row mb-3">
     <div class="col-md-6 offset-md-6">
@@ -52,25 +54,31 @@
                         <tr class="text-center align-middle">
                             <th>Name</th>
                             <th>Description</th>
+                            @if (Auth::user()->hasPermissionTo('edit-result-type') || Auth::user()->hasPermissionTo('delete-result-type'))
                             <th>Action</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
                         @if ($result_types->count() == 0)
                         <tr>
-                            <td colspan="4" class="text-center text-muted py-4">No result types found! T_T</td>
+                            <td colspan="{{ Auth::user()->hasPermissionTo('edit-result-type') || Auth::user()->hasPermissionTo('delete-result-type') ? 3 : 2 }}" class="text-center text-muted py-4">No result types found! T_T</td>
                         </tr>
                         @endif
                         @foreach ($result_types as $result_type)
                         <tr class="text-center align-middle">
                             <td>{{ $result_type->name }}</td>
                             <td>{{ $result_type->description }}</td>
+                            @if (Auth::user()->hasPermissionTo('edit-result-type') || Auth::user()->hasPermissionTo('delete-result-type'))
                             <td>
+                                @if(Auth::user()->hasPermissionTo('edit-result-type'))
                                 <span class="btn btn-primary mb-1">
                                     <a class="text-white" href="{{ route('admin.result_types.edit', $result_type->id) }}">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
                                 </span>
+                                @endif
+                                @if(Auth::user()->hasPermissionTo('delete-result-type'))
                                 <form action="{{ route('admin.result_types.destroy', $result_type->id) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
@@ -78,7 +86,9 @@
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </form>
+                                @endif
                             </td>
+                            @endif
                         </tr>
                         @endforeach
                     </tbody>

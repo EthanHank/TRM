@@ -52,13 +52,15 @@
                             <th>End Date</th>
                             <th>Bag Quantity</th>
                             <th>Status</th>
+                            @if(Auth::user()->hasPermissionTo('create-milling'))
                             <th>Action</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
                         @if ($appointments->count() == 0)
                         <tr>
-                            <td colspan="9" class="text-center text-muted py-4">No Appointments found! T_T</td>
+                            <td colspan="{{ Auth::user()->hasPermissionTo('create-milling') ? 9 : 8 }}" class="text-center text-muted py-4">No Appointments found! T_T</td>
                         </tr>
                         @endif
                         @foreach ($appointments as $appointment)
@@ -73,6 +75,7 @@
                             <td>
                                 <span class="badge bg-secondary">{{ $appointment->status }}</span>
                             </td>
+                            @if(Auth::user()->hasPermissionTo('create-milling'))
                             <td>
                                 <span class="btn btn-primary btn-sm">
                                     <a class="text-white text-decoration-none" href="{{ route('admin.millings.create', $appointment->id) }}">
@@ -80,6 +83,7 @@
                                     </a>
                                 </span>
                             </td>
+                            @endif
                         </tr>
                         @endforeach
                     </tbody>
@@ -114,13 +118,15 @@
                             <th>Milling Start Date</th>
                             <th>Bag Quantity</th>
                             <th>Status</th>
+                            @if(Auth::user()->hasPermissionTo('complete-milling'))
                             <th>Action</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
                         @if ($progress_millings->count() == 0)
                         <tr>
-                            <td colspan="7" class="text-center text-muted py-4">No In Progress Milling found! T_T</td>
+                            <td colspan="{{ Auth::user()->hasPermissionTo('complete-milling') ? 7 : 6 }}" class="text-center text-muted py-4">No In Progress Milling found! T_T</td>
                         </tr>
                         @endif
                         @foreach ($progress_millings as $milling)
@@ -133,6 +139,7 @@
                             <td>
                                 <span class="badge bg-secondary">{{ $milling->status }}</span>
                             </td>
+                            @if(Auth::user()->hasPermissionTo('complete-milling'))
                             <td>
                                 <span class="btn btn-primary btn-sm">
                                     <a class="text-white text-decoration-none" href="{{ route('admin.millings.edit', $milling->id) }}">
@@ -140,6 +147,7 @@
                                     </a>
                                 </span>
                             </td>
+                            @endif
                         </tr>
                         @endforeach
                     </tbody>

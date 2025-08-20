@@ -5,9 +5,18 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Result;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+use Spatie\Permission\Middleware\PermissionMiddleware;
 
 class ResultController extends Controller
 {
+    public static function middleware()
+    {
+        return [
+            new Middleware(PermissionMiddleware::using('user-dashboard'), only: ['index', 'destroy']),
+        ];
+    }
     public function index()
     {
         $user = Auth::user();

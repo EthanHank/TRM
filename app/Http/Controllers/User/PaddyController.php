@@ -7,9 +7,22 @@ use App\Models\Paddy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+use Spatie\Permission\Middleware\PermissionMiddleware;
 
-class PaddyController extends Controller
+class PaddyController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return [
+            new Middleware(PermissionMiddleware::using('user-dashboard'), only: ['index', 'show']),
+        ];
+    }
+    /**
+     * Display a listing of the resource.
+     */
+
     public function index(Request $request)
     {
 

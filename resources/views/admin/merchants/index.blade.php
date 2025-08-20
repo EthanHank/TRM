@@ -28,13 +28,15 @@
                             <th>Is Opened</th>
                             <th>Role</th>
                             <th>Status</th>
+                            @if(Auth::user()->hasPermissionTo('edit-user') || Auth::user()->hasPermissionTo('delete-user'))
                             <th>Action</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
                         @if ($merchants->count() == 0)
                         <tr>
-                            <td colspan="6" class="text-center text-muted py-4">No merchants found! T_T</td>
+                            <td colspan="{{ Auth::user()->hasPermissionTo('edit-user') || Auth::user()->hasPermissionTo('delete-user') ? 6 : 5 }}" class="text-center text-muted py-4">No merchants found! T_T</td>
                         </tr>
                         @endif
                         @foreach ($merchants as $merchant)
@@ -62,12 +64,16 @@
                                     <span class="badge bg-danger">Inactive</span>
                                 @endif
                             </td>
+                            @if(Auth::user()->hasPermissionTo('edit-user') || Auth::user()->hasPermissionTo('delete-user'))
                             <td>
+                                @if(Auth::user()->hasPermissionTo('edit-user'))
                                 <span class="btn btn-primary mb-1">
                                     <a class="text-white" href="{{ route('admin.merchants.edit', $merchant->id) }}">
                                         <i class="bi bi-person-fill-check"></i>
                                     </a>
                                 </span>
+                                @endif
+                                @if(Auth::user()->hasPermissionTo('delete-user'))
                                 <form action="{{ route('admin.merchants.destroy', $merchant->id) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
@@ -75,7 +81,9 @@
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </form>
+                                @endif
                             </td>
+                            @endif
                         </tr>
                         @endforeach
                     </tbody>

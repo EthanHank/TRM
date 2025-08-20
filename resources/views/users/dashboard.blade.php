@@ -69,8 +69,8 @@ User Dashboard
                         <tbody>
                             @forelse ($recentAppointments as $appointment)
                             <tr>
-                                <td>{{ $appointment->appointment_start_date->format('d M Y') }}</td>
-                                <td>{{ $appointment->appointment_end_date->format('d M Y') }}</td>
+                                <td>{{ $appointment->appointment_start_date }}</td>
+                                <td>{{ $appointment->appointment_end_date }}</td>
                                 <td>{{ $appointment->appointment_type->name }}</td>
                                 <td><span class="badge bg-{{ $appointment->status == 'Pending' ? 'secondary' : 'success' }}">{{ $appointment->status }}</span></td>
                                 <td>{{ $appointment->paddy->paddy_type->name }}</td>

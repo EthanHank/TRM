@@ -149,6 +149,77 @@ class PermissionSeeder extends Seeder
                 'category' => 'Portal Management',
                 'guard_name' => 'web',
             ],
+            [
+                'name' => 'confirm-appointment',
+                'category' => 'Appointment Management',
+                'guard_name' => 'web',
+            ],
+            [
+                'name' => 'cancel-appointment',
+                'category' => 'Appointment Management',
+                'guard_name' => 'web',
+            ],
+            [
+                'name' => 'view-appointment',
+                'category' => 'Appointment Management',
+                'guard_name' => 'web',
+            ],
+            [
+                'name' => 'create-milling',
+                'category' => 'Milling Management',
+                'guard_name' => 'web',
+            ],
+            [
+                'name' => 'complete-milling',
+                'category' => 'Milling Management',
+                'guard_name' => 'web',
+            ],
+            [
+                'name' => 'view-milling',
+                'category' => 'Milling Management',
+                'guard_name' => 'web',
+            ],
+            [
+                'name' => 'create-drying',
+                'category' => 'Drying Management',
+                'guard_name' => 'web',
+            ],
+            [
+                'name' => 'complete-drying',
+                'category' => 'Drying Management',
+                'guard_name' => 'web',
+            ],
+            [
+                'name' => 'view-drying',
+                'category' => "Drying Management",
+                "guard_name" => "web",
+            ],
+            [
+                'name' => 'view-report',
+                'category' => 'Report Management',
+                'guard_name' => 'web',
+            ],
+            [
+                'name' => 'download-report',
+                'category' => 'Report Management',
+                'guard_name' => 'web',
+            ],
+            [
+                'name' => 'view-result',
+                'category' => 'Result Management',
+                'guard_name' => 'web',
+            ],
+            [
+                'name' => 'edit-result',
+                'category' => 'Result Management',
+                'guard_name' => 'web',
+            ],
+            [
+                'name' => 'delete-result',
+                'category' => 'Result Management',
+                'guard_name' => 'web',
+            ],
+            
         ];
 
         foreach ($permissions as $permission) {

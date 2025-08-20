@@ -12,9 +12,18 @@ use App\Models\User;
 use App\Models\Milling;
 use App\Models\Drying;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\Middleware;
+use Spatie\Permission\Middleware\PermissionMiddleware;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class AdminController extends Controller
+class AdminController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return [
+            new Middleware(PermissionMiddleware::using('admin-dashboard'), only: ['dashboard']),
+        ];
+    }
     public function dashboard(Request $request, ReportController $reportController)
     {
         $merchantCount = User::role('merchant')->count();

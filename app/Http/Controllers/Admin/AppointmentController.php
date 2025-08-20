@@ -10,9 +10,20 @@ use App\Models\Appointment;
 use App\Services\AppointmentService;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+use Spatie\Permission\Middleware\PermissionMiddleware;
 
-class AppointmentController extends Controller
+class AppointmentController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return [
+            new Middleware(PermissionMiddleware::using('view-appointment'), only: ['index']),
+            new Middleware(PermissionMiddleware::using('confirm-appointment'), only: [ 'confirm']),
+            new Middleware(PermissionMiddleware::using('cancel-appointment'), only: ['cancel', 'destroy']),
+        ];
+    }
     public function index(AppointmentService $appointmentService)
     {
         try {
