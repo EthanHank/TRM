@@ -9,7 +9,7 @@ use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use Spatie\Permission\Middleware\PermissionMiddleware;
 
-class ResultController extends Controller
+class ResultController extends Controller implements HasMiddleware
 {
     public static function middleware()
     {
