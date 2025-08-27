@@ -36,7 +36,7 @@ class UpdateRequest extends FormRequest
             'results.required' => 'The result fields are required.',
             'results.array' => 'The result fields must be an array.',
             'results.*.required' => 'Each result must be specified.',
-            'results.*.integer' => 'Each result must be an integer.',
+            'results.*.integer' => 'Each result must be a number.',
             'results.*.min' => 'Each result must be at least 1.',
         ];
     }

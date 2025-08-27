@@ -22,7 +22,7 @@ class CompleteDryingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'bag_quantity' => 'required|numeric|min:500',
+            'bag_quantity' => 'required|numeric|min:400',
             'bag_weight' => 'required|numeric|min:50',
         ];
     }
@@ -32,7 +32,7 @@ class CompleteDryingRequest extends FormRequest
         return [
             'bag_quantity.required' => 'The bag quantity field is required.',
             'bag_quantity.numeric' => 'The bag quantity must be a number.',
-            'bag_quantity.min' => 'The bag quantity must be at least 500.',
+            'bag_quantity.min' => 'The bag quantity must be at least 400.',
             'bag_weight.required' => 'The bag weight field is required.',
             'bag_weight.numeric' => 'The bag weight must be a number.',
             'bag_weight.min' => 'The bag weight must be at least 50kg.',
