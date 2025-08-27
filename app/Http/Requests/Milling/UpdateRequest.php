@@ -23,7 +23,7 @@ class UpdateRequest extends FormRequest
     {
         return [
             'results' => 'required|array',
-            'results.*' => 'required|integer|min:0',
+            'results.*' => 'required|integer|min:1',
         ];
     }
 
@@ -33,11 +33,11 @@ class UpdateRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'results.required' => 'The results field is required.',
-            'results.array' => 'The results field must be an array.',
+            'results.required' => 'The result fields are required.',
+            'results.array' => 'The result fields must be an array.',
             'results.*.required' => 'Each result must be specified.',
             'results.*.integer' => 'Each result must be an integer.',
-            'results.*.min' => 'Each result must be at least 0.',
+            'results.*.min' => 'Each result must be at least 1.',
         ];
     }
 }
