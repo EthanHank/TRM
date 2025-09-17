@@ -349,25 +349,25 @@
                         <div class="row">
                             <div class="col-md-6 mb-4">
                                 <div class="mb-4">
-                                    <input type="text" class="form-control" placeholder="Your Username" name="name" >
+                                    <input type="text" class="form-control" placeholder="Enter Your Username" name="name" >
                                     @error('name')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="mb-4">
-                                    <input type="text" class="form-control" placeholder="Your Name" name="full_name">
+                                    <input type="text" class="form-control" placeholder="Enter Your Name" name="full_name">
                                     @error('full_name')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="mb-4">
-                                    <input type="text" class="form-control" placeholder="Your NRC" name="nrc">
+                                    <input type="text" class="form-control" placeholder="Enter Your NRC" name="nrc">
                                     @error('nrc')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="mb-4">
-                                    <input type="text" class="form-control" placeholder="Your Phone" name="phone">
+                                    <input type="text" class="form-control" placeholder="Enter Your Phone" name="phone">
                                     @error('phone')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -401,13 +401,13 @@
                                     @enderror
                                 </div>
                                 <div class="mb-4">
-                                    <input type="email" class="form-control" placeholder="Your Email" name="email">
+                                    <input type="email" class="form-control" placeholder="Enter Your Email" name="email">
                                     @error('email')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <textarea class="form-control" rows="4" type="text" placeholder="Your Address" name="address"></textarea>
+                                    <textarea class="form-control" rows="4" type="text" placeholder="Enter Your Address" name="address"></textarea>
                                     @error('address')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
