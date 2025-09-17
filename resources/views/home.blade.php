@@ -240,6 +240,11 @@
             max-height: 300px;
         }
 
+        #terms-and-conditions:hover {
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
         @media (max-width: 991px) {
             .nav-link {
                 margin: 5px 0;
@@ -401,11 +406,15 @@
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div>
+                                <div class="mb-3">
                                     <textarea class="form-control" rows="4" type="text" placeholder="Your Address" name="address"></textarea>
                                     @error('address')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
+                                </div>
+                                <div>
+                                    <input type="checkbox" id="terms" required>
+                                    <label for="terms">I agree to the <span id="terms-and-conditions" data-bs-toggle="modal" data-bs-target="#termsModal">terms and conditions</span></label>
                                 </div>
                             </div>
                         </div>
@@ -444,6 +453,8 @@
             </div>
         </section>
     </div>
+    @include('components._terms_and_conditions_modal')
+
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
