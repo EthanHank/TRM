@@ -91,11 +91,11 @@
         </div>
         <div class="mb-3">
             <label for="final_moisture_content" class="form-label">Final Moisture Content (%)</label>
-            <input type="text" class="form-control" id="final_moisture_content" name="final_moisture_content" value="{{ old('final_moisture_content', '14') }}" required>
+            <input type="text" class="form-control" id="final_moisture_content" name="final_moisture_content" value="{{ old('final_moisture_content', '14') }}">
         </div>
         <div class="mb-3">
             <label for="initial_bag_quantity" class="form-label">Initial Bag Quantity</label>
-            <input type="text" class="form-control" id="initial_bag_quantity" name="initial_bag_quantity" value="{{ old('initial_bag_quantity', $paddy->bag_quantity ?? '') }}" required>
+            <input type="text" class="form-control" id="initial_bag_quantity" name="initial_bag_quantity" value="{{ old('initial_bag_quantity', $paddy->bag_quantity ?? '') }}">
         </div>
         <button type="submit" class="btn btn-primary">Calculate</button>
         <a href="{{ route('users.paddies.index') }}" class="btn btn-outline-dark">Back to Paddies</a>
