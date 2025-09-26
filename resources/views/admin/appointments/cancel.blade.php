@@ -55,12 +55,11 @@
                         @method('DELETE')
                         <div class="mb-3">
                             <label for="cancel_reason" class="form-label">Cancellation Reason <span class="text-danger">*</span></label>
-                            <textarea 
-                                class="form-control @error('cancel_reason') is-invalid @enderror" 
-                                id="cancel_reason" 
-                                name="cancel_reason" 
-                                rows="5" 
-                                required
+                            <textarea
+                                class="form-control @error('cancel_reason') is-invalid @enderror"
+                                id="cancel_reason"
+                                name="cancel_reason"
+                                rows="5"
                                 placeholder="Please provide a detailed reason for cancelling this appointment. This will be sent to the merchant."
                             >{{ old('cancel_reason') }}</textarea>
                             @error('cancel_reason')
