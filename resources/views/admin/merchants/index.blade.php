@@ -74,7 +74,7 @@
                                 </span>
                                 @endif
                                 @if(Auth::user()->hasPermissionTo('delete-user'))
-                                <form action="{{ route('admin.merchants.destroy', $merchant->id) }}" method="POST" class="d-inline">
+                                <form action="{{ route('admin.users.destroy', $merchant->id) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this user?')">
@@ -89,7 +89,7 @@
                     </tbody>
                 </table>
             </div>
-            
+
             <div class="mt-3">
                     @if($merchants->hasPages())
                         {{ $merchants->links('vendor.pagination.custom-pagination') }}
